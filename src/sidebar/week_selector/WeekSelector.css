@@ -1,0 +1,31 @@
+.WeekSelector {
+    flex: 1;
+    padding-left: 0.5rem;
+    overflow-y: scroll;
+}
+
+h3 {
+    margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.Week {
+    text-align: center;
+    border-radius: 1rem;
+    background-color: #262626;
+    border: 1px solid #282828;
+    margin: 2px 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.Week:hover {
+    background-color: #303030;
+}
+
+.Week.selected {
+    background-color: #474747;
+}
+
+.Week > p {
+    margin: 0;
+    user-select: none;
+}

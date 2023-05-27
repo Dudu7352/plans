@@ -1,0 +1,14 @@
+.Planner {
+    height: 100%;
+    flex: 1;
+}
+
+.Editor {
+    margin: 1rem 2rem;
+    border-radius: 1rem;
+    background-color: #202020;
+    border: 1px solid #282828;
+    width: calc(100% - 4rem);
+    height: calc(100% - 2rem);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+}

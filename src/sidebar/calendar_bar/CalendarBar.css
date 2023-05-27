@@ -1,0 +1,24 @@
+.CalendarBar {
+    width: 100%;
+    height: fit-content;
+    text-align: right;
+    border-bottom: 1px solid #282828; 
+    background-color: #262626;
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
+}
+
+select {
+    margin: 0.5rem;
+    border: none;
+    border-radius: 0.2rem;
+    user-select: none;
+    background: #282828;
+}
+
+select:focus {
+    outline: 0;
+}
+
+select:active {
+    outline: 0;
+}
