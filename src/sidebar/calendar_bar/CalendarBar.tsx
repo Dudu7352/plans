@@ -1,23 +1,25 @@
-import { invoke } from '@tauri-apps/api/tauri';
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import './CalendarBar.css'
 
-export default function CalendarBar() {
+interface CalendarBarProps {
+    year: number,
+    setYear: Dispatch<SetStateAction<number>>
+}
+
+export default function CalendarBar(props: CalendarBarProps) {
     let years: Array<number> = [];
-    let [currentYear, setCurrentYear] = React.useState(0);
-    invoke('get_current_year') 
-        .then(msg => setCurrentYear(msg as number));
-    
-    if(currentYear != 0) {
-        for(let i: number = currentYear; i<currentYear+5; i++)
+
+    if (props.year != 0) {
+        for (let i: number = props.year; i < props.year + 5; i++)
             years.push(i);
     }
-    
-    console.log(years, currentYear);
-    
+
     return (
         <div className="CalendarBar child-box">
-            <select className="year selector">
+            <select
+                className="year selector"
+                onChange={e => props.setYear(+e.target.value)}
+            >
                 {
                     years.map((year, i) => {
                         console.log(year, i);

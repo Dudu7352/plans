@@ -1,20 +1,6 @@
 import Week from './Week/Week';
 import './WeekSelector.css'
-
-const MONTHS = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'Octover',
-    'November',
-    'December'
-];
+import { MONTHS } from '../../consts'
 
 
 export default function WeekSelector() {
