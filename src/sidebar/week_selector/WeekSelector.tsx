@@ -1,3 +1,4 @@
+import Week from './Week/Week';
 import './WeekSelector.css'
 
 const MONTHS = [
@@ -15,17 +16,6 @@ const MONTHS = [
     'December'
 ];
 
-interface weekProps {
-    weekNumber: number;
-}
-
-function Week(props: weekProps) {
-    return (
-        <div className="Week">
-            <p>Week {props.weekNumber}</p>
-        </div>
-    );
-}
 
 export default function WeekSelector() {
     let year: number = 2023;

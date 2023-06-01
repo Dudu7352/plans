@@ -3,3 +3,24 @@
   width: 100%;
   height: 100vh;
 }
+
+.root-box {
+  background-color: #202020;
+  border-color: #303030;
+}
+
+.bordered {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.child-box {
+  background-color: #262626;
+  border-color: #323232;
+}
+
+
+.selector { 
+  background-color: #303030;
+  border-color: #363636;
+}

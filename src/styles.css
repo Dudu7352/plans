@@ -9,8 +9,9 @@ body {
   font-weight: 400;
 
   color: #f7f7f7;
-  background-color: #1d1d1d;
+  background-color: #1c1c1c;
 
+  user-select: none;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
