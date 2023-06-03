@@ -18,3 +18,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+select {
+  color: #f7f7f7;
+  padding: 0.5rem;
+}

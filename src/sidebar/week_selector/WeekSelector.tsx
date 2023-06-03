@@ -3,8 +3,11 @@ import './WeekSelector.css'
 import { MONTHS } from '../../consts'
 
 
-export default function WeekSelector() {
-    let year: number = 2023;
+interface WeekSelectorProps {
+    year: number
+}
+
+export default function WeekSelector(props: WeekSelectorProps) {
     return (
         <div className="WeekSelector">
             {

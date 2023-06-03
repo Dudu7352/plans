@@ -12,7 +12,7 @@ export default function Sidebar() {
     return (
         <div className="Sidebar">
             <CalendarBar year={year} setYear={setYear} />
-            <WeekSelector />
+            <WeekSelector year={year}/>
         </div>
     );
 }
