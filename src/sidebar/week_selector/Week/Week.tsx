@@ -11,12 +11,12 @@ interface DayProps {
 }
 
 function Day(props: DayProps) {
-  return <div id="Day">{props.dayNumber}</div>;
+  return <td id="Day">{props.dayNumber}</td>;
 }
 
 export default function Week(props: WeekProps) {
   return (
-    <div className="Week selector">
+    <tr className="Week selector">
       {Array(7)
         .fill(null)
         .map(({ _, i }: any) => {
@@ -27,6 +27,6 @@ export default function Week(props: WeekProps) {
             />
           );
         })}
-    </div>
+    </tr>
   );
 }

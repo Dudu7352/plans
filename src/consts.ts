@@ -1,4 +1,4 @@
-export const MONTHS = [
+export const MONTHS: string[] = [
   "January",
   "February",
   "March",
@@ -12,3 +12,5 @@ export const MONTHS = [
   "November",
   "December",
 ];
+
+export const YEAR_WEEKS = 53;

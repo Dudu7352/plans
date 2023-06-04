@@ -11,8 +11,14 @@ fn get_current_year() -> i32 {
 
 #[derive(serde::Serialize, serde::Deserialize)]
 struct YearDetails {
-    beginning_weekday_list: [u32; 12],
+    month_details_list: Vec<MonthDetails>,
     is_leap: bool,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
+struct MonthDetails {
+    beginning_weekday: u8,
+    month_length: u8
 }
 
 #[derive(Serialize)]
@@ -25,15 +31,19 @@ struct EventDetails {
 
 #[tauri::command]
 fn get_year_details(year: i32) -> YearDetails {
-    let mut weekday_list: [u32; 12] = [0; 12];
+    let mut month_details_list = Vec::with_capacity(12);
     let mut date: NaiveDate;
     for month in 1..=12 {
         date = NaiveDate::from_ymd_opt(year, month, 1).unwrap();
-        weekday_list[(month - 1) as usize] = date.weekday().num_days_from_monday();
+        let month_details = MonthDetails {
+            beginning_weekday: date.weekday().num_days_from_monday() as u8,
+            month_length: date.pred_opt().unwrap().day0() as u8
+        };
+        month_details_list.push(month_details);
     }
 
     return YearDetails {
-        beginning_weekday_list: weekday_list,
+        month_details_list,
         is_leap: year % 4 == 0 && year % 100 != 0 || year % 400 == 0,
     };
 }
