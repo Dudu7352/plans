@@ -1,0 +1,19 @@
+.Week {
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: solid;
+    height: fit-content;
+    display: flex;
+    justify-content: space-around;
+    transition: all 0.2s ease-in-out;
+}
+
+.Week:hover {
+    background-color: #314e69;
+    border-color: #375877;
+}
+
+.Week.selected:hover {
+    background-color: #284968;
+    border-color: #2c5174;
+}
