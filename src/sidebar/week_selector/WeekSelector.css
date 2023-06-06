@@ -1,31 +1,55 @@
 .WeekSelector {
     flex: 1;
-    padding-left: 0.5rem;
     overflow-y: scroll;
 }
 
-h3 {
-    margin: 1.5rem 0.5rem 0.5rem 0.5rem;
+.Column{   
+    margin: 1rem 1rem;
+    display: grid;
+    grid-template-columns: 5rem 11.9rem;
+}
+
+.Column>h3 {
+    margin: 0 1rem 0 0;
+    display: flex;
+    align-items: center;
 }
 
 .Week {
-    text-align: center;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     border-width: 1px;
     border-style: solid;
-    margin: 2px 1rem;
+    
+    height: fit-content;
+    display: flex;
+    justify-content: space-around;
+
     transition: background-color 0.2s ease-in-out;
 }
 
 .Week:hover {
-    background-color: #303030;
+    background-color: #314e69;
 }
 
-.Week.selected {
-    background-color: #474747;
+.Week:hover>* {
+    background-color: #3a7ebd;
 }
 
-.Week > p {
-    margin: 0;
+.Week.selected:hover {
+    background-color: #284968;
+}
+
+.Week.selected:hover>* {
+    background-color: #2a72b6;
+}
+
+.Day {
+    font-size: 0.9rem;
     user-select: none;
+    text-align: center;
+    margin: 0.1rem;
+    padding: 0.1rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 100%;
 }

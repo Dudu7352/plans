@@ -14,3 +14,5 @@ export const MONTHS: string[] = [
 ];
 
 export const YEAR_WEEKS = 53;
+export const YEAR_DAYS = 365;
+export const LEAP_YEAR_DAYS = 366;

@@ -1,32 +1,26 @@
-interface WeekProps {
-  weekId: number;
-  start: number;
-  daysInMonth: number;
-  selectedDay: number;
-}
-
 interface DayProps {
   dayNumber: number;
-  selected: boolean;
 }
 
 function Day(props: DayProps) {
-  return <td id="Day">{props.dayNumber}</td>;
+  return <div className="Day">{props.dayNumber%31+1}</div>;
+}
+
+interface WeekProps {
+  weekId: number;
 }
 
 export default function Week(props: WeekProps) {
   return (
-    <tr className="Week selector">
-      {Array(7)
-        .fill(null)
-        .map(({ _, i }: any) => {
-          return (
-            <Day
-              dayNumber={(props.start + i) % (props.daysInMonth + 1)}
-              selected={false}
-            />
-          );
-        })}
-    </tr>
+    <div className="Column">
+        <h3>Jan</h3>
+        <div className="Week selector">
+        {
+          [...Array(7)].map((_, i) => (
+            <Day key={props.weekId*7 + i + 1} dayNumber={props.weekId*7 + i}/>
+          ))
+        }
+      </div>
+    </div>
   );
 }

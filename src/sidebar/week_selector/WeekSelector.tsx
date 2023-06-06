@@ -1,21 +1,22 @@
-import { invoke } from "@tauri-apps/api/tauri";
-import Week from "./Week/Week";
 import "./WeekSelector.css";
-import { MONTHS, YEAR_WEEKS } from "../../consts";
+import { MonthDetails } from "../../utils";
+import { Dispatch, SetStateAction } from "react";
+import { YEAR_WEEKS } from "../../consts";
+import Week from "./Week/Week";
 
 interface WeekSelectorProps {
-  year: number;
+  monthDetails?: MonthDetails[],
+  setWeek: Dispatch<SetStateAction<number>>;
 }
 
-export default function WeekSelector(props: WeekSelectorProps) {
-
-  
-
+export default function WeekSelector(props: {}) {
   return (
     <div className="WeekSelector">
-      {Array.from(Array(12).keys()).map((month, i) => {
-        return null;
-      })}
+      {
+        [...Array(YEAR_WEEKS)].map((_, i) => (
+          <Week key={i} weekId={i}/>
+        ))
+      }
     </div>
   );
 }
