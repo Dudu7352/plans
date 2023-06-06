@@ -2,7 +2,7 @@ import "./WeekSelector.css";
 import { MonthDetails } from "../../utils";
 import { Dispatch, SetStateAction } from "react";
 import { YEAR_WEEKS } from "../../consts";
-import Week from "./Week/Week";
+import Week from "./week/Week";
 
 interface WeekSelectorProps {
   monthDetails?: MonthDetails[],
