@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import React from "react";
+import { useState, useEffect } from "react";
 import "./Sidebar.css";
 import CalendarBar from "./calendar_bar/CalendarBar";
 import WeekSelector from "./week_selector/WeekSelector";
@@ -13,19 +13,24 @@ function getYearDetails(year: number): YearDetails {
   invoke("get_year_details", { year: year }).then(
     (msg) => (result = msg as YearDetails)
   );
+  console.log(result);
   return result;
 }
 
 export default function Sidebar() {
-  let [year, setYear] = React.useState(0);
-  let [yearDetails, setYearDetails] = React.useState<YearDetails>();
-  let [week, setWeek] = React.useState(0);
+  let [yearDetails, setYearDetails] = useState<YearDetails>();
+  let [year, setYear] = useState(0);
+  let [week, setWeek] = useState(0);
 
-  invoke("get_current_year").then((year_msg) => {
-    const newYear = year_msg as number;
-    setYear(newYear);
-    setYearDetails(getYearDetails(newYear));
-  });
+  useEffect(() => {
+    invoke("get_current_year").then((year_msg) => {
+      const newYear = year_msg as number;
+      setYearDetails(getYearDetails(newYear));
+      setYear(newYear);
+    });
+  }, []);
+  
+
 
   return (
     <div className="Sidebar">
