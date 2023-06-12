@@ -4,6 +4,7 @@ import './Week.css';
 
 interface WeekProps {
   weekId: number;
+  nextMonth: number,
 }
 
 export default function Week(props: WeekProps) {
@@ -13,7 +14,7 @@ export default function Week(props: WeekProps) {
         <div className="Week selector">
         {
           [...Array(7)].map((_, i) => (
-            <Day key={props.weekId*7 + i + 1} dayNumber={props.weekId*7 + i}/>
+            <Day key={props.weekId*7 + i + 1} dayNumber={props.weekId*7 + i} nextMonth={props.nextMonth}/>
           ))
         }
       </div>

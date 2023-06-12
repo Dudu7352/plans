@@ -19,11 +19,14 @@ export default function CalendarBar(props: CalendarBarProps) {
         className="year selector"
         onChange={(e) => props.setYear(+e.target.value)}
       >
-        {years.map((year, i) => (
-          <option key={i} value={year}>
-            {year}
-          </option>
-        ))}
+        {[...Array(5)].map((_, i) => {
+          let optionYear: number = props.year + i;
+          return (
+            <option key={i} value={optionYear}>
+              {optionYear}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

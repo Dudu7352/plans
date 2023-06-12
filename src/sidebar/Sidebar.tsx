@@ -3,7 +3,7 @@ import React from "react";
 import "./Sidebar.css";
 import CalendarBar from "./calendar_bar/CalendarBar";
 import WeekSelector from "./week_selector/WeekSelector";
-import { YearDetails } from "../utils";
+import { MonthDetails, YearDetails } from "../utils";
 
 function getYearDetails(year: number): YearDetails {
   let result: YearDetails = {
@@ -24,13 +24,18 @@ export default function Sidebar() {
   invoke("get_current_year").then((year_msg) => {
     const newYear = year_msg as number;
     setYear(newYear);
-    //setYearDetails(getYearDetails(newYear));
+    setYearDetails(getYearDetails(newYear));
   });
 
   return (
     <div className="Sidebar">
       <CalendarBar year={year} setYear={setYear} />
-      <WeekSelector />
+      <WeekSelector
+        monthDetails={
+          yearDetails?.monthDetailsList || new Array<MonthDetails>()
+        }
+        setWeek={setWeek}
+      />
     </div>
   );
 }
