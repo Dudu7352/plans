@@ -10,11 +10,14 @@ interface WeekSelectorProps {
 }
 
 export default function WeekSelector(props: WeekSelectorProps) {
-  if (props.monthDetails.length == 0)
+    console.log("WeekSelector",props);
+
+  if (props.monthDetails === undefined || props.monthDetails.length == 0 || props.monthDetails[0] === undefined)
     return <div className="WeekSelector"></div>;
 
-  let daysToMonth: number = props.monthDetails[0].weekDayBeginning;
+  let daysToMonth: number = props.monthDetails[0].beginning_weekday;
   let month: number = -1;
+
   return (
     <div className="WeekSelector">
       {[...Array(YEAR_WEEKS)].map((_, i) => {

@@ -1,9 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
 import "./CalendarBar.css";
 
 interface CalendarBarProps {
   year: number;
-  setYear: Dispatch<SetStateAction<number>>;
+  setYear: (year: number) => void;
 }
 
 export default function CalendarBar(props: CalendarBarProps) {

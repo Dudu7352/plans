@@ -1,10 +1,10 @@
 export interface MonthDetails {
-    weekDayBeginning: number;
+    beginning_weekday: number;
     length: number;
-    weekName: string;
 }
 
 export interface YearDetails {
-    monthDetailsList: MonthDetails[];
+    year: number;
+    month_details_list: MonthDetails[];
     isLeap: boolean;
 }
