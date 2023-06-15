@@ -1,7 +1,9 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use chrono::{naive::serde::ts_seconds, Datelike, NaiveDate, NaiveDateTime};
+use std::ops::Add;
+
+use chrono::{naive::serde::ts_seconds, Datelike, NaiveDate, NaiveDateTime, Month};
 use serde::Serialize;
 
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -11,7 +13,7 @@ struct YearDetails {
     is_leap: bool,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug)]
 struct MonthDetails {
     beginning_weekday: u8,
     month_length: u8,
@@ -32,15 +34,20 @@ fn get_year_details(requested_year: Option<i32>) -> YearDetails {
     );
 
     let mut month_details_list = Vec::with_capacity(12);
-    let mut date: NaiveDate;
+    let mut date: NaiveDate = NaiveDate::from_ymd_opt(year, 1, 1).unwrap();
 
     for month in 1..=12 {
-        date = NaiveDate::from_ymd_opt(year, month, 1).unwrap();
-
+        let beginning_weekday = date.weekday().num_days_from_monday() as u8;
+        date = NaiveDate::from_ymd_opt(
+            if month == 12 {year + 1} else {year}, 
+            if month == 12 {12} else {month + 1}, 
+            1).unwrap();
         let month_details = MonthDetails {
-            beginning_weekday: date.weekday().num_days_from_monday() as u8,
-            month_length: date.pred_opt().unwrap().day0() as u8,
+            beginning_weekday,
+            month_length: date.pred_opt().unwrap().day0() as u8 + 1,
         };
+
+        println!("{:?} -> {:?}", date, month_details);
         month_details_list.push(month_details);
     }
 

@@ -10,7 +10,7 @@ interface WeekSelectorProps {
 }
 
 export default function WeekSelector(props: WeekSelectorProps) {
-    console.log("WeekSelector",props);
+  console.log("WeekSelector",props);
 
   if (props.monthDetails === undefined || props.monthDetails.length == 0 || props.monthDetails[0] === undefined)
     return <div className="WeekSelector"></div>;
@@ -21,10 +21,19 @@ export default function WeekSelector(props: WeekSelectorProps) {
   return (
     <div className="WeekSelector">
       {[...Array(YEAR_WEEKS)].map((_, i) => {
-        if (i * 7 + 1 > daysToMonth)
-          daysToMonth += props.monthDetails[++month].length;
+        if (i * 7 + 1 > daysToMonth) {
+          month++;
+          console.log(month);
+          daysToMonth += props.monthDetails[month].month_length;
+        }
 
-        return <Week key={i} weekId={i} nextMonth={31} />;
+        return (
+          <Week 
+            key={i} 
+            weekId={i} 
+            nextMonth={month === -1 ? daysToMonth : props.monthDetails[month].month_length} 
+          />
+        );
       })}
     </div>
   );

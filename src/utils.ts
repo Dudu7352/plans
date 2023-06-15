@@ -1,6 +1,6 @@
 export interface MonthDetails {
     beginning_weekday: number;
-    length: number;
+    month_length: number;
 }
 
 export interface YearDetails {
