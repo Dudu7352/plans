@@ -2,7 +2,6 @@ import { MONTHS } from '../../../consts';
 import Day from './day/Day';
 import './Week.css';
 
-
 interface WeekProps {
   weekId: number,
   slice: number[],
@@ -16,11 +15,10 @@ export default function Week(props: WeekProps) {
     <div className="Column">
         <h3>
         {
-          (props.monthDay+6 >= props.monthChange) ?
+          props.monthDay+6 >= props.monthChange ?
           MONTHS[props.month].slice(0, 3) : ""
         }
         </h3>
-
         <div className="Week selector">
         {
           [...Array(7)].map((_, i) => (          

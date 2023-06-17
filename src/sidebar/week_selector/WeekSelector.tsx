@@ -20,27 +20,28 @@ export default function WeekSelector(props: WeekSelectorProps) {
   return (
     <div className="WeekSelector">
       {[...Array(YEAR_WEEKS)].map((_, weekId) => {
-        if(monthDay+6 >= nextMonth && month < 11)
+        if(monthDay+6 >= nextMonth)
           month++;
 
         const slice = (
-          month === -1 ? 
+          weekId === 0 ? 
           [nextMonth, 7] : 
-          weekId+1 === YEAR_WEEKS ? [0, monthDay] : [0, 7]
+          month === 12 ? [0, nextMonth - monthDay] : 
+          [0, 7]
         );
-        
+
         const jsx: React.JSX.Element = (
           <Week
             key={weekId} 
             weekId={weekId}
-            slice={[0, 7]}
+            slice={slice}
             monthDay={monthDay}
-            monthChange={nextMonth}
+            monthChange={month == 12 ? 999 : nextMonth}
             month={month}
           />
         );
 
-        if(monthDay+6 >= nextMonth && month < 11) {
+        if(monthDay+6 >= nextMonth && weekId+1 < YEAR_WEEKS) {
           monthDay -= nextMonth;
           nextMonth = props.monthDetails[month].month_length;
         }
