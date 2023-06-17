@@ -1,10 +1,9 @@
 import './Day.css'
 
 interface DayProps {
-  dayNumber: number;
-  nextMonth: number;
+  monthDay : number;
 }
 
 export default function Day(props: DayProps) {
-  return <div className="Day">{(props.dayNumber % props.nextMonth) + 1}</div>;
+  return <div className="Day">{props.monthDay !== -1 ? props.monthDay : ""}</div>;
 }

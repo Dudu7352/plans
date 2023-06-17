@@ -21,8 +21,6 @@ export default function Sidebar() {
       setYearDetails(yearDetailsMsg as YearDetails);
     });
   }, []);
-  
-  console.log("Sidebar", yearDetails);
 
   return (
     <div className="Sidebar">
