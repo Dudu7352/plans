@@ -2,17 +2,3 @@
     height: fit-content;
     text-align: right;
 }
-
-
-select:hover {
-    background-color: #284968;
-    border-color: #2c5174;
-}
-
-select:focus {
-    outline: 0;
-}
-
-select:active {
-    outline: 0;
-}

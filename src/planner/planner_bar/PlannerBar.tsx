@@ -1,3 +1,4 @@
+import Button from "../../components/button/Button";
 import "./PlannerBar.css";
 
 interface PlannerBarProps {
@@ -12,9 +13,7 @@ export default function PlannerBar(props: PlannerBarProps) {
                 {/* TODO: display date range of the week from rust function*/}
             </h2>
             <div className="fill"></div>
-            <select className="selector">
-                <option>Add</option>
-            </select>
+            <Button title="Add" onClick={() => {}}/>
         </div>
     );
 }

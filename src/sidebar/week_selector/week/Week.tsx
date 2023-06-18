@@ -13,14 +13,14 @@ interface WeekProps {
 
 export default function Week(props: WeekProps) {
    return (
-    <div className="Column" onClick={props.setWeek}>
+    <div className="Week" onClick={props.setWeek}>
         <h3>
         {
           props.monthDay+6 >= props.monthChange ?
           MONTHS[props.month].slice(0, 3) : ""
         }
         </h3>
-        <div className="Week selector">
+        <div className="week-representation selectable">
         {
           [...Array(7)].map((_, i) => {
             let day: number = props.monthDay + i;

@@ -1,0 +1,29 @@
+.Select {
+  appearance: none;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.Select {
+  color: #f7f7f7;
+  padding: 0.5rem;
+}
+
+.Select:focus {
+    outline: 0;
+}
+
+.Select:active {
+    outline: 0;
+}
+
+/*
+handled by .selectable tag
+.Select:hover {
+    background-color: #284968;
+    border-color: #2c5174;
+}
+*/

@@ -1,3 +1,4 @@
+import Select from "../../components/select/Select";
 import "./CalendarBar.css";
 
 interface CalendarBarProps {
@@ -14,19 +15,10 @@ export default function CalendarBar(props: CalendarBarProps) {
 
   return (
     <div className="CalendarBar child-box box">
-      <select
-        className="year selector"
+      <Select
+        values={[...Array(5)].map((_, i) => props.year + i)}
         onChange={(e) => props.setYear(+e.target.value)}
-      >
-        {[...Array(5)].map((_, i) => {
-          let optionYear: number = props.year + i;
-          return (
-            <option key={i} value={optionYear}>
-              {optionYear}
-            </option>
-          );
-        })}
-      </select>
+      />
     </div>
   );
 }

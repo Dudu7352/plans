@@ -26,24 +26,25 @@
   border-bottom-style: solid;
 }
 
-.selector { 
+.selectable {
   background-color: #303030;
   border-color: #363636;
+}
+
+.selectable:hover {
+  background-color: #284968;
+  border-color: #2c5174;
 }
 
 .fill {
   flex: 1;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 500;
-}
-
-select {
-  appearance: none;
-  margin: 0.5rem;
-  border: none;
-  border-radius: 0.2rem;
-  user-select: none;
-  transition: all 0.2s ease-in-out;
 }
