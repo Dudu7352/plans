@@ -1,15 +1,14 @@
 .Select {
   appearance: none;
   margin: 0.5rem;
-  border: none;
-  border-radius: 0.2rem;
-  user-select: none;
-  transition: all 0.2s ease-in-out;
-}
-
-.Select {
-  color: #f7f7f7;
   padding: 0.5rem;
+  border-radius: 0.2rem;
+  border: none;
+  
+  color: #f7f7f7;
+  font-size: 0.9rem;
+  
+  user-select: none;
 }
 
 .Select:focus {

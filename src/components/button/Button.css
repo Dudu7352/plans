@@ -1,11 +1,12 @@
 .Button {
-  appearance: none;
   margin: 0.5rem;
-  border: none;
+  padding: 0.5rem !important;
   border-radius: 0.2rem;
-  user-select: none;
-  transition: all 0.2s ease-in-out;
-
+  border: none;
+  
+  color: #f7f7f7;
   font-size: 0.9rem;
-  padding: 0.5rem;
+  line-height: 1rem;
+  
+  user-select: none;
 }

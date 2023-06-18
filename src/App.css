@@ -29,11 +29,17 @@
 .selectable {
   background-color: #303030;
   border-color: #363636;
+  transition: all 0.1s ease-in-out;
 }
 
 .selectable:hover {
   background-color: #284968;
   border-color: #2c5174;
+}
+
+.selectable:active {
+  background-color: #192f44;
+  border-color: #1c344b;
 }
 
 .fill {
@@ -47,4 +53,20 @@ h4,
 h5,
 h6 {
   font-weight: 500;
+}
+
+*::-webkit-scrollbar {
+  width: .7rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #404040;
+  border-radius: 20px;
+  border: 0.2rem solid #202020;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #505050;
+  border-radius: 20px;
+  border: 0.2rem solid #202020;
 }

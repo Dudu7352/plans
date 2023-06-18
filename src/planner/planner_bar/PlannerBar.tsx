@@ -1,4 +1,5 @@
 import Button from "../../components/button/Button";
+import Select from "../../components/select/Select";
 import "./PlannerBar.css";
 
 interface PlannerBarProps {
@@ -14,6 +15,7 @@ export default function PlannerBar(props: PlannerBarProps) {
             </h2>
             <div className="fill"></div>
             <Button title="Add" onClick={() => {}}/>
+            <Select values={["Add"]} onChange={(e) => {}}/>
         </div>
     );
 }
