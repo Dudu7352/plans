@@ -19,8 +19,31 @@
   border-color: #323232;
 }
 
+.bar {
+  width: 100%;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
 
 .selector { 
   background-color: #303030;
   border-color: #363636;
+}
+
+.fill {
+  flex: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}
+
+select {
+  appearance: none;
+  margin: 0.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
 }

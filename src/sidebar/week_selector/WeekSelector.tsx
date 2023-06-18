@@ -6,7 +6,7 @@ import Week from "./week/Week";
 
 interface WeekSelectorProps {
   monthDetails: MonthDetails[];
-  setWeek: Dispatch<SetStateAction<number>>;
+  setWeek: (year: number) => void;
 }
 
 export default function WeekSelector(props: WeekSelectorProps) {

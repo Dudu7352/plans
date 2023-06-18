@@ -8,7 +8,7 @@ import { MonthDetails, YearDetails } from "../utils";
 interface SidebarProps {
   userYear: number,
   currentYear: number,
-  setUserYear: React.Dispatch<React.SetStateAction<number>>,
+  setUserYear: (year: number) => void,
   setWeek: React.Dispatch<React.SetStateAction<number>>,
 }
 

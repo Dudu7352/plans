@@ -22,11 +22,15 @@ function App() {
       <Sidebar 
         userYear={userYear}
         currentYear={currentYear}
-        setUserYear={setUserYear}
+        setUserYear={(year: number) => {
+          setUserYear(year);
+          setWeek(0);
+        }}
         setWeek={setWeek}
       />
       <Planner 
         week={week}
+        userYear={userYear}
       />
     </div>
   );

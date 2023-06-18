@@ -13,7 +13,7 @@ export default function CalendarBar(props: CalendarBarProps) {
   }
 
   return (
-    <div className="CalendarBar child-box">
+    <div className="CalendarBar child-box box">
       <select
         className="year selector"
         onChange={(e) => props.setYear(+e.target.value)}
