@@ -26,11 +26,10 @@ struct EventDetails {
 }
 
 #[tauri::command]
-fn get_year_details(requested_year: Option<i32>) -> YearDetails {
-    let year = requested_year.unwrap_or(
-        chrono::Utc::now().date_naive().year()
-    );
+fn get_current_year() -> i32 { chrono::Utc::now().date_naive().year() }
 
+#[tauri::command]
+fn get_year_details(year: i32) -> YearDetails {
     let mut month_details_list = Vec::with_capacity(12);
     let mut date: NaiveDate = NaiveDate::from_ymd_opt(year, 1, 1).unwrap();
 
@@ -58,7 +57,7 @@ fn get_year_details(requested_year: Option<i32>) -> YearDetails {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_year_details])
+        .invoke_handler(tauri::generate_handler![get_current_year, get_year_details])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

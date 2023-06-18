@@ -38,6 +38,7 @@ export default function WeekSelector(props: WeekSelectorProps) {
             monthDay={monthDay}
             monthChange={month == 12 ? 999 : nextMonth}
             month={month}
+            setWeek={() => {props.setWeek(weekId)}}
           />
         );
 
