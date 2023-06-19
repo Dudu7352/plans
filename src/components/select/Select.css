@@ -18,11 +18,3 @@
 .Select:active {
     outline: 0;
 }
-
-/*
-handled by .selectable tag
-.Select:hover {
-    background-color: #284968;
-    border-color: #2c5174;
-}
-*/

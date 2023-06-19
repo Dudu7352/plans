@@ -17,15 +17,14 @@ function App() {
     })
   }, []);
 
+  useEffect(() => {setWeek(0)}, [userYear]);
+
   return (
     <div className="App">
       <Sidebar 
         userYear={userYear}
         currentYear={currentYear}
-        setUserYear={(year: number) => {
-          setUserYear(year);
-          setWeek(0);
-        }}
+        setUserYear={(year: number) => setUserYear(year)}
         setWeek={setWeek}
       />
       <Planner 
