@@ -1,14 +1,20 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod date_structures;
-
+mod app_state;
 mod commands;
+mod date_structures;
+mod event_structures;
+
+use std::sync::Mutex;
+use app_state::AppState;
 use commands::date::{get_current_year, get_year_details};
+use commands::event::try_add_event;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_current_year, get_year_details])
+        .manage(Mutex::new(AppState::new()))
+        .invoke_handler(tauri::generate_handler![get_current_year, get_year_details, try_add_event])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
