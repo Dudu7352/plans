@@ -28,10 +28,6 @@ You can build the application by issuing the commnad `npm run tauri build`
 
 The application will be placed in the `src-tauri/target/release` folder. The application name should be `plans` (file ending may differ depending on operating system)
 
-## Usage
-
-// TODO: add functionality to the application
-
 ## Credits
 * <a href="https://github.com/nodejs">Node.js</a>
 * <a href="https://github.com/tauri-apps/tauri">Tauri</a>
