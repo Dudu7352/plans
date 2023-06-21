@@ -63,7 +63,7 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
     for i in 0..min(7, remaining) {
         let day = start + Duration::days(i);
         let events = event_list.get(&day).unwrap_or(&empty);
-        week_details.push(DayDetails::new(day, events.to_vec())); // TODO: get data from tauri state and return it
+        week_details.push(DayDetails::new(day, events.to_vec()));
     }
 
     return week_details;
