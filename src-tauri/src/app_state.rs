@@ -1,23 +1,24 @@
 use std::collections::HashMap;
 
-use chrono::Duration;
+use chrono::{Duration, NaiveDate};
 use serde::Serialize;
 
 use crate::event_structures::event_details::EventDetails;
 
 #[derive(Serialize)]
 pub struct AppState {
-    pub event_list: HashMap<i64, Vec<EventDetails>>,
+    pub event_list: HashMap<NaiveDate, Vec<EventDetails>>,
 }
 
 impl AppState {
     pub fn new() -> Self {
-        let event_list: HashMap<i64, Vec<EventDetails>> = HashMap::new();
+        let event_list: HashMap<NaiveDate, Vec<EventDetails>> = HashMap::new();
+        // TODO: load saved events
         Self { event_list }
     }
 
     pub fn add_event(&mut self, new_event: EventDetails) -> Result<(), ()> {
-        let day_key = new_event.date_time.timestamp() / (3600 * 24);
+        let day_key = new_event.date_time.date();
         let new_event_end =
             new_event.date_time + Duration::seconds(new_event.duration_seconds as i64);
 

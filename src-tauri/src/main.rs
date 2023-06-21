@@ -8,13 +8,18 @@ mod event_structures;
 
 use std::sync::Mutex;
 use app_state::AppState;
-use commands::date::{get_current_year, get_year_details};
-use commands::event::try_add_event;
+use commands::date::*;
+use commands::event::*;
 
 fn main() {
     tauri::Builder::default()
         .manage(Mutex::new(AppState::new()))
-        .invoke_handler(tauri::generate_handler![get_current_year, get_year_details, try_add_event])
+        .invoke_handler(tauri::generate_handler![
+            get_current_year, 
+            get_year_details, 
+            get_week_details,
+            try_add_event
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
