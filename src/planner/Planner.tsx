@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "./planner_bar/PlannerBar";
-import { DayDetails } from "../utils";
+import { DayDetails } from "../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
-import { DEFAULT_DATE } from "../consts";
+import { DEFAULT_DATE } from "../utils/consts";
 
 interface PlannerProps {
   week: number,

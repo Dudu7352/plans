@@ -3,7 +3,7 @@ import { useState, useEffect, Dispatch } from "react";
 import "./Sidebar.css";
 import CalendarBar from "./calendar_bar/CalendarBar";
 import WeekSelector from "./week_selector/WeekSelector";
-import { MonthDetails, YearDetails } from "../utils";
+import { MonthDetails, YearDetails } from "../utils/interfaces";
 
 interface SidebarProps {
   userYear: number,

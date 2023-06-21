@@ -1,5 +1,6 @@
 import Button from "../../components/button/Button";
 import Select from "../../components/select/Select";
+import { formatDate } from "../../utils/functions";
 import "./PlannerBar.css";
 
 interface PlannerBarProps {
@@ -11,11 +12,9 @@ interface PlannerBarProps {
 export default function PlannerBar(props: PlannerBarProps) {
   return (
     <div className="PlannerBar child-box box">
-      <h2>{props.weekStart.toDateString()} - {props.weekEnd.toDateString()}</h2>
+      <h2>{formatDate(props.weekStart)} - {formatDate(props.weekEnd, true)}</h2>
       <div className="fill"></div>
-      <Button title="Add" onClick={() => {
-        
-      }} />
+      <Button title="Add" onClick={props.showEventPropmt} />
     </div>
   );
 }
