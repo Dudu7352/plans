@@ -58,7 +58,7 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
     }
 
     let new_year = NaiveDate::from_yo_opt(year + 1, 1).unwrap() - Duration::days(-1);
-    let year_remaining = (new_year - week_start).num_days();
+    let year_remaining = (new_year - week_start).num_days() - 1;
     let mut week_remaining = 7;
     if week == 0 {
         week_remaining -= year_start.weekday().num_days_from_monday() as i64;
