@@ -8,7 +8,7 @@ where students had to create an application to help organise meetings.
 
 Unfortunately, the design of this application was not practical and it had to be written in C# Windows Professional Forms, which is not cross-compatible. 
 
-Therefore, int order to challenge my skills, I set myself the goal of creating a better version of the program that would be more usable and work on all kinds of devices.
+Therefore, in order to challenge my skills, I set myself the goal of creating a better version of the program that would be more usable and work on all kinds of devices.
 
 The application is written in Rust using Tauri with React as the frontend.
 It currently supports all Windows, MacOS and Linux devices, with Android and IOS coming in the future.
