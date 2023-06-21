@@ -30,6 +30,7 @@ export default function Planner(props: PlannerProps) {
         />
         <p>Events: </p>
       </div>
+      
     </div>
   );
 }
