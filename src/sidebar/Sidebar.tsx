@@ -31,11 +31,7 @@ export default function Sidebar(props: SidebarProps) {
         year={
           props.currentYear
         }
-        setYear={(year: number) => {
-          invoke("get_year_details", {year : year}).then(yearDetailsMsg => {
-            setYearDetails(yearDetailsMsg as YearDetails);
-          });
-        }}
+        setYear={props.setUserYear}
       />
       <WeekSelector
         monthDetails={

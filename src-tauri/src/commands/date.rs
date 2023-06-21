@@ -5,10 +5,11 @@ use tauri::State;
 
 use crate::{
     app_state::AppState,
+    consts::{LEAP_YEAR_MONTHS, YEAR_MONTHS},
     date_structures::{
         day_details::DayDetails, month_details::MonthDetails, year_details::YearDetails,
     },
-    event_structures::event_details::EventDetails, consts::{LEAP_YEAR_MONTHS, YEAR_MONTHS},
+    event_structures::event_details::EventDetails,
 };
 
 #[tauri::command]
@@ -26,12 +27,16 @@ pub fn get_year_details(year: i32) -> YearDetails {
         date = NaiveDate::from_ymd_opt(year, month, 1).unwrap();
 
         let beginning_weekday = date.weekday().num_days_from_monday() as u8;
-        
-        let m_i = (month-1) as usize;
+
+        let m_i = (month - 1) as usize;
 
         let month_details = MonthDetails {
             beginning_weekday,
-            month_length: if is_leap { LEAP_YEAR_MONTHS[m_i] } else {YEAR_MONTHS[m_i]},
+            month_length: if is_leap {
+                LEAP_YEAR_MONTHS[m_i]
+            } else {
+                YEAR_MONTHS[m_i]
+            },
         };
 
         month_details_list.push(month_details);
@@ -46,9 +51,18 @@ pub fn get_year_details(year: i32) -> YearDetails {
 
 #[tauri::command]
 pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> Vec<DayDetails> {
-    let start = NaiveDate::from_yo_opt(year, 1).unwrap() + Duration::days((week - 1) * 7 + 1);
+    let year_start = NaiveDate::from_yo_opt(year, 1).unwrap();
+    let mut week_start = year_start + Duration::days(week * 7);
+    if week > 0 {
+        week_start -= Duration::days(year_start.weekday().num_days_from_monday() as i64)
+    }
+
     let new_year = NaiveDate::from_yo_opt(year + 1, 1).unwrap() - Duration::days(-1);
-    let remaining = (new_year - start).num_days();
+    let year_remaining = (new_year - week_start).num_days();
+    let mut week_remaining = 7;
+    if week == 0 {
+        week_remaining -= year_start.weekday().num_days_from_monday() as i64;
+    }
 
     let mut week_details: Vec<DayDetails> = Vec::new();
 
@@ -60,8 +74,8 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
 
     let empty: Vec<EventDetails> = Vec::new();
 
-    for i in 0..min(7, remaining) {
-        let day = start + Duration::days(i);
+    for i in 0..min(week_remaining, year_remaining) {
+        let day = week_start + Duration::days(i);
         let events = event_list.get(&day).unwrap_or(&empty);
         week_details.push(DayDetails::new(day, events.to_vec()));
     }
