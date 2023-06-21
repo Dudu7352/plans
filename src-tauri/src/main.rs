@@ -5,6 +5,7 @@ mod app_state;
 mod commands;
 mod date_structures;
 mod event_structures;
+mod consts;
 
 use std::sync::Mutex;
 use app_state::AppState;

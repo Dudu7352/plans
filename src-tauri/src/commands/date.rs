@@ -8,7 +8,7 @@ use crate::{
     date_structures::{
         day_details::DayDetails, month_details::MonthDetails, year_details::YearDetails,
     },
-    event_structures::event_details::EventDetails,
+    event_structures::event_details::EventDetails, consts::{LEAP_YEAR_MONTHS, YEAR_MONTHS},
 };
 
 #[tauri::command]
@@ -19,19 +19,19 @@ pub fn get_current_year() -> i32 {
 #[tauri::command]
 pub fn get_year_details(year: i32) -> YearDetails {
     let mut month_details_list = Vec::with_capacity(12);
-    let mut date: NaiveDate = NaiveDate::from_ymd_opt(year, 1, 1).unwrap();
+    let mut date: NaiveDate;
+    let is_leap = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
 
     for month in 1..=12 {
+        date = NaiveDate::from_ymd_opt(year, month, 1).unwrap();
+
         let beginning_weekday = date.weekday().num_days_from_monday() as u8;
-        date = NaiveDate::from_ymd_opt(
-            if month == 12 { year + 1 } else { year },
-            if month == 12 { 12 } else { month + 1 },
-            1,
-        )
-        .unwrap();
+        
+        let m_i = (month-1) as usize;
+
         let month_details = MonthDetails {
             beginning_weekday,
-            month_length: date.pred_opt().unwrap().day0() as u8 + 1,
+            month_length: if is_leap { LEAP_YEAR_MONTHS[m_i] } else {YEAR_MONTHS[m_i]},
         };
 
         month_details_list.push(month_details);
@@ -40,7 +40,7 @@ pub fn get_year_details(year: i32) -> YearDetails {
     return YearDetails {
         year,
         month_details_list,
-        is_leap: year % 4 == 0 && year % 100 != 0 || year % 400 == 0,
+        is_leap,
     };
 }
 
