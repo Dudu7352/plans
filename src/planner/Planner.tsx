@@ -7,34 +7,50 @@ import { DEFAULT_DATE } from "../utils/consts";
 import EventPrompt from "./event_prompt/EventPrompt";
 
 interface PlannerProps {
-  week: number,
-  userYear: number,
+  week: number;
+  userYear: number;
 }
 
 export default function Planner(props: PlannerProps) {
-
   let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
 
   let [promptOpened, setPromptOpened] = useState(false);
 
   useEffect(() => {
     console.log(props.userYear);
-    invoke('get_week_details', {year: props.userYear, week: props.week}).then(msg => {
-      setWeekDetails(msg as DayDetails[]);
-    });
+    invoke("get_week_details", { year: props.userYear, week: props.week }).then(
+      (msg) => {
+        setWeekDetails(msg as DayDetails[]);
+      }
+    );
   }, [props.userYear, props.week]);
 
   return (
     <div className="Planner box">
       <div className="Editor root-box bordered">
-        <PlannerBar 
-          weekStart = {new Date(weekDetails.at(0)?.date || DEFAULT_DATE)}
-          weekEnd = {new Date(weekDetails.at(-1)?.date || DEFAULT_DATE)}
-          showEventPropmt={() => {setPromptOpened(promptOpened => !promptOpened)}}
+        <PlannerBar
+          weekStart={
+            weekDetails.length 
+              ? new Date(weekDetails[0].date) 
+              : DEFAULT_DATE
+          }
+          weekEnd={
+            weekDetails.length
+              ? new Date(weekDetails[weekDetails.length-1].date)
+              : DEFAULT_DATE
+          }
+          showEventPropmt={() => {
+            setPromptOpened((promptOpened) => !promptOpened);
+          }}
         />
         <p>Events: </p>
       </div>
-      <EventPrompt isOpened={promptOpened} close={() => {setPromptOpened(false)}}/>
+      <EventPrompt
+        isOpened={promptOpened}
+        close={() => {
+          setPromptOpened(false);
+        }}
+      />
     </div>
   );
 }
