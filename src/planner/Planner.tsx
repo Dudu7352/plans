@@ -4,6 +4,7 @@ import PlannerBar from "./planner_bar/PlannerBar";
 import { DayDetails } from "../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE } from "../utils/consts";
+import EventPrompt from "./event_prompt/EventPrompt";
 
 interface PlannerProps {
   week: number,
@@ -13,6 +14,8 @@ interface PlannerProps {
 export default function Planner(props: PlannerProps) {
 
   let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
+
+  let [promptOpened, setPromptOpened] = useState(false);
 
   useEffect(() => {
     console.log(props.userYear);
@@ -27,11 +30,11 @@ export default function Planner(props: PlannerProps) {
         <PlannerBar 
           weekStart = {new Date(weekDetails.at(0)?.date || DEFAULT_DATE)}
           weekEnd = {new Date(weekDetails.at(-1)?.date || DEFAULT_DATE)}
-          showEventPropmt={() => {}}
+          showEventPropmt={() => {setPromptOpened(promptOpened => !promptOpened)}}
         />
         <p>Events: </p>
       </div>
-      
+      <EventPrompt isOpened={promptOpened} close={() => {setPromptOpened(false)}}/>
     </div>
   );
 }

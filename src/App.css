@@ -7,6 +7,7 @@
 .root-box {
   background-color: #202020;
   border-color: #303030;
+  color: white;
 }
 
 .bordered {
@@ -53,6 +54,7 @@ h4,
 h5,
 h6 {
   font-weight: 500;
+  margin: 0.5rem 0;
 }
 
 *::-webkit-scrollbar {
