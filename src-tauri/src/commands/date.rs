@@ -18,6 +18,11 @@ pub fn get_current_year() -> i32 {
 }
 
 #[tauri::command]
+pub fn get_first_weekday(year: i32) -> u32 {
+    NaiveDate::from_yo_opt(year, 1).unwrap().weekday().num_days_from_monday()
+}
+
+#[tauri::command]
 pub fn get_year_details(year: i32) -> YearDetails {
     let mut month_details_list = Vec::with_capacity(12);
     let mut date: NaiveDate;

@@ -14,7 +14,7 @@ interface PlannerProps {
 
 export default function Planner(props: PlannerProps) {
   let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
-
+  let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(false);
 
   useEffect(() => {
@@ -26,9 +26,15 @@ export default function Planner(props: PlannerProps) {
     );
   }, [props.userYear, props.week]);
 
+  useEffect(() => {
+    invoke("get_first_weekday", {year: props.userYear}).then(msg => {
+      setFirstWeekday(msg as number);
+    })
+  }, [props.userYear]);
+
   return (
     <div className="Planner box">
-      <div className="Editor root-box bordered">
+      <div className="editor root-box bordered">
         <PlannerBar
           weekStart={
             weekDetails.length ? new Date(weekDetails[0].date) : DEFAULT_DATE
@@ -42,7 +48,7 @@ export default function Planner(props: PlannerProps) {
             setPromptOpened((promptOpened) => !promptOpened);
           }}
         />
-        <EventsTable weekDetails={weekDetails} emptyCols={0} />
+        <EventsTable weekDetails={weekDetails} emptyCols={props.week == 0 ? firstWeekday : 0 } />
       </div>
       <EventPrompt
         isOpened={promptOpened}
