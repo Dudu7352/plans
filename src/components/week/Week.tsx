@@ -1,5 +1,5 @@
-import { MONTHS } from '../../../utils/consts';
-import Day from './day/Day';
+import { MONTHS } from '../../utils/consts';
+import Day from '../day/Day';
 import './Week.css';
 
 interface WeekProps {

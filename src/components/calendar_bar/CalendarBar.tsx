@@ -1,4 +1,4 @@
-import Select from "../../components/select/Select";
+import Select from "../select/Select";
 import "./CalendarBar.css";
 
 interface CalendarBarProps {
