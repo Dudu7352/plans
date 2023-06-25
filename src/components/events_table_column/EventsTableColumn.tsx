@@ -7,7 +7,7 @@ interface DayDetailsProps {
 
 export default function EventsTableColumn(props: DayDetailsProps) {
   return (
-    <div className="EventsTableColumn">
+    <div className="EventsTableColumn child-box">
       {props.eventList.map((eventDetails, i) => (
         <div key={i} className="EventDetails">
           {eventDetails.name}

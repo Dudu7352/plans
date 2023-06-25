@@ -20,6 +20,11 @@
   border-color: #323232;
 }
 
+.child-flat {
+  border-color: #323232;
+  background-color: #323232;
+}
+
 .bar {
   width: 100%;
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
