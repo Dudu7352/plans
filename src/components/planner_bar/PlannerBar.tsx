@@ -1,6 +1,6 @@
 import Button from "../../components/button/Button";
-import Select from "../../components/select/Select";
 import { formatDate } from "../../utils/functions";
+import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import "./PlannerBar.css";
 
 interface PlannerBarProps {
@@ -11,10 +11,10 @@ interface PlannerBarProps {
 
 export default function PlannerBar(props: PlannerBarProps) {
   return (
-    <div className="PlannerBar child-box box">
+    <TopBar className="PlannerBar" size={TopBarSize.FIT} float={TopBarFloat.LEFT}>
       <h2>{formatDate(props.weekStart)} - {formatDate(props.weekEnd, true)}</h2>
       <div className="fill"></div>
       <Button title="Add" onClick={props.showEventPropmt} />
-    </div>
+    </TopBar>
   );
 }
