@@ -1,5 +1,5 @@
 import Select from "../select/Select";
-import "./CalendarBar.css";
+import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 
 interface CalendarBarProps {
   year: number;
@@ -14,11 +14,11 @@ export default function CalendarBar(props: CalendarBarProps) {
   }
 
   return (
-    <div className="CalendarBar child-box box">
+    <TopBar size={TopBarSize.FIT} float={TopBarFloat.RIGHT}>
       <Select
         values={[...Array(5)].map((_, i) => props.year + i)}
         onChange={(e) => props.setYear(+e.target.value)}
       />
-    </div>
+    </TopBar>
   );
 }

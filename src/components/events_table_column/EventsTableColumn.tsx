@@ -1,5 +1,5 @@
 import { formatDate } from "../../utils/functions";
-import { DayDetails, EventDetails } from "../../utils/interfaces";
+import { DayDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
 import Fill from "../fill/Fill";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
@@ -11,7 +11,6 @@ interface EventsTableColumnProps {
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
-  console.log(props);
   return (
     <div className="EventsTableColumn child-box">
       <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>

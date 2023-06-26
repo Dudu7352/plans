@@ -16,9 +16,9 @@ export default function Planner(props: PlannerProps) {
   let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(false);
+  let [date, setDate] = useState(DEFAULT_DATE);
 
   useEffect(() => {
-    console.log(props.userYear);
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
       (msg) => {
         setWeekDetails(msg as DayDetails[]);
@@ -49,11 +49,13 @@ export default function Planner(props: PlannerProps) {
           weekDetails={weekDetails} 
           emptyCols={props.week == 0 ? firstWeekday : 0 } 
           showEventPrompt={(date: Date) => {
+            setDate(date);
             setPromptOpened((promptOpened) => !promptOpened);
           }}
         />
       </div>
       <EventPrompt
+        date={date}
         isOpened={promptOpened}
         close={() => {
           setPromptOpened(false);

@@ -35,12 +35,11 @@
   border-bottom-style: solid;
 }
 
-
 .selectable {
   box-shadow: 0 0 0.5rem 0 #0000000d;
-
   background-color: #303030;
   border-color: #363636;
+  color: white;
   transition: all 0.1s ease-in-out;
 }
 

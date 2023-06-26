@@ -1,0 +1,9 @@
+.EventInput {
+    display: inline-table;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+}
+
+.EventInput input {
+    border-radius: 0.5rem;
+}
