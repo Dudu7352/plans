@@ -44,11 +44,14 @@ export default function Planner(props: PlannerProps) {
               ? new Date(weekDetails[weekDetails.length - 1].date)
               : DEFAULT_DATE
           }
-          showEventPropmt={() => {
+        />
+        <EventsTable 
+          weekDetails={weekDetails} 
+          emptyCols={props.week == 0 ? firstWeekday : 0 } 
+          showEventPrompt={(date: Date) => {
             setPromptOpened((promptOpened) => !promptOpened);
           }}
         />
-        <EventsTable weekDetails={weekDetails} emptyCols={props.week == 0 ? firstWeekday : 0 } />
       </div>
       <EventPrompt
         isOpened={promptOpened}

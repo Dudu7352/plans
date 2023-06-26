@@ -1,3 +1,7 @@
 .EventsTableColumn {
   border-radius: 0.5rem;
 }
+
+.EventsTableColumn span {
+  margin-left: 0.5rem;
+}

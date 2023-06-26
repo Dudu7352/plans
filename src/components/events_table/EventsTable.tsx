@@ -1,10 +1,12 @@
 import { DayDetails } from "../../utils/interfaces";
 import EventsTableColumn from "../events_table_column/EventsTableColumn";
+import Fill from "../fill/Fill";
 import "./EventsTable.css";
 
 interface EventsTableProps {
   weekDetails: DayDetails[]
   emptyCols: number;
+  showEventPrompt: (date: Date) => void;
 }
 
 export default function EventsTable(props: EventsTableProps) {
@@ -12,13 +14,14 @@ export default function EventsTable(props: EventsTableProps) {
       <div className="EventsTable child-flat bordered">
         {
           [...Array(props.emptyCols)].map((_, i) => {
-            console.log(i);
-            return <EventsTableColumn key={i} eventList={[]} />;
+            return <Fill />
           })
         }
         {
           props.weekDetails.map((dayDetails, i) => (
-            <EventsTableColumn key={i} eventList={dayDetails.events} />
+            <EventsTableColumn key={i} dayDetails={dayDetails} showEventPropmt={() => {
+              props.showEventPrompt(dayDetails.date);
+            }}/>
           ))
         }
       </div>

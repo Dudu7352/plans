@@ -12,3 +12,7 @@
   
   user-select: none;
 }
+
+.Button.fit {
+  width: fit-content;
+}

@@ -1,18 +1,21 @@
 .TopBar {
   border-bottom-width: 1px;
   border-bottom-style: solid;
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
 }
 
 .TopBar.left {
-    text-align: left;
+    justify-content: start;
 }
 
 .TopBar.center {
-    text-align: center;
+    justify-content: center;
 }
 
 .TopBar.right {
-    text-align: right;
+    justify-content: end;
 }
 
 .TopBar.large {
