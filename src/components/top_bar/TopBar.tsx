@@ -1,3 +1,5 @@
+import "./TopBar.css";
+
 export enum TopBarSize {
   LARGE = "large",
   MEDIUM = "medium",
@@ -14,11 +16,13 @@ export enum TopBarFloat {
 interface TopBarProps {
   size: TopBarSize;
   float: TopBarFloat;
+  rounded?: boolean;
   className?: string;
   children?: React.ReactElement | React.ReactElement[];
 }
 
 export default function TopBar(props: TopBarProps) {
-  let className: string = `TopBar child-box box ${props.size} ${props.float} ${props.className}`;
+  let className: string = `TopBar bar ${props.size} ${props.float} ${props.className} ${props.rounded ? "rounded" : ""}`;
+  if(props.rounded) className += " rounded";
   return <div className={className}>{props.children}</div>;
 }

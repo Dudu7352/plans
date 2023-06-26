@@ -1,3 +1,32 @@
 .TopBar {
-    
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.TopBar.left {
+    text-align: left;
+}
+
+.TopBar.center {
+    text-align: center;
+}
+
+.TopBar.right {
+    text-align: right;
+}
+
+.TopBar.large {
+    height: 3rem;
+}
+
+.TopBar.medium {
+    height: 2rem;
+}
+
+.TopBar.small {
+    height: 1rem;
+}
+
+.TopBar.rounded {
+    border-radius: 0.5rem 0.5rem 0 0;
 }

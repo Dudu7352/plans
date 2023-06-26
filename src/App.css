@@ -26,13 +26,19 @@
 }
 
 .bar {
+  background-color: #292929;
+  border-color: #323232;
+
   width: 100%;
-  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.5rem 0 #0000001a;
   border-bottom-width: 1px;
   border-bottom-style: solid;
 }
 
+
 .selectable {
+  box-shadow: 0 0 0.5rem 0 #0000000d;
+
   background-color: #303030;
   border-color: #363636;
   transition: all 0.1s ease-in-out;
