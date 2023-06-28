@@ -1,3 +1,5 @@
+import { Time } from "./classes";
+
 export const MONTHS: string[] = [
   "January",
   "February",
@@ -18,3 +20,4 @@ export const YEAR_DAYS = 365;
 export const LEAP_YEAR_DAYS = 366;
 
 export const DEFAULT_DATE: Date = new Date("2000-01-01");
+export const DEFAULT_TIME: Time = new Time("00:00");

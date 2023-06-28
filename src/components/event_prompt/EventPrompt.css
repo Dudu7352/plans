@@ -12,6 +12,10 @@ dialog::backdrop {
   backdrop-filter: blur(5px);
 }
 
+dialog h3 {
+  margin-left: 0.5rem;
+}
+
 .control-bar {
   display: flex;
 }

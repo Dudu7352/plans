@@ -14,7 +14,7 @@ export default function EventsTable(props: EventsTableProps) {
       <div className="EventsTable child-flat bordered">
         {
           [...Array(props.emptyCols)].map((_, i) => {
-            return <Fill />
+            return <Fill key={i} />
           })
         }
         {
