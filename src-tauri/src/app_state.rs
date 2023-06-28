@@ -3,18 +3,23 @@ use std::collections::HashMap;
 use chrono::{Duration, NaiveDate};
 use serde::Serialize;
 
-use crate::event_structures::event_details::EventDetails;
+use crate::{event_structures::event_details::EventDetails, file_manager::FileManager};
 
 #[derive(Serialize)]
 pub struct AppState {
     pub event_list: HashMap<NaiveDate, Vec<EventDetails>>,
+    file_manager: FileManager
 }
 
 impl AppState {
     pub fn new() -> Self {
-        let event_list: HashMap<NaiveDate, Vec<EventDetails>> = HashMap::new();
-        // TODO: load saved events
-        Self { event_list }
+        let mut file_manager = FileManager::new();
+        let event_list: HashMap<NaiveDate, Vec<EventDetails>> = file_manager.load_data();
+
+        Self { 
+            event_list,
+            file_manager
+        }
     }
 
     pub fn add_event(&mut self, new_event: EventDetails) -> Result<(), ()> {
@@ -28,6 +33,7 @@ impl AppState {
 
         if !self.event_list.contains_key(&day_key) {
             self.event_list.insert(day_key, vec![new_event]);
+            self.file_manager.save_data(&self.event_list);
             return Ok(());
         }
 
@@ -43,6 +49,7 @@ impl AppState {
         }
 
         day_list.push(new_event);
+        self.file_manager.save_data(&self.event_list);
         return Ok(());
     }
 }
