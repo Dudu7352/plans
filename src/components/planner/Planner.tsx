@@ -21,6 +21,7 @@ export default function Planner(props: PlannerProps) {
   useEffect(() => {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
       (msg) => {
+        console.log(msg);
         setWeekDetails(msg as DayDetails[]);
       }
     );

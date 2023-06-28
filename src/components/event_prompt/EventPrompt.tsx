@@ -47,16 +47,16 @@ export default function EventPrompt(props: EventPromptProps) {
         <Button onClick={props.close} title="Cancel" />
         <Button
           onClick={() => {
-            const startDate = Object.assign(new Date(), props.date);
+            const startDate = new Date(props.date);
             startDate.setHours(inputData.start.getHour());
             startDate.setMinutes(inputData.start.getMinute());
             const duration = Time.duration_seconds(inputData.end, inputData.start);
             let newEvent = {
-              date_time: Math.floor(startDate.getTime() / 1000),
+              date_time: Math.floor(startDate.getTime() / 1000) + 3600*24,
               duration_seconds: duration,
               name: inputData.name,
             } as EventDetails;
-
+            console.log(props.date);
             invoke("try_add_event", { newEvent: newEvent }).then(console.log);
           }}
           title="Add"
