@@ -1,5 +1,11 @@
 .EventsTableColumn {
   border-radius: 0.5rem;
+  
+}
+
+.EventsTableColumn > .events {
+  position: relative;
+  height: 800px;
 }
 
 .EventsTableColumn span {

@@ -1,6 +1,7 @@
 import { formatDate } from "../../utils/functions";
 import { DayDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
+import { EventBox } from "../event_box/EventBox";
 import Fill from "../fill/Fill";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import "./EventsTableColumn.css";
@@ -25,11 +26,17 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
           <></>
         )}
       </TopBar>
-      {props.dayDetails.events.map((eventDetails, i) => (
-        <div key={i} className="EventDetails">
-          {eventDetails.name}
-        </div>
-      ))}
+      <div className="events">
+        {props.dayDetails.events.map((eventDetails, i) => {
+          return (
+            <EventBox
+              date_time={eventDetails.date_time}
+              duration_seconds={eventDetails.duration_seconds}
+              name={eventDetails.name}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

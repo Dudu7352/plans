@@ -1,0 +1,5 @@
+.EventBox {
+    width: calc(100% - 2px - 1rem);
+    margin: 0 0.5rem;
+    text-align: center;
+}

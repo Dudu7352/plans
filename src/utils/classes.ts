@@ -28,6 +28,10 @@ export class Time {
     if (0 <= minute && minute < 60) this.minute = minute;
   }
 
+  getDayPercent(): number {
+    return this.getHour()*60+this.getMinute() / (24 * 60);
+  }
+
   static duration_seconds(t1: Time, t2: Time): number {
     return (
       (t1.getHour() - t2.getHour()) * 3600 +

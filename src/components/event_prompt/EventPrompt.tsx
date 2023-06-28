@@ -52,7 +52,7 @@ export default function EventPrompt(props: EventPromptProps) {
             startDate.setMinutes(inputData.start.getMinute());
             const duration = Time.duration_seconds(inputData.end, inputData.start);
             let newEvent = {
-              date_time: Math.floor(startDate.getTime() / 1000) + 3600*24,
+              date_time: Math.floor(startDate.getTime() / 1000),
               duration_seconds: duration,
               name: inputData.name,
             } as EventDetails;

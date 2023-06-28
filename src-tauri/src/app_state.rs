@@ -18,7 +18,6 @@ impl AppState {
     }
 
     pub fn add_event(&mut self, new_event: EventDetails) -> Result<(), ()> {
-        println!("{:?}", new_event);
         let day_key = new_event.date_time.date();
         let new_event_end =
             new_event.date_time + Duration::seconds(new_event.duration_seconds as i64);
