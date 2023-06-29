@@ -44,11 +44,18 @@ export class Time {
     return newTime;
   }
 
-  static duration_seconds(t1: Time, t2: Time): number {
+  static durationSeconds(t1: Time, t2: Time): number {
     return (
       (t1.getHour() - t2.getHour()) * 3600 +
       (t1.getMinute() - t2.getMinute()) * 60
     );
+  }
+
+  static fromDate(date: Date) {
+    const time = new Time();
+    time.setHour(date.getHours());
+    time.setMinute(date.getMinutes());
+    return time;
   }
 
   toString(): string {

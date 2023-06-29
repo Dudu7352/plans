@@ -3,7 +3,7 @@ import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
 import { DayDetails, EventDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
-import { DEFAULT_DATE, Prompt } from "../../utils/consts";
+import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
@@ -19,7 +19,7 @@ export default function Planner(props: PlannerProps) {
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
-  let [eventDetails, setEventDetails] = useState({} as EventDetails);
+  let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
 
   useEffect(() => {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
@@ -56,7 +56,8 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={() => {
+          showEditEventDialog={(eventDetails: EventDetails) => {
+            setEventDetails(eventDetails);
             setPromptOpened(Prompt.EDIT);
           }}
         />

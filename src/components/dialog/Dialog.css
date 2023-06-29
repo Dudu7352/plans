@@ -9,7 +9,6 @@
 
 .Dialog::backdrop {
   background: #00000080;
-  backdrop-filter: blur(5px);
 }
 
 .Dialog h3 {

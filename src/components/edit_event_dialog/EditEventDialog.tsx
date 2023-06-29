@@ -1,3 +1,6 @@
+import { start } from "repl";
+import { Time } from "../../utils/classes";
+import { formatDate } from "../../utils/functions";
 import { EventDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
@@ -10,8 +13,34 @@ interface EditEventDialogProps {
 }
 
 export default function EditEventDialog(props: EditEventDialogProps) {
+  const date = new Date(props.eventDetails.date_time);
+  const startTime: Time = Time.fromDate(date);
+  const endTime = startTime.copy();
+  
+  endTime.addMinutes(Math.floor(props.eventDetails.duration_seconds));
+
   return (
-    <Dialog isOpened={props.isOpened} title={"Edit event"}>
+    <Dialog isOpened={props.isOpened} title={`Edit event "${props.eventDetails.name}"`}>
+      <table>
+        <tbody>
+          <tr>
+            <td>Date:</td>
+            <td>{formatDate(new Date(props.eventDetails.date_time * 1000))}</td>
+          </tr>
+          <tr>
+            <td>Start: </td>
+            <td>{startTime.toString()}</td>
+          </tr>
+          <tr>
+            <td>Duration: </td>
+            <td>{`${props.eventDetails.duration_seconds} seconds`}</td>
+          </tr>
+          <tr>
+            <td>End: </td>
+            <td>{endTime.toString()}</td>
+          </tr>
+        </tbody>
+      </table>
       <ControlBar
         controlOptionList={[ControlOption.CANCEL, ControlOption.DELETE]}
         onInput={(actionType: ControlOption) => {

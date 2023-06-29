@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import Button from "../button/Button";
 import EventInput from "../event_input/EventInput";
 import { EventDetails, EventInputData } from "../../utils/interfaces";
 import { formatDate } from "../../utils/functions";
 import { DEFAULT_TIME } from "../../utils/consts";
 import { Time } from "../../utils/classes";
 import Dialog from "../dialog/Dialog";
-
-import "./AddEventDialog.css";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 
 interface AddEventDialogProps {
@@ -41,7 +38,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
             const startDate = new Date(props.date);
             startDate.setHours(inputData.start.getHour());
             startDate.setMinutes(inputData.start.getMinute());
-            const duration = Time.duration_seconds(inputData.end, inputData.start);
+            const duration = Time.durationSeconds(inputData.end, inputData.start);
             let newEvent = {
               date_time: Math.floor(startDate.getTime() / 1000),
               duration_seconds: duration,
