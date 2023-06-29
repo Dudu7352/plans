@@ -3,3 +3,9 @@
     margin: 0 0.5rem;
     text-align: center;
 }
+
+.EventBox > p {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}

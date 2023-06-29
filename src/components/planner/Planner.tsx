@@ -4,7 +4,7 @@ import PlannerBar from "../planner_bar/PlannerBar";
 import { DayDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE } from "../../utils/consts";
-import EventPrompt from "../event_prompt/EventPrompt";
+import EventPrompt from "../add_event_prompt/AddEventPrompt";
 import EventsTable from "../events_table/EventsTable";
 
 interface PlannerProps {

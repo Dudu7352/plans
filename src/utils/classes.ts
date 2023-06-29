@@ -28,8 +28,20 @@ export class Time {
     if (0 <= minute && minute < 60) this.minute = minute;
   }
 
+  addMinutes(newMinutes: number) {
+    this.hour = (this.hour + Math.floor(newMinutes / 60)) % 24
+    this.minute = (this.minute + newMinutes) % 60;
+  }
+
   getDayPercent(): number {
     return this.getHour()*60+this.getMinute() / (24 * 60);
+  }
+
+  copy(): Time {
+    const newTime = new Time();
+    newTime.setMinute(this.getMinute());
+    newTime.setHour(this.getHour());
+    return newTime;
   }
 
   static duration_seconds(t1: Time, t2: Time): number {

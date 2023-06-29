@@ -1,4 +1,4 @@
-dialog {
+.Dialog {
   padding: 0;
   position: absolute;
   top: 0;
@@ -7,19 +7,7 @@ dialog {
   border-radius: 0.5rem;
 }
 
-dialog::backdrop {
+.Dialog::backdrop {
   background: #00000080;
   backdrop-filter: blur(5px);
-}
-
-dialog h3 {
-  margin-left: 0.5rem;
-}
-
-.control-bar {
-  display: flex;
-}
-
-.control-bar > * {
-  flex: 1;
 }

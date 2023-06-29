@@ -31,9 +31,8 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
           return (
             <EventBox
               key={i}
-              date_time={eventDetails.date_time}
-              duration_seconds={eventDetails.duration_seconds}
-              name={eventDetails.name}
+              eventDetails={eventDetails}
+              showEditEventDialog={() => {}}
             />
           );
         })}

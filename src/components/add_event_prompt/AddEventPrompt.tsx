@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import "./EventPrompt.css";
-import Button from "../../components/button/Button";
+import "./AddEventPrompt.css";
+import Button from "../button/Button";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import EventInput from "../event_input/EventInput";
 import { EventDetails, EventInputData } from "../../utils/interfaces";
 import { formatDate } from "../../utils/functions";
 import { DEFAULT_TIME } from "../../utils/consts";
 import { Time } from "../../utils/classes";
+import Dialog from "../dialog/Dialog";
 
 interface EventPromptProps {
   date: Date;
@@ -16,26 +17,16 @@ interface EventPromptProps {
 }
 
 export default function EventPrompt(props: EventPromptProps) {
-  let ref = useRef<HTMLDialogElement>(null);
   let [inputData, setInputData] = useState({
     name: "",
     start: DEFAULT_TIME,
     end: DEFAULT_TIME,
   } as EventInputData);
 
-  useEffect(() => {
-    if (props.isOpened && !ref.current?.hidden) ref.current?.showModal();
-    else ref.current?.close();
-  }, [props.isOpened]);
-
   const dateFormat: string = formatDate(new Date(props.date));
 
   return (
-    <dialog className="root-box bordered" ref={ref}>
-      <TopBar size={TopBarSize.FIT} float={TopBarFloat.LEFT} rounded={true}>
-        <h3>Add new event for {dateFormat}</h3>
-      </TopBar>
-
+    <Dialog isOpened={props.isOpened} title={`Add new event for ${dateFormat}`}>
       <EventInput
         inputData={inputData}
         updateEventDetails={(inputData: EventInputData) => {
@@ -62,6 +53,6 @@ export default function EventPrompt(props: EventPromptProps) {
           title="Add"
         />
       </div>
-    </dialog>
+    </Dialog>
   );
 }
