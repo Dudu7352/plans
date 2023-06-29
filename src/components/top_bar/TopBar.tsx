@@ -22,7 +22,7 @@ interface TopBarProps {
 }
 
 export default function TopBar(props: TopBarProps) {
-  let className: string = `TopBar bar ${props.size} ${props.float} ${props.className} ${props.rounded ? "rounded" : ""}`;
+  let className: string = `TopBar bar ${props.size} ${props.float} ${props.className}`;
   if(props.rounded) className += " rounded";
   return <div className={className}>{props.children}</div>;
 }
