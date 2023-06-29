@@ -1,5 +1,5 @@
 import { formatDate } from "../../utils/functions";
-import { DayDetails } from "../../utils/interfaces";
+import { DayDetails, EventDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
 import { EventBox } from "../event_box/EventBox";
 import Fill from "../fill/Fill";
@@ -8,7 +8,8 @@ import "./EventsTableColumn.css";
 
 interface EventsTableColumnProps {
   dayDetails: DayDetails;
-  showEventPropmt: () => void | undefined;
+  showAddEventDialog: () => void;
+  showEditEventDialog: (eventDetails: EventDetails) => void;
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
@@ -16,15 +17,8 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
     <div className="EventsTableColumn child-box">
       <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>
         <span>{formatDate(new Date(props.dayDetails.date))}</span>
-
-        {props.showEventPropmt ? (
-          <>
-            <Fill />
-            <Button title="Add" onClick={props.showEventPropmt} fit />
-          </>
-        ) : (
-          <></>
-        )}
+        <Fill />
+        <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
       <div className="events">
         {props.dayDetails.events.map((eventDetails, i) => {
@@ -32,7 +26,9 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
             <EventBox
               key={i}
               eventDetails={eventDetails}
-              showEditEventDialog={() => {}}
+              showEditEventDialog={() => {
+                props.showEditEventDialog(eventDetails);
+              }}
             />
           );
         })}

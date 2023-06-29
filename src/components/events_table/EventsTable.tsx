@@ -1,29 +1,31 @@
-import { DayDetails } from "../../utils/interfaces";
+import { DayDetails, EventDetails } from "../../utils/interfaces";
 import EventsTableColumn from "../events_table_column/EventsTableColumn";
 import Fill from "../fill/Fill";
 import "./EventsTable.css";
 
 interface EventsTableProps {
-  weekDetails: DayDetails[]
+  weekDetails: DayDetails[];
   emptyCols: number;
-  showEventPrompt: (date: Date) => void;
+  showAddEventDialog: (date: Date) => void;
+  showEditEventDialog: (eventDetails: EventDetails) => void;
 }
 
 export default function EventsTable(props: EventsTableProps) {
   return (
-      <div className="EventsTable child-flat bordered">
-        {
-          [...Array(props.emptyCols)].map((_, i) => {
-            return <Fill key={i} />
-          })
-        }
-        {
-          props.weekDetails.map((dayDetails, i) => (
-            <EventsTableColumn key={i} dayDetails={dayDetails} showEventPropmt={() => {
-              props.showEventPrompt(dayDetails.date);
-            }}/>
-          ))
-        }
-      </div>
-    );
+    <div className="EventsTable child-flat bordered">
+      {[...Array(props.emptyCols)].map((_, i) => {
+        return <Fill key={i} />;
+      })}
+      {props.weekDetails.map((dayDetails, i) => (
+        <EventsTableColumn
+          key={i}
+          dayDetails={dayDetails}
+          showAddEventDialog={() => {
+            props.showAddEventDialog(dayDetails.date);
+          }}
+          showEditEventDialog={props.showEditEventDialog}
+        />
+      ))}
+    </div>
+  );
 }

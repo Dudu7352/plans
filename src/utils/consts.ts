@@ -15,6 +15,12 @@ export const MONTHS: string[] = [
   "December",
 ];
 
+export enum Prompt {
+  NONE,
+  ADD,
+  EDIT
+}
+
 export const YEAR_WEEKS = 53;
 export const YEAR_DAYS = 365;
 export const LEAP_YEAR_DAYS = 366;

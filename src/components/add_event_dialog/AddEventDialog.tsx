@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import "./AddEventPrompt.css";
 import Button from "../button/Button";
-import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import EventInput from "../event_input/EventInput";
 import { EventDetails, EventInputData } from "../../utils/interfaces";
 import { formatDate } from "../../utils/functions";
@@ -10,13 +8,16 @@ import { DEFAULT_TIME } from "../../utils/consts";
 import { Time } from "../../utils/classes";
 import Dialog from "../dialog/Dialog";
 
-interface EventPromptProps {
+import "./AddEventDialog.css";
+import ControlBar, { ControlOption } from "../control_bar/ControlBar";
+
+interface AddEventDialogProps {
   date: Date;
   isOpened: boolean;
   close: () => void;
 }
 
-export default function EventPrompt(props: EventPromptProps) {
+export default function AddEventDialog(props: AddEventDialogProps) {
   let [inputData, setInputData] = useState({
     name: "",
     start: DEFAULT_TIME,
@@ -34,10 +35,9 @@ export default function EventPrompt(props: EventPromptProps) {
         }}
       />
 
-      <div className="control-bar">
-        <Button onClick={props.close} title="Cancel" />
-        <Button
-          onClick={() => {
+      <ControlBar controlOptionList={[ControlOption.CANCEL, ControlOption.ADD]} onInput={(actionType => {
+        switch(actionType) {
+          case ControlOption.ADD: {
             const startDate = new Date(props.date);
             startDate.setHours(inputData.start.getHour());
             startDate.setMinutes(inputData.start.getMinute());
@@ -49,10 +49,14 @@ export default function EventPrompt(props: EventPromptProps) {
             } as EventDetails;
             console.log(props.date);
             invoke("try_add_event", { newEvent: newEvent }).then(console.log);
-          }}
-          title="Add"
-        />
-      </div>
+            break;
+          }
+          case ControlOption.CANCEL: {
+            props.close();
+            break;
+          }
+        }
+      })} />
     </Dialog>
   );
 }

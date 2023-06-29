@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { DayDetails } from "../../utils/interfaces";
+import { DayDetails, EventDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
-import { DEFAULT_DATE } from "../../utils/consts";
-import EventPrompt from "../add_event_prompt/AddEventPrompt";
+import { DEFAULT_DATE, Prompt } from "../../utils/consts";
+import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
+import EditEventDialog from "../edit_event_dialog/EditEventDialog";
+
 
 interface PlannerProps {
   week: number;
@@ -15,8 +17,9 @@ interface PlannerProps {
 export default function Planner(props: PlannerProps) {
   let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
   let [firstWeekday, setFirstWeekday] = useState(0);
-  let [promptOpened, setPromptOpened] = useState(false);
+  let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
+  let [eventDetails, setEventDetails] = useState({} as EventDetails);
 
   useEffect(() => {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
@@ -28,9 +31,9 @@ export default function Planner(props: PlannerProps) {
   }, [props.userYear, props.week]);
 
   useEffect(() => {
-    invoke("get_first_weekday", {year: props.userYear}).then(msg => {
+    invoke("get_first_weekday", { year: props.userYear }).then((msg) => {
       setFirstWeekday(msg as number);
-    })
+    });
   }, [props.userYear]);
 
   return (
@@ -46,20 +49,30 @@ export default function Planner(props: PlannerProps) {
               : DEFAULT_DATE
           }
         />
-        <EventsTable 
-          weekDetails={weekDetails} 
-          emptyCols={props.week == 0 ? firstWeekday : 0 } 
-          showEventPrompt={(date: Date) => {
+        <EventsTable
+          weekDetails={weekDetails}
+          emptyCols={props.week === 0 ? firstWeekday : 0}
+          showAddEventDialog={(date: Date) => {
             setDate(date);
-            setPromptOpened((promptOpened) => !promptOpened);
+            setPromptOpened(Prompt.ADD);
+          }}
+          showEditEventDialog={() => {
+            setPromptOpened(Prompt.EDIT);
           }}
         />
       </div>
-      <EventPrompt
+      <AddEventDialog
         date={date}
-        isOpened={promptOpened}
+        isOpened={promptOpened === Prompt.ADD}
         close={() => {
-          setPromptOpened(false);
+          setPromptOpened(Prompt.NONE);
+        }}
+      />
+      <EditEventDialog
+        eventDetails={eventDetails}
+        isOpened={promptOpened === Prompt.EDIT}
+        close={() => {
+          setPromptOpened(Prompt.NONE);
         }}
       />
     </div>
