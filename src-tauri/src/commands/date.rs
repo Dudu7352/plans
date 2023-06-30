@@ -19,7 +19,10 @@ pub fn get_current_year() -> i32 {
 
 #[tauri::command]
 pub fn get_first_weekday(year: i32) -> u32 {
-    NaiveDate::from_yo_opt(year, 1).unwrap().weekday().num_days_from_monday()
+    NaiveDate::from_yo_opt(year, 1)
+        .unwrap()
+        .weekday()
+        .num_days_from_monday()
 }
 
 #[tauri::command]
@@ -71,19 +74,17 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
 
     let mut week_details: Vec<DayDetails> = Vec::new();
 
-    let lock = state.lock();
-    if lock.is_err() {
-        return vec![];
+
+    match state.lock() {
+        Ok(app_state) => {
+            let empty: Vec<EventDetails> = Vec::new();
+            for i in 0..min(week_remaining, year_remaining) {
+                let day = week_start + Duration::days(i);
+                let events = app_state.event_list.get(&day).unwrap_or(&empty);
+                week_details.push(DayDetails::new(day, events.to_vec()));
+            }
+            week_details
+        }
+        Err(_) => vec![]
     }
-    let event_list = &lock.unwrap().event_list;
-
-    let empty: Vec<EventDetails> = Vec::new();
-
-    for i in 0..min(week_remaining, year_remaining) {
-        let day = week_start + Duration::days(i);
-        let events = event_list.get(&day).unwrap_or(&empty);
-        week_details.push(DayDetails::new(day, events.to_vec()));
-    }
-
-    return week_details;
 }
