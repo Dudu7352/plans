@@ -1,13 +1,23 @@
 use std::sync::Mutex;
 
+use crate::{
+    app_state::AppState,
+    event_structures::event_details::EventDetails,
+};
 use tauri::State;
-use crate::{app_state::AppState, event_structures::event_details::EventDetails};
 
 #[tauri::command]
-pub fn try_add_event(state: State<'_, Mutex<AppState>>, new_event: EventDetails) -> bool {
-    let lock = state.lock();
-    if lock.is_err() {
-        return false;
+pub fn try_add_event(state: State<'_, Mutex<AppState>>, event: EventDetails) -> bool {
+    match state.lock() {
+        Ok(mut app_state) => app_state.add_event(event).is_ok(),
+        Err(_) => false,
     }
-    return lock.unwrap().add_event(new_event).is_ok();
+}
+
+#[tauri::command]
+pub fn try_delete_event(state: State<'_, Mutex<AppState>>, event: EventDetails) -> bool {
+    match state.lock() {
+        Ok(mut app_state) => app_state.delete_event(event).is_ok(),
+        Err(_) => false,
+    }
 }

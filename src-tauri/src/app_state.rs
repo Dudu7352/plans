@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, ops::Index};
 
 use chrono::{Duration, NaiveDate};
 use serde::Serialize;
@@ -51,5 +51,23 @@ impl AppState {
         day_list.push(new_event);
         self.file_manager.save_data(&self.event_list);
         return Ok(());
+    }
+
+    pub fn delete_event(&mut self, event_details: EventDetails) -> Result<(), ()> {
+        match self.event_list.get_mut(&event_details.date_time.date()) {
+            Some(day_list) => {
+                match day_list.iter().position(|r| r == &event_details) {
+                    Some(index) => {
+                        for i in index+1..day_list.len() {
+                            day_list[i-1] = day_list.index(i).clone();
+                        }
+                        day_list.pop();
+                        Ok(())
+                    },
+                    None => Err(()),
+                }
+            }
+            None => Err(()),
+        }
     }
 }
