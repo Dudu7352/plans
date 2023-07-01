@@ -1,8 +1,6 @@
-import { start } from "repl";
 import { Time } from "../../utils/classes";
 import { formatDate } from "../../utils/functions";
 import { EventDetails } from "../../utils/interfaces";
-import Button from "../button/Button";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
 import { invoke } from "@tauri-apps/api";

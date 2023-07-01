@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { useState, useEffect, Dispatch, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import "./Sidebar.css";
 import CalendarBar from "../calendar_bar/CalendarBar";
 import WeekSelector from "../week_selector/WeekSelector";

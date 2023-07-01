@@ -1,4 +1,3 @@
-import Button from "../../components/button/Button";
 import { formatDate } from "../../utils/functions";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import "./PlannerBar.css";
