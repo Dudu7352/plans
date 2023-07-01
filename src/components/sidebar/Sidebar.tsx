@@ -16,7 +16,7 @@ interface SidebarProps {
 export default function Sidebar(props: SidebarProps) {
   let [yearDetails, setYearDetails] = useState<YearDetails>({
     year: 0,
-    month_details_list: Array<MonthDetails>(12),
+    monthDetailsList: Array<MonthDetails>(12),
     isLeap: false,
   });
 
@@ -35,7 +35,7 @@ export default function Sidebar(props: SidebarProps) {
       )}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
-          monthDetails={yearDetails.month_details_list}
+          monthDetails={yearDetails.monthDetailsList}
           setWeek={props.setWeek}
         />
       </Suspense>

@@ -12,11 +12,11 @@ interface EditEventDialogProps {
 }
 
 export default function EditEventDialog(props: EditEventDialogProps) {
-  const date = new Date(props.eventDetails.date_time);
+  const date = new Date(props.eventDetails.dateTime);
   const startTime: Time = Time.fromDate(date);
   const endTime = startTime.copy();
 
-  endTime.addMinutes(Math.floor(props.eventDetails.duration_seconds));
+  endTime.addMinutes(Math.floor(props.eventDetails.durationSeconds));
 
   return (
     <Dialog
@@ -27,7 +27,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
         <tbody>
           <tr>
             <td>Date:</td>
-            <td>{formatDate(new Date(props.eventDetails.date_time * 1000))}</td>
+            <td>{formatDate(new Date(props.eventDetails.dateTime * 1000))}</td>
           </tr>
           <tr>
             <td>Start: </td>
@@ -35,7 +35,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
           </tr>
           <tr>
             <td>Duration: </td>
-            <td>{`${props.eventDetails.duration_seconds} seconds`}</td>
+            <td>{`${props.eventDetails.durationSeconds} seconds`}</td>
           </tr>
           <tr>
             <td>End: </td>

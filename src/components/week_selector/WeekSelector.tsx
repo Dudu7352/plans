@@ -12,7 +12,7 @@ export default function WeekSelector(props: WeekSelectorProps) {
   if (props.monthDetails === undefined || props.monthDetails.length == 0 || props.monthDetails[0] === undefined)
     return <div className="WeekSelector"></div>;
 
-  let nextMonth: number = props.monthDetails[0].beginning_weekday;
+  let nextMonth: number = props.monthDetails[0].beginningWeekday;
   let monthDay: number = 0;
   let month: number = -1;
 
@@ -43,7 +43,7 @@ export default function WeekSelector(props: WeekSelectorProps) {
 
         if(monthDay+6 >= nextMonth && weekId+1 < YEAR_WEEKS) {
           monthDay -= nextMonth;
-          nextMonth = props.monthDetails[month].month_length;
+          nextMonth = props.monthDetails[month].monthLength;
         }
         
         monthDay += 7;

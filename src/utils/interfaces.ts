@@ -7,8 +7,8 @@ export interface EventInputData {
 }
 
 export interface EventDetails {
-  date_time: number;
-  duration_seconds: number;
+  dateTime: number;
+  durationSeconds: number;
   name: string;
 }
 
@@ -18,12 +18,12 @@ export interface DayDetails {
 }
 
 export interface MonthDetails {
-  beginning_weekday: number;
-  month_length: number;
+  beginningWeekday: number;
+  monthLength: number;
 }
 
 export interface YearDetails {
   year: number;
-  month_details_list: MonthDetails[];
+  monthDetailsList: MonthDetails[];
   isLeap: boolean;
 }

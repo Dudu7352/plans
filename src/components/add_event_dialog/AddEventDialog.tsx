@@ -45,8 +45,8 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                 inputData.start
               );
               let newEvent = {
-                date_time: Math.floor(startDate.getTime() / 1000),
-                duration_seconds: duration,
+                dateTime: Math.floor(startDate.getTime() / 1000),
+                durationSeconds: duration,
                 name: inputData.name,
               } as EventDetails;
               invoke("try_add_event", { event: newEvent }).then((msg) => {
