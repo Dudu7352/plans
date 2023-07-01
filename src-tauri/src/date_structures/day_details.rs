@@ -3,8 +3,8 @@ use serde::Serialize;
 
 use crate::event_structures::event_details::EventDetails;
 
-#[serde(rename_all = "camelCase")]
 #[derive(Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct DayDetails {
     pub date: NaiveDate,
     pub events: Vec<EventDetails>
