@@ -5,22 +5,26 @@ import { EventDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
+import { invoke } from "@tauri-apps/api";
 
 interface EditEventDialogProps {
   eventDetails: EventDetails;
   isOpened: boolean;
-  close: () => void;
+  close: (refresh: boolean) => void;
 }
 
 export default function EditEventDialog(props: EditEventDialogProps) {
   const date = new Date(props.eventDetails.date_time);
   const startTime: Time = Time.fromDate(date);
   const endTime = startTime.copy();
-  
+
   endTime.addMinutes(Math.floor(props.eventDetails.duration_seconds));
 
   return (
-    <Dialog isOpened={props.isOpened} title={`Edit event "${props.eventDetails.name}"`}>
+    <Dialog
+      isOpened={props.isOpened}
+      title={`Edit event "${props.eventDetails.name}"`}
+    >
       <table>
         <tbody>
           <tr>
@@ -44,16 +48,19 @@ export default function EditEventDialog(props: EditEventDialogProps) {
       <ControlBar
         controlOptionList={[ControlOption.CANCEL, ControlOption.DELETE]}
         onInput={(actionType: ControlOption) => {
-          switch(actionType) {
-            case ControlOption.CANCEL: {
-              props.close();
+          switch (actionType) {
+            case ControlOption.CANCEL:
+              props.close(false);
               break;
-            }
-            case ControlOption.DELETE: {
-              console.log("DELETE");
-              // TODO: Delete event
+            case ControlOption.DELETE:
+              invoke("try_delete_event", { event: props.eventDetails }).then(
+                (msg) => {
+                  const result = msg as boolean;
+                  if (result) props.close(true);
+                  else alert("Could not delete the event");
+                }
+              );
               break;
-            }
           }
         }}
       />

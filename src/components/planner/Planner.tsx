@@ -8,7 +8,6 @@ import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
 
-
 interface PlannerProps {
   week: number;
   userYear: number;
@@ -21,14 +20,15 @@ export default function Planner(props: PlannerProps) {
   let [date, setDate] = useState(DEFAULT_DATE);
   let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
 
-  useEffect(() => {
+  function refreshDetails() {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
       (msg) => {
-        console.log(msg);
         setWeekDetails(msg as DayDetails[]);
       }
     );
-  }, [props.userYear, props.week]);
+  }
+
+  useEffect(refreshDetails, [props.userYear, props.week]);
 
   useEffect(() => {
     invoke("get_first_weekday", { year: props.userYear }).then((msg) => {
@@ -65,15 +65,17 @@ export default function Planner(props: PlannerProps) {
       <AddEventDialog
         date={date}
         isOpened={promptOpened === Prompt.ADD}
-        close={() => {
+        close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);
+          if (refresh) refreshDetails();
         }}
       />
       <EditEventDialog
         eventDetails={eventDetails}
         isOpened={promptOpened === Prompt.EDIT}
-        close={() => {
+        close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);
+          if (refresh) refreshDetails();
         }}
       />
     </div>

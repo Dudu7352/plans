@@ -1,6 +1,6 @@
 import Button from "../button/Button";
 
-import "./ControlBar.css"
+import "./ControlBar.css";
 
 export enum ControlOption {
   ADD = "Add",

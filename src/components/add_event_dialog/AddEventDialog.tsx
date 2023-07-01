@@ -11,7 +11,7 @@ import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 interface AddEventDialogProps {
   date: Date;
   isOpened: boolean;
-  close: () => void;
+  close: (refresh: boolean) => void;
 }
 
 export default function AddEventDialog(props: AddEventDialogProps) {
@@ -32,28 +32,37 @@ export default function AddEventDialog(props: AddEventDialogProps) {
         }}
       />
 
-      <ControlBar controlOptionList={[ControlOption.CANCEL, ControlOption.ADD]} onInput={(actionType => {
-        switch(actionType) {
-          case ControlOption.ADD: {
-            const startDate = new Date(props.date);
-            startDate.setHours(inputData.start.getHour());
-            startDate.setMinutes(inputData.start.getMinute());
-            const duration = Time.durationSeconds(inputData.end, inputData.start);
-            let newEvent = {
-              date_time: Math.floor(startDate.getTime() / 1000),
-              duration_seconds: duration,
-              name: inputData.name,
-            } as EventDetails;
-            console.log(props.date);
-            invoke("try_add_event", { newEvent: newEvent }).then(console.log);
-            break;
+      <ControlBar
+        controlOptionList={[ControlOption.CANCEL, ControlOption.ADD]}
+        onInput={(actionType) => {
+          switch (actionType) {
+            case ControlOption.ADD: {
+              const startDate = new Date(props.date);
+              startDate.setHours(inputData.start.getHour());
+              startDate.setMinutes(inputData.start.getMinute());
+              const duration = Time.durationSeconds(
+                inputData.end,
+                inputData.start
+              );
+              let newEvent = {
+                date_time: Math.floor(startDate.getTime() / 1000),
+                duration_seconds: duration,
+                name: inputData.name,
+              } as EventDetails;
+              invoke("try_add_event", { event: newEvent }).then((msg) => {
+                const result = msg as boolean;
+                if (result) props.close(true);
+                else alert("Could not add the event");
+              });
+              break;
+            }
+            case ControlOption.CANCEL: {
+              props.close(false);
+              break;
+            }
           }
-          case ControlOption.CANCEL: {
-            props.close();
-            break;
-          }
-        }
-      })} />
+        }}
+      />
     </Dialog>
   );
 }
