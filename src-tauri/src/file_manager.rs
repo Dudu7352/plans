@@ -1,29 +1,15 @@
+use serde_json::from_str;
+use std::fs::create_dir_all;
 use std::io::prelude::*;
 use std::path::PathBuf;
-use std::{
-    collections::HashMap,
-    env,
-    fs::{File, OpenOptions},
-};
+use std::{collections::HashMap, env, fs::OpenOptions};
 
 use crate::event_structures::event_details::EventDetails;
 use chrono::NaiveDate;
-use serde::ser::{Serialize, SerializeStruct};
 
+#[derive(serde::Serialize)]
 pub struct FileManager {
-    data_file: File,
-    data_path: PathBuf
-}
-
-impl Serialize for FileManager {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        let mut s = serializer.serialize_struct("FileManager", 1)?;
-        let _ = s.serialize_field("data_path", self.data_path.to_str().unwrap_or(""));
-        s.end()
-    }
+    data_path: PathBuf,
 }
 
 impl FileManager {
@@ -33,39 +19,58 @@ impl FileManager {
             "windows" => {
                 data_path.push("AppData");
                 data_path.push("Local");
+                data_path.push("plans-app");
+                data_path.push("plans");
             }
             "linux" => {
                 data_path.push(".local");
                 data_path.push("share");
+                data_path.push("plans-app");
             }
             _ => {
                 data_path.push(".plans");
             }
         };
+        let _ = create_dir_all(&data_path);
 
-        data_path.push("plans");
+        data_path.push("events");
         data_path.set_file_name("events");
         data_path.set_extension("json");
 
-        let mut binding = OpenOptions::new();
-        let open_options = binding.read(true).write(true).create(true);
-
-        let data_file = open_options.open(&data_path).unwrap();
-
-        return FileManager { data_file, data_path };
+        return FileManager { data_path };
     }
 
     pub fn save_data(&mut self, event_list: &HashMap<NaiveDate, Vec<EventDetails>>) {
-        let data = serde_json::to_string(&event_list).unwrap_or(String::from("{}"));
-        let _ = self.data_file.write_all(data.as_bytes());
+        let mut binding = OpenOptions::new();
+        let open_options = binding.read(true).write(true).create(true).truncate(true);
+
+        if let Ok(mut data_file) = open_options.open(&self.data_path) {
+            let data = serde_json::to_string(&event_list).unwrap_or(String::from("{}"));
+            let _ = data_file.write_all(data.as_bytes());
+            let _ = data_file.flush();
+        }
     }
 
     pub fn load_data(&mut self) -> HashMap<NaiveDate, Vec<EventDetails>> {
-        let mut contents = String::new();
-        let _ = self.data_file.read_to_string(&mut contents);
+        let mut binding = OpenOptions::new();
+        let open_options = binding.read(true).write(true).create(true);
+        let err_data: HashMap<NaiveDate, Vec<EventDetails>> = HashMap::new();
+        match open_options.open(&self.data_path) {
+            Ok(mut data_file) => {
+                let mut contents = String::new();
+                let _ = data_file.read_to_string(&mut contents);
+                match from_str::<HashMap<NaiveDate, Vec<EventDetails>>>(&contents) {
+                    Ok(data) => data,
+                    Err(_) => err_data,
+                }
+            }
+            Err(_) => err_data,
+        }
+    }
+}
 
-        let data: HashMap<NaiveDate, Vec<EventDetails>> =
-            serde_json::from_str(&contents).unwrap_or(HashMap::new());
-        data
+impl Default for FileManager {
+    fn default() -> Self {
+        Self::new()
     }
 }

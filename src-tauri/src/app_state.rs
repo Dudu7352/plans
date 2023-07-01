@@ -64,6 +64,7 @@ impl AppState {
                         day_list[i - 1] = day_list.index(i).clone();
                     }
                     day_list.pop();
+                    self.file_manager.save_data(&self.event_list);
                     Ok(())
                 }
                 None => Err(()),

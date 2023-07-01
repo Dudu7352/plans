@@ -74,17 +74,14 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
 
     let mut week_details: Vec<DayDetails> = Vec::new();
 
-
-    match state.lock() {
-        Ok(app_state) => {
-            let empty: Vec<EventDetails> = Vec::new();
-            for i in 0..min(week_remaining, year_remaining) {
-                let day = week_start + Duration::days(i);
-                let events = app_state.event_list.get(&day).unwrap_or(&empty);
-                week_details.push(DayDetails::new(day, events.to_vec()));
-            }
-            week_details
+    if let Ok(app_state) = state.lock() {
+        let empty: Vec<EventDetails> = Vec::new();
+        for i in 0..min(week_remaining, year_remaining) {
+            let day = week_start + Duration::days(i);
+            let events = app_state.event_list.get(&day).unwrap_or(&empty);
+            week_details.push(DayDetails::new(day, events.to_vec()));
         }
-        Err(_) => vec![]
     }
+
+    week_details
 }
