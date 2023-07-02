@@ -21,18 +21,14 @@ export default function Sidebar(props: SidebarProps) {
   });
 
   useEffect(() => {
-    invoke("get_year_details", { year: props.userYear }).then(
-      (yearDetailsMsg) => {
-        setYearDetails(yearDetailsMsg as YearDetails);
-      }
+    invoke<YearDetails>("get_year_details", { year: props.userYear }).then(
+      setYearDetails
     );
   }, [props.userYear]);
 
   return (
     <TopBar className="Sidebar" size={TopBarSize.FIT} float={TopBarFloat.RIGHT}>
-      <Suspense fallback={(
-        <div>Loading...</div>
-      )}>
+      <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
           monthDetails={yearDetails.monthDetailsList}

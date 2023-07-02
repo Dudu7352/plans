@@ -5,20 +5,18 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Planner from "./components/planner/Planner";
 import { useState, useEffect } from "react";
 
-function App() {
+export default function App() {
   let [currentYear, setCurrentYear] = useState(0);
   let [userYear, setUserYear] = useState(0);
   let [week, setWeek] = useState(0);
 
   useEffect(() => {
-    invoke("get_current_year").then(msg => {
-      const currentYear = msg as number;
-      setCurrentYear(currentYear);
-      setUserYear(currentYear);
+    invoke<number>("get_current_year").then(result => {
+      setCurrentYear(result);
+      setUserYear(result);
     })
+    invoke<number>("get_current_week").then(setWeek);
   }, []);
-
-  useEffect(() => {setWeek(0)}, [userYear]);
 
   return (
     <div className="App">
@@ -35,5 +33,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

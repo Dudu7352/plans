@@ -18,6 +18,7 @@ fn main() {
         .manage(Mutex::new(AppState::new()))
         .invoke_handler(tauri::generate_handler![
             get_current_year, 
+            get_current_week,
             get_first_weekday,
             get_year_details, 
             get_week_details,

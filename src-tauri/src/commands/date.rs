@@ -26,6 +26,15 @@ pub fn get_first_weekday(year: i32) -> u32 {
 }
 
 #[tauri::command]
+pub fn get_current_week() -> i64 {
+    let today = chrono::offset::Local::now().date_naive();
+    let first = today.with_day(1).unwrap().with_month(1).unwrap();
+    let dur = today - first;
+    println!("{}", dur.num_weeks());
+    return dur.num_weeks();
+}
+
+#[tauri::command]
 pub fn get_year_details(year: i32) -> YearDetails {
     let mut month_details_list = Vec::with_capacity(12);
     let mut date: NaiveDate;
