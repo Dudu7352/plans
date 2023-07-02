@@ -12,7 +12,7 @@ interface EditEventDialogProps {
 }
 
 export default function EditEventDialog(props: EditEventDialogProps) {
-  const date = new Date(props.eventDetails.dateTime);
+  const date = new Date(props.eventDetails.dateTime * 1000);
   const startTime: Time = Time.fromDate(date);
   const endTime = startTime.copy();
 
@@ -30,7 +30,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
         <tbody>
           <tr>
             <td>Date:</td>
-            <td>{formatDate(new Date(props.eventDetails.dateTime * 1000))}</td>
+            <td>{formatDate(date)}</td>
           </tr>
           <tr>
             <td>Start: </td>
