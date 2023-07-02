@@ -44,10 +44,10 @@ export class Time {
     return newTime;
   }
 
-  static durationSeconds(t1: Time, t2: Time): number {
+  static durationMinutes(t1: Time, t2: Time): number {
     return (
-      (t1.getHour() - t2.getHour()) * 3600 +
-      (t1.getMinute() - t2.getMinute()) * 60
+      (t1.getHour() - t2.getHour()) * 60 +
+      (t1.getMinute() - t2.getMinute())
     );
   }
 

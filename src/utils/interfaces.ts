@@ -8,7 +8,7 @@ export interface EventInputData {
 
 export interface EventDetails {
   dateTime: number;
-  durationSeconds: number;
+  durationMinutes: number;
   name: string;
 }
 

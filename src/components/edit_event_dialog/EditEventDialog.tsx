@@ -16,7 +16,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
   const startTime: Time = Time.fromDate(date);
   const endTime = startTime.copy();
 
-  endTime.addMinutes(Math.floor(props.eventDetails.durationSeconds));
+  endTime.addMinutes(Math.floor(props.eventDetails.durationMinutes));
 
   return (
     <Dialog
@@ -38,7 +38,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
           </tr>
           <tr>
             <td>Duration: </td>
-            <td>{`${props.eventDetails.durationSeconds} seconds`}</td>
+            <td>{`${props.eventDetails.durationMinutes} minutes`}</td>
           </tr>
           <tr>
             <td>End: </td>

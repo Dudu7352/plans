@@ -26,7 +26,7 @@ impl AppState {
     pub fn add_event(&mut self, new_event: EventDetails) -> Result<(), ()> {
         let day_key = new_event.date_time.date();
         let new_event_end =
-            new_event.date_time + Duration::seconds(new_event.duration_seconds as i64);
+            new_event.date_time + Duration::minutes(new_event.duration_minutes as i64);
 
         if new_event.date_time.date() != new_event_end.date() {
             return Err(());
@@ -36,7 +36,7 @@ impl AppState {
             Some(day_list) => {
                 for event in day_list.iter() {
                     let event_end =
-                        event.date_time + Duration::seconds(event.duration_seconds as i64);
+                        event.date_time + Duration::minutes(event.duration_minutes as i64);
 
                     if (event.date_time < new_event.date_time && new_event.date_time < event_end)
                         || (event.date_time < new_event_end && new_event_end < event_end)

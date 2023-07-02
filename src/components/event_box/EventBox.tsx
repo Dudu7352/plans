@@ -13,7 +13,7 @@ export function EventBox(props: EventBoxProps) {
   startTime.setHour(start.getHours());
   startTime.setMinute(start.getMinutes());
   const endTime = startTime.copy();
-  endTime.addMinutes(Math.floor(props.eventDetails.durationSeconds / 60));
+  endTime.addMinutes(Math.floor(props.eventDetails.durationMinutes));
   return (
     <div
       className="EventBox child-box selectable bordered rounded"
@@ -22,13 +22,13 @@ export function EventBox(props: EventBoxProps) {
         top: `${
           ((start.getHours() * 60 + start.getMinutes()) / (24 * 60)) * 100
         }%`,
-        height: `${(props.eventDetails.durationSeconds / (3600 * 24)) * 100}%`,
+        height: `${(props.eventDetails.durationMinutes / (60 * 24)) * 100}%`,
       }}
       onClick={props.showEditEventDialog}
     >
       {props.eventDetails.name}
       <br />
-      {props.eventDetails.durationSeconds == 0 ? (
+      {props.eventDetails.durationMinutes == 0 ? (
         <p>{startTime.toString()}</p>
       ) : (
         <p>
