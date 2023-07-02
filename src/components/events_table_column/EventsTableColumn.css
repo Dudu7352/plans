@@ -1,11 +1,12 @@
 .EventsTableColumn {
   border-radius: 0.5rem;
-  
+  display: flex;
+  flex-direction: column;
 }
 
 .EventsTableColumn > .events {
   position: relative;
-  height: 800px;
+  flex: 1
 }
 
 .EventsTableColumn span {

@@ -1,11 +1,33 @@
 .EventBox {
     width: calc(100% - 2px - 1rem);
+    transition: background-color border-color 0.2s ease-in-out;
     margin: 0 0.5rem;
     text-align: center;
 }
 
 .EventBox > p {
+    word-wrap: break-word;
     text-align: center;
     padding: 0;
     margin: 0;
+}
+
+.EventBox:hover {
+    z-index: 2;
+}
+
+.EventBox > p:not(.event-name) {
+    display: none;
+    
+    margin: auto;
+    padding: 0 0.2rem;
+    font-size: small;
+    width: fit-content;
+    background-color: #2228;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(5px);
+}
+
+.EventBox:hover > p:not(.event-name) {
+    display: block;
 }

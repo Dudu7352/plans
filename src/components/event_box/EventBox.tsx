@@ -26,8 +26,7 @@ export function EventBox(props: EventBoxProps) {
       }}
       onClick={props.showEditEventDialog}
     >
-      {props.eventDetails.name}
-      <br />
+      <p className="event-name">{props.eventDetails.name}</p>
       {props.eventDetails.durationMinutes == 0 ? (
         <p>{startTime.toString()}</p>
       ) : (
