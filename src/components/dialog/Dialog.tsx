@@ -4,12 +4,19 @@ import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 
 interface DialogProps {
   isOpened: boolean;
+  closeDialog: () => void;
   title: string;
   children?: React.ReactElement | React.ReactElement[];
 }
 
 export default function Dialog(props: DialogProps) {
   let ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    ref.current?.addEventListener("keydown", e => {
+      if (e.key === "Escape") props.closeDialog();
+    });
+  }, [ref])
 
   useEffect(() => {
     if (props.isOpened && !ref.current?.hidden) ref.current?.showModal();

@@ -24,7 +24,13 @@ export default function AddEventDialog(props: AddEventDialogProps) {
   const dateFormat: string = formatDate(new Date(props.date));
 
   return (
-    <Dialog isOpened={props.isOpened} title={`Add new event for ${dateFormat}`}>
+    <Dialog
+      isOpened={props.isOpened}
+      title={`Add new event for ${dateFormat}`}
+      closeDialog={() => {
+        props.close(false);
+      }}
+    >
       <EventInput
         inputData={inputData}
         updateEventDetails={(inputData: EventInputData) => {

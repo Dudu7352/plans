@@ -22,6 +22,9 @@ export default function EditEventDialog(props: EditEventDialogProps) {
     <Dialog
       isOpened={props.isOpened}
       title={`Edit event "${props.eventDetails.name}"`}
+      closeDialog={() => {
+        props.close(false);
+      }}
     >
       <table>
         <tbody>
