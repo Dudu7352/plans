@@ -19,10 +19,15 @@ interface TopBarProps {
   rounded?: boolean;
   className?: string;
   children?: React.ReactElement | React.ReactElement[];
+  tauriDrag?: boolean;
 }
 
 export default function TopBar(props: TopBarProps) {
   let className: string = `TopBar bar ${props.size} ${props.float} ${props.className}`;
-  if(props.rounded) className += " rounded";
-  return <div className={className}>{props.children}</div>;
+  if (props.rounded) className += " rounded";
+  return (
+    <div className={className} data-tauri-drag-region={props.tauriDrag}>
+      {props.children}
+    </div>
+  );
 }

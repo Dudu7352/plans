@@ -7,6 +7,7 @@ import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
+import Titlebar from "../titlebar/Titlebar";
 
 interface PlannerProps {
   week: number;
@@ -38,6 +39,7 @@ export default function Planner(props: PlannerProps) {
 
   return (
     <div className="Planner box">
+      <Titlebar />
       <div className="editor root-box bordered">
         <PlannerBar
           weekStart={

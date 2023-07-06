@@ -16,6 +16,17 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
     },
     "bundle": {
@@ -37,6 +48,8 @@
       {
         "fullscreen": false,
         "resizable": true,
+        "transparent": true,
+        "decorations": false,
         "title": "plans",
         "width": 1040,
         "height": 800,
