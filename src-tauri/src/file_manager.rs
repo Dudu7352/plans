@@ -4,7 +4,7 @@ use std::io::prelude::*;
 use std::path::PathBuf;
 use std::{collections::HashMap, env, fs::OpenOptions};
 
-use crate::event_structures::event_details::EventDetails;
+use crate::event_structures::event_details::EventType;
 use chrono::NaiveDate;
 
 #[derive(serde::Serialize)]
@@ -40,7 +40,7 @@ impl FileManager {
         return FileManager { data_path };
     }
 
-    pub fn save_data(&mut self, event_list: &HashMap<NaiveDate, Vec<EventDetails>>) {
+    pub fn save_data(&mut self, event_list: &HashMap<NaiveDate, Vec<EventType>>) {
         let mut binding = OpenOptions::new();
         let open_options = binding.read(true).write(true).create(true).truncate(true);
 
@@ -51,15 +51,15 @@ impl FileManager {
         }
     }
 
-    pub fn load_data(&mut self) -> HashMap<NaiveDate, Vec<EventDetails>> {
+    pub fn load_data(&mut self) -> HashMap<NaiveDate, Vec<EventType>> {
         let mut binding = OpenOptions::new();
         let open_options = binding.read(true).write(true).create(true);
-        let err_data: HashMap<NaiveDate, Vec<EventDetails>> = HashMap::new();
+        let err_data: HashMap<NaiveDate, Vec<EventType>> = HashMap::new();
         match open_options.open(&self.data_path) {
             Ok(mut data_file) => {
                 let mut contents = String::new();
                 let _ = data_file.read_to_string(&mut contents);
-                match from_str::<HashMap<NaiveDate, Vec<EventDetails>>>(&contents) {
+                match from_str::<HashMap<NaiveDate, Vec<EventType>>>(&contents) {
                     Ok(data) => data,
                     Err(_) => err_data,
                 }

@@ -16,6 +16,16 @@ export const MONTHS: string[] = [
   "December",
 ];
 
+export const WEEKDAYS: string[] = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 export enum Prompt {
   NONE,
   ADD,

@@ -6,6 +6,11 @@ export interface EventInputData {
   end: Time;
 }
 
+export interface DeadlineDetails {
+  dateTime: number;
+  name: String;
+}
+
 export interface EventDetails {
   dateTime: number;
   durationMinutes: number;

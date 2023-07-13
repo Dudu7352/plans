@@ -1,3 +1,4 @@
+import { WEEKDAYS } from "../../utils/consts";
 import { formatDate } from "../../utils/functions";
 import { DayDetails, EventDetails } from "../../utils/interfaces";
 import Button from "../button/Button";
@@ -13,10 +14,14 @@ interface EventsTableColumnProps {
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
+  const date = new Date(props.dayDetails.date);
   return (
     <div className="EventsTableColumn child-box">
       <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>
-        <span>{formatDate(new Date(props.dayDetails.date))}</span>
+        <div className="vert">
+          <span>{formatDate(date)}</span>
+          <span>{WEEKDAYS[date.getDay()]}</span>
+        </div>
         <Fill />
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
