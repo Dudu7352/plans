@@ -25,7 +25,7 @@ export default function Dialog(props: DialogProps) {
 
   return (
     <dialog className="Dialog" ref={ref}>
-      <TopBar size={TopBarSize.FIT} float={TopBarFloat.LEFT} rounded={true}>
+      <TopBar tauriDrag size={TopBarSize.FIT} float={TopBarFloat.LEFT} rounded={true}>
         <h3>{props.title}</h3>
       </TopBar>
       <div className="content child-box rounded bordered">
