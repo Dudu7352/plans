@@ -48,8 +48,8 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "transparent": true,
-        "decorations": false,
+        "transparent": false,
+        "decorations": true,
         "title": "plans",
         "width": 1040,
         "height": 800,

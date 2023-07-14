@@ -1,9 +1,7 @@
 .EventsTable {
-  margin: 1rem;
   border-radius: 0.5rem;
   flex: 1;
-
   display: inline-grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  gap: 0.5rem;
 }

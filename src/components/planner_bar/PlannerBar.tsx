@@ -10,7 +10,7 @@ interface PlannerBarProps {
 
 export default function PlannerBar(props: PlannerBarProps) {
   return (
-    <TopBar className="PlannerBar" size={TopBarSize.LARGE} float={TopBarFloat.LEFT}>
+    <TopBar rounded className="PlannerBar" size={TopBarSize.LARGE} float={TopBarFloat.LEFT}>
       <h2>{formatDate(props.weekStart)} - {formatDate(props.weekEnd, true)}</h2>
     </TopBar>
   );

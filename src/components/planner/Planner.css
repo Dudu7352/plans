@@ -8,8 +8,8 @@
 .editor {
   margin: 1rem 2rem;
   border-radius: 0.5rem;
+  gap: 0.5rem;
   flex: 1;
-  box-shadow: 0 0 0.5rem #0000001a;
   display: flex;
   flex-direction: column;
 }

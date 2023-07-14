@@ -38,9 +38,8 @@ export default function Planner(props: PlannerProps) {
   }, [props.userYear]);
 
   return (
-    <div className="Planner box">
-      <Titlebar />
-      <div className="editor root-box bordered">
+    <div className="Planner">
+      <div className="editor">
         <PlannerBar
           weekStart={
             weekDetails.length ? new Date(weekDetails[0].date) : DEFAULT_DATE

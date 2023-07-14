@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api";
 import "./App.css";
-import "./common.css";
+import "./styles";
 import Sidebar from "./components/sidebar/Sidebar";
 import Planner from "./components/planner/Planner";
 import { useState, useEffect } from "react";

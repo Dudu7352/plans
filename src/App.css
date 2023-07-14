@@ -18,19 +18,3 @@ input {
   height: 1rem;
   padding: 0.25rem;
 }
-
-*::-webkit-scrollbar {
-  width: .7rem;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #404040;
-  border-radius: 1rem;
-  border: 0.2rem solid #202020;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background-color: #505050;
-  border-radius: 1rem;
-  border: 0.2rem solid #202020;
-}
