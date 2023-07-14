@@ -12,6 +12,7 @@ import Titlebar from "../titlebar/Titlebar";
 interface PlannerProps {
   week: number;
   userYear: number;
+  toggleTheme: () => void;
 }
 
 export default function Planner(props: PlannerProps) {
@@ -49,6 +50,7 @@ export default function Planner(props: PlannerProps) {
               ? new Date(weekDetails[weekDetails.length - 1].date)
               : DEFAULT_DATE
           }
+          toggleTheme={props.toggleTheme}
         />
         <EventsTable
           weekDetails={weekDetails}

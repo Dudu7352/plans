@@ -30,6 +30,7 @@ export default function App() {
       <Planner 
         week={week}
         userYear={userYear}
+        toggleTheme={() => {setLightTheme(x => !x)}}
       />
     </div>
   );
