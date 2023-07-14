@@ -14,13 +14,13 @@ interface EventsTableColumnProps {
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
   return (
-    <div className="EventsTableColumn child-box">
-      <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>
+    <div className="EventsTableColumn rounded">
+      <TopBar size={TopBarSize.MEDIUM} float={TopBarFloat.LEFT} rounded>
         <span>{formatDate(new Date(props.dayDetails.date))}</span>
         <Fill />
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
-      <div className="events">
+      <div className="events child-box rounded bordered">
         {props.dayDetails.events.map((eventDetails, i) => {
           return (
             <EventBox

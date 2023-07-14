@@ -12,7 +12,7 @@ interface EventsTableProps {
 
 export default function EventsTable(props: EventsTableProps) {
   return (
-    <div className="EventsTable child-flat bordered">
+    <div className="EventsTable">
       {[...Array(props.emptyCols)].map((_, i) => {
         return <Fill key={i} />;
       })}

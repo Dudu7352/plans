@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api";
 import "./App.css";
-import "./common.css";
+import "./styles";
 import Sidebar from "./components/sidebar/Sidebar";
 import Planner from "./components/planner/Planner";
 import { useState, useEffect } from "react";
@@ -9,6 +9,7 @@ export default function App() {
   let [currentYear, setCurrentYear] = useState(0);
   let [userYear, setUserYear] = useState(0);
   let [week, setWeek] = useState(0);
+  let [lightTheme, setLightTheme] = useState(true);
 
   useEffect(() => {
     invoke<number>("get_current_year").then(result => {
@@ -19,7 +20,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className={`App ${lightTheme ? "light" : "dark"}`}>
       <Sidebar 
         userYear={userYear}
         currentYear={currentYear}
@@ -29,6 +30,7 @@ export default function App() {
       <Planner 
         week={week}
         userYear={userYear}
+        toggleTheme={() => {setLightTheme(x => !x)}}
       />
     </div>
   );

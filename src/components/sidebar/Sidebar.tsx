@@ -4,7 +4,6 @@ import "./Sidebar.css";
 import CalendarBar from "../calendar_bar/CalendarBar";
 import WeekSelector from "../week_selector/WeekSelector";
 import { MonthDetails, YearDetails } from "../../utils/interfaces";
-import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 
 interface SidebarProps {
   userYear: number;
@@ -27,7 +26,7 @@ export default function Sidebar(props: SidebarProps) {
   }, [props.userYear]);
 
   return (
-    <TopBar className="Sidebar" size={TopBarSize.FIT} float={TopBarFloat.RIGHT}>
+    <div className="Sidebar">
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
@@ -35,6 +34,6 @@ export default function Sidebar(props: SidebarProps) {
           setWeek={props.setWeek}
         />
       </Suspense>
-    </TopBar>
+    </div>
   );
 }
