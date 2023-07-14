@@ -9,7 +9,7 @@ export default function App() {
   let [currentYear, setCurrentYear] = useState(0);
   let [userYear, setUserYear] = useState(0);
   let [week, setWeek] = useState(0);
-  let [lightTheme, setLightTheme] = useState(false);
+  let [lightTheme, setLightTheme] = useState(true);
 
   useEffect(() => {
     invoke<number>("get_current_year").then(result => {
