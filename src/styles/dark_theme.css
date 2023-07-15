@@ -1,45 +1,45 @@
 .dark {
   color: white;
   background-color: #2b2b2b;
-  
-  .bar {
-    background-color: #1d1d1d;
-    border-color: #282828;
-    color: white;
-  }
-  
-  .bar-shadow {
-    box-shadow: 0 0 0.5rem 0 #0000001a;
-  }
-  
-  .child-box {
-    background-color: #1d1d1d;
-    border-color: #282828;
-  }
-  
-  .child-flat {
-    background-color: #101010;
-    border-color: #282828;
-  }
-  
-  .selectable {
-    box-shadow: 0 0.1rem 0.2rem #00000010;
-    background-color: #303030;
-    border-color: #363636;
-    color: white;
-  }
-  
-  .selectable:hover, .selectable:focus{
-    background-color: #2e5a83;
-    border-color: #284e72;
-  }
-  
-  .selectable:active {
-    background-color: #294f72;
-    border-color: #1c344d;
-  }
-  
-  .content {
-    color: white;
-  }
+}
+.dark .bar {
+  background-color: #1d1d1d;
+  border-color: #282828;
+  color: white;
+}
+
+.dark .bar-shadow {
+  box-shadow: 0 0 0.5rem 0 #0000001a;
+}
+
+.dark .child-box {
+  background-color: #1d1d1d;
+  border-color: #282828;
+}
+
+.dark .child-flat {
+  background-color: #101010;
+  border-color: #282828;
+}
+
+.dark .selectable {
+  box-shadow: 0 0.1rem 0.2rem #00000010;
+  background-color: #303030;
+  border-color: #363636;
+  color: white;
+}
+
+.dark .selectable:hover,
+.dark .selectable:focus {
+  background-color: #2e5a83;
+  border-color: #284e72;
+}
+
+.dark .selectable:active {
+  background-color: #294f72;
+  border-color: #1c344d;
+}
+
+.dark .content {
+  color: white;
 }
