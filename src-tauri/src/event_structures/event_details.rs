@@ -19,7 +19,6 @@ pub struct DeadlineDetails {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-#[serde(rename_all = "camelCase")]
 pub enum EventType {
     EVENT(EventDetails),
     DEADLINE(DeadlineDetails)

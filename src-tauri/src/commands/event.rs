@@ -2,7 +2,7 @@ use std::sync::Mutex;
 
 use crate::{
     app_state::AppState,
-    event_structures::event_details::EventType,
+    event_structures::event_details::{EventType, EventDetails},
 };
 use tauri::State;
 

@@ -50,11 +50,22 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                 inputData.end,
                 inputData.start
               );
-              let newEvent = {
-                dateTime: Math.floor(startDate.getTime() / 1000),
-                durationMinutes: duration,
-                name: inputData.name,
-              } as EventDetails;
+              let newEvent: any =
+                duration === 0
+                  ? {
+                      DEADLINE: {
+                        dateTime: Math.floor(startDate.getTime() / 1000),
+                        name: inputData.name,
+                      } as EventDetails,
+                    }
+                  : {
+                      EVENT: {
+                        dateTime: Math.floor(startDate.getTime() / 1000),
+                        durationMinutes: duration,
+                        name: inputData.name,
+                      } as EventDetails,
+                    };
+              console.log(newEvent);
               invoke("try_add_event", { event: newEvent }).then((msg) => {
                 const result = msg as boolean;
                 if (result) props.close(true);
