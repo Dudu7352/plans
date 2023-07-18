@@ -1,7 +1,9 @@
 import { WEEKDAYS } from "../../utils/consts";
 import { formatDate } from "../../utils/functions";
 import { IDayDetails, IEventDetails } from "../../utils/interfaces";
+import IEventType from "../../utils/interfaces/IEventType";
 import Button from "../button/Button";
+import DeadlineBox from "../deadline_box/DeadlineBox";
 import { EventBox } from "../event_box/EventBox";
 import Fill from "../fill/Fill";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
@@ -27,16 +29,27 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
       </TopBar>
       <div className="events">
         {props.dayDetails.events.map(
-          (eventDetails: IEventDetails, i: number) => {
-            return (
-              <EventBox
-                key={i}
-                IEventDetails={eventDetails}
-                showEditEventDialog={() => {
-                  props.showEditEventDialog(eventDetails);
-                }}
-              />
-            );
+          (eventType: IEventType, i: number) => {
+            if (eventType.EVENT) {
+              const eventDetails = eventType.EVENT;
+              return (
+                <EventBox
+                  key={i}
+                  eventDetails={eventDetails}
+                  showEditEventDialog={() => {
+                    props.showEditEventDialog(eventDetails);
+                  }}
+                />
+              );
+            } else if (eventType.DEADLINE) {
+              const deadlineDetails = eventType.DEADLINE;
+              return (
+                <DeadlineBox 
+                  deadlineDetails={deadlineDetails} 
+                  showEditEventDialog={() => {}}                
+                />
+              );
+            }
           }
         )}
       </div>
