@@ -1,29 +1,29 @@
 import { Time } from "./classes";
 
-export interface EventInputData {
+export interface IEventInputData {
   name: string;
   start: Time;
   end: Time;
 }
 
-export interface EventDetails {
+export interface IEventDetails {
   dateTime: number;
   durationMinutes: number | undefined;
   name: string;
 }
 
-export interface DayDetails {
+export interface IDayDetails {
   date: Date;
-  events: EventDetails[];
+  events: IEventDetails[];
 }
 
-export interface MonthDetails {
+export interface IMonthDetails {
   beginningWeekday: number;
   monthLength: number;
 }
 
-export interface YearDetails {
+export interface IYearDetails {
   year: number;
-  monthDetailsList: MonthDetails[];
+  IMonthDetailsList: IMonthDetails[];
   isLeap: boolean;
 }

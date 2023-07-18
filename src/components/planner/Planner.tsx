@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { DayDetails, EventDetails, DeadlineDetails } from "../../utils/interfaces";
+import { IDayDetails, IEventDetails, DeadlineDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
@@ -14,16 +14,16 @@ interface PlannerProps {
 }
 
 export default function Planner(props: PlannerProps) {
-  let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
+  let [weekDetails, setWeekDetails] = useState([] as IDayDetails[]);
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
-  let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
+  let [IEventDetails, setIEventDetails] = useState(DEFAULT_EVENT);
 
   function refreshDetails() {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
       (msg) => {
-        setWeekDetails(msg as DayDetails[]);
+        setWeekDetails(msg as IDayDetails[]);
       }
     );
   }
@@ -56,8 +56,8 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={(eventDetails: EventDetails) => {
-            setEventDetails(eventDetails);
+          showEditEventDialog={(IEventDetails: IEventDetails) => {
+            setIEventDetails(IEventDetails);
             setPromptOpened(Prompt.EDIT);
           }}
         />
@@ -71,7 +71,7 @@ export default function Planner(props: PlannerProps) {
         }}
       />
       <EditEventDialog
-        eventDetails={eventDetails}
+        IEventDetails={IEventDetails}
         isOpened={promptOpened === Prompt.EDIT}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);

@@ -1,18 +1,18 @@
 import "./WeekSelector.css";
-import { MonthDetails } from "../../utils/interfaces";
+import { IMonthDetails } from "../../utils/interfaces";
 import { YEAR_WEEKS } from "../../utils/consts";
 import Week from "../week/Week";
 
 interface WeekSelectorProps {
-  monthDetails: MonthDetails[];
+  IMonthDetails: IMonthDetails[];
   setWeek: (year: number) => void;
 }
 
 export default function WeekSelector(props: WeekSelectorProps) {
-  if (props.monthDetails === undefined || props.monthDetails.length == 0 || props.monthDetails[0] === undefined)
+  if (props.IMonthDetails === undefined || props.IMonthDetails.length == 0 || props.IMonthDetails[0] === undefined)
     return <div className="WeekSelector"></div>;
 
-  let nextMonth: number = props.monthDetails[0].beginningWeekday;
+  let nextMonth: number = props.IMonthDetails[0].beginningWeekday;
   let monthDay: number = 0;
   let month: number = -1;
 
@@ -43,7 +43,7 @@ export default function WeekSelector(props: WeekSelectorProps) {
 
         if(monthDay+6 >= nextMonth && weekId+1 < YEAR_WEEKS) {
           monthDay -= nextMonth;
-          nextMonth = props.monthDetails[month].monthLength;
+          nextMonth = props.IMonthDetails[month].monthLength;
         }
         
         monthDay += 7;

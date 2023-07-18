@@ -1,10 +1,10 @@
 import { Time } from "../../utils/classes";
-import { EventInputData } from "../../utils/interfaces";
+import { IEventInputData } from "../../utils/interfaces";
 import "./EventInput.css";
 
 interface EventInputProps {
-  inputData: EventInputData;
-  updateEventDetails: (inputData: EventInputData) => void;
+  inputData: IEventInputData;
+  updateIEventDetails: (inputData: IEventInputData) => void;
 }
 
 export default function EventInput(props: EventInputProps) {
@@ -20,7 +20,7 @@ export default function EventInput(props: EventInputProps) {
               onChange={(event) => {
                 const newInputData = Object.assign({}, props.inputData);
                 newInputData.name = event.target.value;
-                props.updateEventDetails(newInputData);
+                props.updateIEventDetails(newInputData);
               }}
             />
           </td>
@@ -34,7 +34,7 @@ export default function EventInput(props: EventInputProps) {
               onChange={(event) => {
                 const newInputData = Object.assign({}, props.inputData);
                 newInputData.start = new Time(event.target.value);
-                props.updateEventDetails(newInputData);
+                props.updateIEventDetails(newInputData);
               }}
             />
           </td>
@@ -48,7 +48,7 @@ export default function EventInput(props: EventInputProps) {
               onChange={(event) => {
                 const newInputData = Object.assign({}, props.inputData);
                 newInputData.end = new Time(event.target.value);
-                props.updateEventDetails(newInputData);
+                props.updateIEventDetails(newInputData);
               }}
             />
           </td>

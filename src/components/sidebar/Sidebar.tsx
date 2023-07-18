@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import "./Sidebar.css";
 import CalendarBar from "../calendar_bar/CalendarBar";
 import WeekSelector from "../week_selector/WeekSelector";
-import { MonthDetails, YearDetails } from "../../utils/interfaces";
+import { IMonthDetails, IYearDetails } from "../../utils/interfaces";
 import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 
 interface SidebarProps {
@@ -14,15 +14,15 @@ interface SidebarProps {
 }
 
 export default function Sidebar(props: SidebarProps) {
-  let [yearDetails, setYearDetails] = useState<YearDetails>({
+  let [IYearDetails, setIYearDetails] = useState<IYearDetails>({
     year: 0,
-    monthDetailsList: Array<MonthDetails>(12),
+    IMonthDetailsList: Array<IMonthDetails>(12),
     isLeap: false,
   });
 
   useEffect(() => {
-    invoke<YearDetails>("get_year_details", { year: props.userYear }).then(
-      setYearDetails
+    invoke<IYearDetails>("get_year_details", { year: props.userYear }).then(
+      setIYearDetails
     );
   }, [props.userYear]);
 
@@ -31,7 +31,7 @@ export default function Sidebar(props: SidebarProps) {
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
-          monthDetails={yearDetails.monthDetailsList}
+          IMonthDetails={IYearDetails.IMonthDetailsList}
           setWeek={props.setWeek}
         />
       </Suspense>

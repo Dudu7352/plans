@@ -1,5 +1,5 @@
 import { Time } from "./classes";
-import { EventDetails } from "./interfaces";
+import { IEventDetails } from "./interfaces";
 
 export const MONTHS: string[] = [
   "January",
@@ -38,7 +38,7 @@ export const LEAP_YEAR_DAYS = 366;
 
 export const DEFAULT_DATE: Date = new Date("2000-01-01");
 export const DEFAULT_TIME: Time = new Time("00:00");
-export const DEFAULT_EVENT: EventDetails = {
+export const DEFAULT_EVENT: IEventDetails = {
   dateTime: Math.floor(DEFAULT_DATE.getTime() / 1000),
   durationMinutes: 0,
   name: ""
