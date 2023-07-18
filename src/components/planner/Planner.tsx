@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { IDayDetails, IEventDetails, DeadlineDetails } from "../../utils/interfaces";
+import { IDayDetails, IEventDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";

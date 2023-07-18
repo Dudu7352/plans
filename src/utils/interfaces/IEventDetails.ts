@@ -1,5 +1,5 @@
-export default interface IEventDetails {
-  dateTime: number;
-  durationMinutes: number | undefined;
-  name: string;
+import IDeadlineDetails from "./IDeadlineDetails";
+
+export default interface IEventDetails extends IDeadlineDetails {
+  durationMinutes: number;
 }
