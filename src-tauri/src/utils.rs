@@ -1,6 +1,6 @@
 use chrono::Duration;
 
-use crate::event_structures::event_details::EventType;
+use crate::event_structures::event_type::EventType;
 
 pub fn events_collide(e1: &EventType, e2: &EventType) -> bool {
     let e1_start = e1.get_date_time();

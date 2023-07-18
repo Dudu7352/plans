@@ -1,7 +1,7 @@
 use chrono::NaiveDate;
 use serde::Serialize;
 
-use crate::event_structures::event_details::EventType;
+use crate::event_structures::event_type::EventType;
 
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "camelCase")]

@@ -9,7 +9,7 @@ use crate::{
     date_structures::{
         day_details::DayDetails, month_details::MonthDetails, year_details::YearDetails,
     },
-    event_structures::event_details::EventType,
+    event_structures::event_type::EventType,
 };
 
 #[tauri::command]

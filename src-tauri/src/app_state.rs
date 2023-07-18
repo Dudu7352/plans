@@ -4,7 +4,7 @@ use chrono::{Duration, NaiveDate};
 use serde::Serialize;
 
 use crate::{
-    file_manager::FileManager, utils::events_collide, event_structures::event_details::EventType,
+    file_manager::FileManager, utils::events_collide, event_structures::event_type::EventType,
 };
 
 #[derive(Serialize)]

@@ -4,7 +4,7 @@ use std::io::prelude::*;
 use std::path::PathBuf;
 use std::{collections::HashMap, env, fs::OpenOptions};
 
-use crate::event_structures::event_details::EventType;
+use crate::event_structures::event_type::EventType;
 use chrono::NaiveDate;
 
 #[derive(serde::Serialize)]
