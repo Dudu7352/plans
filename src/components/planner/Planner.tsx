@@ -18,7 +18,7 @@ export default function Planner(props: PlannerProps) {
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
-  let [IEventDetails, setIEventDetails] = useState(DEFAULT_EVENT);
+  let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
 
   function refreshDetails() {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
@@ -56,8 +56,8 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={(IEventDetails: IEventDetails) => {
-            setIEventDetails(IEventDetails);
+          showEditEventDialog={(eventDetails: IEventDetails) => {
+            setEventDetails(eventDetails);
             setPromptOpened(Prompt.EDIT);
           }}
         />
@@ -71,7 +71,7 @@ export default function Planner(props: PlannerProps) {
         }}
       />
       <EditEventDialog
-        IEventDetails={IEventDetails}
+        IEventDetails={eventDetails}
         isOpened={promptOpened === Prompt.EDIT}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);
