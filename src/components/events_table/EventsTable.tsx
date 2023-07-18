@@ -7,7 +7,7 @@ interface EventsTableProps {
   weekDetails: IDayDetails[];
   emptyCols: number;
   showAddEventDialog: (date: Date) => void;
-  showEditEventDialog: (IEventDetails: IEventDetails) => void;
+  showEditEventDialog: (eventDetails: IEventDetails) => void;
 }
 
 export default function EventsTable(props: EventsTableProps) {
@@ -16,12 +16,12 @@ export default function EventsTable(props: EventsTableProps) {
       {[...Array(props.emptyCols)].map((_, i) => {
         return <Fill key={i} />;
       })}
-      {props.weekDetails.map((IDayDetails, i) => (
+      {props.weekDetails.map((dayDetails, i) => (
         <EventsTableColumn
           key={i}
-          IDayDetails={IDayDetails}
+          dayDetails={dayDetails}
           showAddEventDialog={() => {
-            props.showAddEventDialog(IDayDetails.date);
+            props.showAddEventDialog(dayDetails.date);
           }}
           showEditEventDialog={props.showEditEventDialog}
         />

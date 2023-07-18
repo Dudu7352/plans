@@ -14,15 +14,15 @@ interface SidebarProps {
 }
 
 export default function Sidebar(props: SidebarProps) {
-  let [IYearDetails, setIYearDetails] = useState<IYearDetails>({
+  let [yearDetails, setYearDetails] = useState<IYearDetails>({
     year: 0,
-    IMonthDetailsList: Array<IMonthDetails>(12),
+    monthDetailsList: Array<IMonthDetails>(12),
     isLeap: false,
   });
 
   useEffect(() => {
     invoke<IYearDetails>("get_year_details", { year: props.userYear }).then(
-      setIYearDetails
+      setYearDetails
     );
   }, [props.userYear]);
 
@@ -31,7 +31,7 @@ export default function Sidebar(props: SidebarProps) {
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
-          IMonthDetails={IYearDetails.IMonthDetailsList}
+          monthDetails={yearDetails.monthDetailsList}
           setWeek={props.setWeek}
         />
       </Suspense>

@@ -8,13 +8,13 @@ import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 import "./EventsTableColumn.css";
 
 interface EventsTableColumnProps {
-  IDayDetails: IDayDetails;
+  dayDetails: IDayDetails;
   showAddEventDialog: () => void;
-  showEditEventDialog: (IEventDetails: IEventDetails) => void;
+  showEditEventDialog: (eventDetails: IEventDetails) => void;
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
-  const date = new Date(props.IDayDetails.date);
+  const date = new Date(props.dayDetails.date);
   return (
     <div className="EventsTableColumn child-box">
       <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>
@@ -26,17 +26,19 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
       <div className="events">
-        {props.IDayDetails.events.map((IEventDetails, i) => {
-          return (
-            <EventBox
-              key={i}
-              IEventDetails={IEventDetails}
-              showEditEventDialog={() => {
-                props.showEditEventDialog(IEventDetails);
-              }}
-            />
-          );
-        })}
+        {props.dayDetails.events.map(
+          (eventDetails: IEventDetails, i: number) => {
+            return (
+              <EventBox
+                key={i}
+                IEventDetails={eventDetails}
+                showEditEventDialog={() => {
+                  props.showEditEventDialog(eventDetails);
+                }}
+              />
+            );
+          }
+        )}
       </div>
     </div>
   );
