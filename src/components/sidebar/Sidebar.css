@@ -1,7 +1,5 @@
 .Sidebar {
     width: fit-content;
     height: 100%;
-    background-color: #202020;
-    border-right: 1px solid #282828;
     flex-direction: column;
 }

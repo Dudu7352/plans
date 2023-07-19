@@ -17,8 +17,8 @@ interface EventsTableColumnProps {
 export default function EventsTableColumn(props: EventsTableColumnProps) {
   const date = new Date(props.dayDetails.date);
   return (
-    <div className="EventsTableColumn child-box">
-      <TopBar size={TopBarSize.LARGE} float={TopBarFloat.LEFT} rounded>
+    <div className="EventsTableColumn rounded">
+      <TopBar size={TopBarSize.MEDIUM} float={TopBarFloat.LEFT} rounded>
         <div className="vert">
           <span>{formatDate(date)}</span>
           <span>{WEEKDAYS[date.getDay()]}</span>
@@ -26,7 +26,7 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
         <Fill />
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
-      <div className="events">
+      <div className="events child-box rounded bordered">
         {props.dayDetails.events.map((eventType: IEventType, i: number) => {
           if (eventType.EVENT) {
             return (

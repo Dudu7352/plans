@@ -1,12 +1,11 @@
 .Button {
   margin: 0.5rem;
-  padding: 0.5rem !important;
+  padding: 0.5rem;
   border-radius: 0.2rem;
   border: none;
   
   text-align: center;
 
-  color: #f7f7f7;
   font-size: 0.9rem;
   line-height: 1rem;
   

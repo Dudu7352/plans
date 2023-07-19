@@ -7,10 +7,12 @@ import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
+import Titlebar from "../titlebar/Titlebar";
 
 interface PlannerProps {
   week: number;
   userYear: number;
+  toggleTheme: () => void;
 }
 
 export default function Planner(props: PlannerProps) {
@@ -37,8 +39,8 @@ export default function Planner(props: PlannerProps) {
   }, [props.userYear]);
 
   return (
-    <div className="Planner box">
-      <div className="editor root-box bordered">
+    <div className="Planner">
+      <div className="editor">
         <PlannerBar
           weekStart={
             weekDetails.length ? new Date(weekDetails[0].date) : DEFAULT_DATE
@@ -48,6 +50,7 @@ export default function Planner(props: PlannerProps) {
               ? new Date(weekDetails[weekDetails.length - 1].date)
               : DEFAULT_DATE
           }
+          toggleTheme={props.toggleTheme}
         />
         <EventsTable
           weekDetails={weekDetails}

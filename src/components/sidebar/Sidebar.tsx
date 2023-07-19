@@ -27,7 +27,7 @@ export default function Sidebar(props: SidebarProps) {
   }, [props.userYear]);
 
   return (
-    <TopBar className="Sidebar" size={TopBarSize.FIT} float={TopBarFloat.RIGHT}>
+    <div className="Sidebar">
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
@@ -35,6 +35,6 @@ export default function Sidebar(props: SidebarProps) {
           setWeek={props.setWeek}
         />
       </Suspense>
-    </TopBar>
+    </div>
   );
 }

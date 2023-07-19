@@ -20,7 +20,7 @@ export default function Week(props: WeekProps) {
           MONTHS[props.month].slice(0, 3) : ""
         }
         </h3>
-        <div className="week-representation selectable">
+        <div className="week-representation selectable bordered">
         {
           [...Array(7)].map((_, i) => {
             let day: number = props.monthDay + i;
