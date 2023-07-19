@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { DayDetails, EventDetails } from "../../utils/interfaces";
+import { IDayDetails, IEventType } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
-import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
+import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
@@ -16,16 +16,16 @@ interface PlannerProps {
 }
 
 export default function Planner(props: PlannerProps) {
-  let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
+  let [weekDetails, setWeekDetails] = useState([] as IDayDetails[]);
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
-  let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
+  let [eventType, setEventType] = useState(DEFAULT_EVENT_TYPE);
 
   function refreshDetails() {
     invoke("get_week_details", { year: props.userYear, week: props.week }).then(
       (msg) => {
-        setWeekDetails(msg as DayDetails[]);
+        setWeekDetails(msg as IDayDetails[]);
       }
     );
   }
@@ -59,8 +59,8 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={(eventDetails: EventDetails) => {
-            setEventDetails(eventDetails);
+          showEditEventDialog={(eventType: IEventType) => {
+            setEventType(eventType);
             setPromptOpened(Prompt.EDIT);
           }}
         />
@@ -74,7 +74,7 @@ export default function Planner(props: PlannerProps) {
         }}
       />
       <EditEventDialog
-        eventDetails={eventDetails}
+        eventType={eventType}
         isOpened={promptOpened === Prompt.EDIT}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);

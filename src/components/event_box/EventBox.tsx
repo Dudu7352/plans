@@ -1,9 +1,9 @@
 import { Time } from "../../utils/classes";
-import { EventDetails } from "../../utils/interfaces";
+import { IEventDetails } from "../../utils/interfaces";
 import "./EventBox.css";
 
 interface EventBoxProps {
-  eventDetails: EventDetails;
+  eventDetails: IEventDetails;
   showEditEventDialog: () => void;
 }
 

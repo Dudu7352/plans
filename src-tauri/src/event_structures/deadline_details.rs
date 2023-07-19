@@ -3,9 +3,8 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
-pub struct EventDetails {
+pub struct DeadlineDetails {
     #[serde(with = "ts_seconds")]
     pub date_time: NaiveDateTime,
     pub name: String,
-    pub duration_minutes: u32,
 }
