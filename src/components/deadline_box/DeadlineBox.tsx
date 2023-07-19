@@ -1,8 +1,9 @@
 import { Time } from "../../utils/classes";
-import { DeadlineDetails } from "../../utils/interfaces";
+import "./DeadlineBox.css";
+import { IDeadlineDetails } from "../../utils/interfaces";
 
 interface DeadlineBoxProps {
-  deadlineDetails: DeadlineDetails;
+  deadlineDetails: IDeadlineDetails;
   showEditEventDialog: () => void;
 }
 
@@ -19,7 +20,8 @@ export default function DeadlineBox(props: DeadlineBoxProps) {
         }%`,
       }}
     >
-      <span>{props.deadlineDetails.name}</span>
+      <div className="line"></div>
+      <span className="event-name">{props.deadlineDetails.name}</span>
       <p>{time.toString()}</p>
     </div>
   );
