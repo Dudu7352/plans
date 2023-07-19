@@ -12,7 +12,7 @@ import "./EventsTableColumn.css";
 interface EventsTableColumnProps {
   dayDetails: IDayDetails;
   showAddEventDialog: () => void;
-  showEditEventDialog: (eventDetails: IEventDetails) => void;
+  showEditEventDialog: (eventType: IEventType) => void;
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
@@ -28,30 +28,28 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
       <div className="events">
-        {props.dayDetails.events.map(
-          (eventType: IEventType, i: number) => {
-            if (eventType.EVENT) {
-              const eventDetails = eventType.EVENT;
-              return (
-                <EventBox
-                  key={i}
-                  eventDetails={eventDetails}
-                  showEditEventDialog={() => {
-                    props.showEditEventDialog(eventDetails);
-                  }}
-                />
-              );
-            } else if (eventType.DEADLINE) {
-              const deadlineDetails = eventType.DEADLINE;
-              return (
-                <DeadlineBox 
-                  deadlineDetails={deadlineDetails} 
-                  showEditEventDialog={() => {}}                
-                />
-              );
-            }
+        {props.dayDetails.events.map((eventType: IEventType, i: number) => {
+          if (eventType.EVENT) {
+            return (
+              <EventBox
+                key={i}
+                eventDetails={eventType.EVENT}
+                showEditEventDialog={() => {
+                  props.showEditEventDialog(eventType);
+                }}
+              />
+            );
+          } else if (eventType.DEADLINE) {
+            return (
+              <DeadlineBox
+                deadlineDetails={eventType.DEADLINE}
+                showEditEventDialog={() => {
+                  props.showEditEventDialog(eventType);
+                }}
+              />
+            );
           }
-        )}
+        })}
       </div>
     </div>
   );

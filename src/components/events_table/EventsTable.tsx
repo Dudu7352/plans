@@ -1,4 +1,5 @@
-import { IDayDetails, IEventDetails } from "../../utils/interfaces";
+import { IDayDetails } from "../../utils/interfaces";
+import IEventType from "../../utils/interfaces/IEventType";
 import EventsTableColumn from "../events_table_column/EventsTableColumn";
 import Fill from "../fill/Fill";
 import "./EventsTable.css";
@@ -7,7 +8,7 @@ interface EventsTableProps {
   weekDetails: IDayDetails[];
   emptyCols: number;
   showAddEventDialog: (date: Date) => void;
-  showEditEventDialog: (eventDetails: IEventDetails) => void;
+  showEditEventDialog: (eventType: IEventType) => void;
 }
 
 export default function EventsTable(props: EventsTableProps) {

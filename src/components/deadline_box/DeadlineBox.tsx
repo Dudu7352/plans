@@ -19,6 +19,7 @@ export default function DeadlineBox(props: DeadlineBoxProps) {
           ((time.getHour() * 60 + time.getMinute()) / (24 * 60)) * 100
         }%`,
       }}
+      onClick={props.showEditEventDialog}
     >
       <div className="line"></div>
       <span className="event-name">{props.deadlineDetails.name}</span>

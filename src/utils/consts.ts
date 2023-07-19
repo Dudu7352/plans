@@ -1,5 +1,6 @@
 import { Time } from "./classes";
 import { IEventDetails } from "./interfaces";
+import IEventType from "./interfaces/IEventType";
 
 export const MONTHS: string[] = [
   "January",
@@ -43,3 +44,7 @@ export const DEFAULT_EVENT: IEventDetails = {
   durationMinutes: 0,
   name: ""
 };
+export const DEFAULT_EVENT_TYPE: IEventType = {
+  EVENT: undefined,
+  DEADLINE: undefined
+}
