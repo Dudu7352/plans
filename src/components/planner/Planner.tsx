@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { IDayDetails, IEventDetails } from "../../utils/interfaces";
+import { IDayDetails, IEventType } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
-import IEventType from "../../utils/interfaces/IEventType";
 
 interface PlannerProps {
   week: number;

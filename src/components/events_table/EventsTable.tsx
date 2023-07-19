@@ -1,5 +1,4 @@
-import { IDayDetails } from "../../utils/interfaces";
-import IEventType from "../../utils/interfaces/IEventType";
+import { IDayDetails, IEventType } from "../../utils/interfaces";
 import EventsTableColumn from "../events_table_column/EventsTableColumn";
 import Fill from "../fill/Fill";
 import "./EventsTable.css";

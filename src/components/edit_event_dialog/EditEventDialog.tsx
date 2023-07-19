@@ -1,6 +1,6 @@
 import { Time } from "../../utils/classes";
 import { formatDate } from "../../utils/functions";
-import IEventType from "../../utils/interfaces/IEventType";
+import { IEventType } from "../../utils/interfaces";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
 import { invoke } from "@tauri-apps/api";

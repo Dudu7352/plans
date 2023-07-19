@@ -1,6 +1,5 @@
 import { Time } from "./classes";
-import { IEventDetails } from "./interfaces";
-import IEventType from "./interfaces/IEventType";
+import { IEventDetails, IEventType } from "./interfaces";
 
 export const MONTHS: string[] = [
   "January",

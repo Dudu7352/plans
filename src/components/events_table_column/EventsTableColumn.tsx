@@ -1,7 +1,6 @@
 import { WEEKDAYS } from "../../utils/consts";
 import { formatDate } from "../../utils/functions";
-import { IDayDetails, IEventDetails } from "../../utils/interfaces";
-import IEventType from "../../utils/interfaces/IEventType";
+import { IDayDetails, IEventType } from "../../utils/interfaces";
 import Button from "../button/Button";
 import DeadlineBox from "../deadline_box/DeadlineBox";
 import { EventBox } from "../event_box/EventBox";
