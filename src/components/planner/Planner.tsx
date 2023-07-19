@@ -71,7 +71,7 @@ export default function Planner(props: PlannerProps) {
         }}
       />
       <EditEventDialog
-        IEventDetails={eventDetails}
+        eventDetails={eventDetails}
         isOpened={promptOpened === Prompt.EDIT}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);

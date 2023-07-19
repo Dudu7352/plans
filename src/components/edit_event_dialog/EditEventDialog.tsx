@@ -1,27 +1,28 @@
 import { Time } from "../../utils/classes";
 import { formatDate } from "../../utils/functions";
 import { IEventDetails } from "../../utils/interfaces";
+import IEventType from "../../utils/interfaces/IEventType";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
 import { invoke } from "@tauri-apps/api";
 
 interface EditEventDialogProps {
-  IEventDetails: IEventDetails;
+  eventDetails: IEventDetails;
   isOpened: boolean;
   close: (refresh: boolean) => void;
 }
 
 export default function EditEventDialog(props: EditEventDialogProps) {
-  const date = new Date(props.IEventDetails.dateTime * 1000);
+  const date = new Date(props.eventDetails.dateTime * 1000);
   const startTime: Time = Time.fromDate(date);
   const endTime = startTime.copy();
 
-  endTime.addMinutes(Math.floor(props.IEventDetails.durationMinutes));
+  endTime.addMinutes(Math.floor(props.eventDetails.durationMinutes));
 
   return (
     <Dialog
       isOpened={props.isOpened}
-      title={`Edit event "${props.IEventDetails.name}"`}
+      title={`Edit event "${props.eventDetails.name}"`}
       closeDialog={() => {
         props.close(false);
       }}
@@ -38,7 +39,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
           </tr>
           <tr>
             <td>Duration: </td>
-            <td>{`${props.IEventDetails.durationMinutes} minutes`}</td>
+            <td>{`${props.eventDetails.durationMinutes} minutes`}</td>
           </tr>
           <tr>
             <td>End: </td>
@@ -54,7 +55,10 @@ export default function EditEventDialog(props: EditEventDialogProps) {
               props.close(false);
               break;
             case ControlOption.DELETE:
-              invoke("try_delete_event", { event: props.IEventDetails }).then(
+              let event = {
+                EVENT: props.eventDetails
+              }
+              invoke("try_delete_event", { event: event }).then(
                 (msg) => {
                   const result = msg as boolean;
                   if (result) props.close(true);
