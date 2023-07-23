@@ -18,6 +18,7 @@ export default function DeadlineBox(props: DeadlineBoxProps) {
         top: `${
           ((time.getHour() * 60 + time.getMinute()) / (24 * 60)) * 100
         }%`,
+        backgroundColor: props.deadlineDetails.color
       }}
       onClick={props.showEditEventDialog}
     >

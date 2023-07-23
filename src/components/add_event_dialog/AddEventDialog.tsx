@@ -55,6 +55,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                   ? {
                       DEADLINE: {
                         dateTime: Math.floor(startDate.getTime() / 1000),
+                        color: "#808080",
                         name: inputData.name,
                       },
                     }
@@ -62,6 +63,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                       EVENT: {
                         dateTime: Math.floor(startDate.getTime() / 1000),
                         durationMinutes: duration,
+                        color: "#808080",
                         name: inputData.name,
                       },
                     };

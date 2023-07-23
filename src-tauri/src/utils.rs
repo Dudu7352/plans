@@ -13,6 +13,5 @@ pub fn events_collide(e1: &EventType, e2: &EventType) -> bool {
         EventType::EVENT(e) => e.date_time + Duration::minutes(e.duration_minutes as i64),
         EventType::DEADLINE(_) => e2_start.clone(),
     };
-    e1_start < e2_start && e2_start < &e1_end || 
-    e2_start < e1_start && e1_start < &e2_end
+    e1_start < e2_start && e2_start < &e1_end || e2_start < e1_start && e1_start < &e2_end
 }

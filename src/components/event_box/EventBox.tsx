@@ -22,6 +22,7 @@ export function EventBox(props: EventBoxProps) {
         top: `${
           ((start.getHours() * 60 + start.getMinutes()) / (24 * 60)) * 100
         }%`,
+        backgroundColor: props.eventDetails.color,
         height: `${(props.eventDetails.durationMinutes / (60 * 24)) * 100}%`,
       }}
       onClick={props.showEditEventDialog}

@@ -59,7 +59,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
           <td>{formatDate(date)}</td>
         </tr>
         <tr>
-          <td>Time: </td>
+          <td>Time until: </td>
           <td>{time.toString()}</td>
         </tr>
       </tbody>
