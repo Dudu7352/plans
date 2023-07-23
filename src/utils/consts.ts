@@ -29,7 +29,7 @@ export const WEEKDAYS: string[] = [
 export enum Prompt {
   NONE,
   ADD,
-  EDIT
+  EDIT,
 }
 
 export const YEAR_WEEKS = 53;
@@ -41,9 +41,13 @@ export const DEFAULT_TIME: Time = new Time("00:00");
 export const DEFAULT_EVENT: IEventDetails = {
   dateTime: Math.floor(DEFAULT_DATE.getTime() / 1000),
   durationMinutes: 0,
-  name: ""
+  color: "#ff0000",
+  name: "",
 };
 export const DEFAULT_EVENT_TYPE: IEventType = {
   EVENT: undefined,
-  DEADLINE: undefined
-}
+  DEADLINE: undefined,
+};
+
+export const SHADE_DOWN = 0.9;
+export const SHADE_UP = 1.1;
