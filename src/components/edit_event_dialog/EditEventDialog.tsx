@@ -4,6 +4,7 @@ import { IEventType } from "../../utils/interfaces";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
 import { invoke } from "@tauri-apps/api";
+import "./EditEventDialog.css";
 
 interface EditEventDialogProps {
   eventType: IEventType;
@@ -73,6 +74,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
       closeDialog={() => {
         props.close(false);
       }}
+      className={"EditEventDialog"}
     >
       <table>{tableData}</table>
       <ControlBar
