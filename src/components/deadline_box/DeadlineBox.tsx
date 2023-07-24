@@ -1,6 +1,7 @@
 import { Time } from "../../utils/classes";
 import "./DeadlineBox.css";
 import { IDeadlineDetails } from "../../utils/interfaces";
+import { shadeUp } from "../../utils/functions/shades";
 
 interface DeadlineBoxProps {
   deadlineDetails: IDeadlineDetails;
@@ -18,7 +19,8 @@ export default function DeadlineBox(props: DeadlineBoxProps) {
         top: `${
           ((time.getHour() * 60 + time.getMinute()) / (24 * 60)) * 100
         }%`,
-        backgroundColor: props.deadlineDetails.color
+        backgroundColor: props.deadlineDetails.color,
+        borderColor: shadeUp(props.deadlineDetails.color, 1),
       }}
       onClick={props.showEditEventDialog}
     >
