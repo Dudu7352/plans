@@ -1,5 +1,7 @@
+import { ChangeEvent } from "react";
 import { Time } from "../../utils/classes";
 import { IEventInputData } from "../../utils/interfaces";
+import TableInput from "../table_input/TableInput";
 import "./EventInput.css";
 
 interface EventInputProps {
@@ -11,48 +13,33 @@ export default function EventInput(props: EventInputProps) {
   return (
     <table className="EventInput">
       <tbody>
-        <tr>
-          <td>Event name: </td>
-          <td>
-            <input
-              type="text"
-              className="selectable bordered"
-              onChange={(event) => {
-                const newInputData = Object.assign({}, props.inputData);
-                newInputData.name = event.target.value;
-                props.updateIEventDetails(newInputData);
-              }}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Start:</td>
-          <td>
-            <input
-              type="time"
-              className="selectable bordered"
-              onChange={(event) => {
-                const newInputData = Object.assign({}, props.inputData);
-                newInputData.start = new Time(event.target.value);
-                props.updateIEventDetails(newInputData);
-              }}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>End:</td>
-          <td>
-            <input
-              type="time"
-              className="selectable bordered"
-              onChange={(event) => {
-                const newInputData = Object.assign({}, props.inputData);
-                newInputData.end = new Time(event.target.value);
-                props.updateIEventDetails(newInputData);
-              }}
-            />
-          </td>
-        </tr>
+        <TableInput
+          label={"Event name: "}
+          type={"text"}
+          onChange={(event) => {
+            const newInputData = Object.assign({}, props.inputData);
+            newInputData.name = event.target.value;
+            props.updateIEventDetails(newInputData);
+          }}
+        />
+        <TableInput
+          label={"Start: "}
+          type={"time"}
+          onChange={(event) => {
+            const newInputData = Object.assign({}, props.inputData);
+            newInputData.start = new Time(event.target.value);
+            props.updateIEventDetails(newInputData);
+          }}
+        />
+        <TableInput
+          label={"End: "}
+          type={"time"}
+          onChange={(event) => {
+            const newInputData = Object.assign({}, props.inputData);
+            newInputData.end = new Time(event.target.value);
+            props.updateIEventDetails(newInputData);
+          }}
+        />
       </tbody>
     </table>
   );

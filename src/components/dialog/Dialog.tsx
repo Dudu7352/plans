@@ -7,7 +7,7 @@ interface DialogProps {
   closeDialog: () => void;
   title: string;
   children?: React.ReactElement | React.ReactElement[];
-  className: string | undefined
+  className?: string;
 }
 
 export default function Dialog(props: DialogProps) {

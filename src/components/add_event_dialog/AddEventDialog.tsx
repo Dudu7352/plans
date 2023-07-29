@@ -29,8 +29,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
       title={`Add new event for ${dateFormat}`}
       closeDialog={() => {
         props.close(false);
-      }}
-    >
+      } }>
       <EventInput
         inputData={inputData}
         updateIEventDetails={(inputData: IEventInputData) => {
