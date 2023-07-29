@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Time } from "../../utils/classes";
 import { shadeDown, shadeUp } from "../../utils/functions/shades";
 import { IEventDetails } from "../../utils/interfaces";
@@ -9,6 +10,8 @@ interface EventBoxProps {
 }
 
 export function EventBox(props: EventBoxProps) {
+  let [highlight, setHightlight] = useState(false);
+
   const start = new Date(props.eventDetails.dateTime * 1000);
   const startTime = new Time();
   startTime.setHour(start.getHours());
@@ -18,14 +21,17 @@ export function EventBox(props: EventBoxProps) {
   return (
     <div
       className="EventBox bordered rounded"
+      onMouseEnter={() => setHightlight(true)}
+      onMouseLeave={() => setHightlight(false)}
       style={{
         position: "absolute",
         top: `${
           ((start.getHours() * 60 + start.getMinutes()) / (24 * 60)) * 100
         }%`,
-        backgroundColor: props.eventDetails.color,
-        borderColor: shadeDown(props.eventDetails.color),
+        backgroundColor: highlight ? shadeUp(props.eventDetails.color) : props.eventDetails.color,
+        borderColor: highlight ? props.eventDetails.color : shadeDown(props.eventDetails.color),
         height: `${(props.eventDetails.durationMinutes / (60 * 24)) * 100}%`,
+        transition: 'all 100ms ease-in-out'
       }}
       onClick={props.showEditEventDialog}
     >
