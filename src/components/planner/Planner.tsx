@@ -12,6 +12,7 @@ import Titlebar from "../titlebar/Titlebar";
 interface PlannerProps {
   week: number;
   userYear: number;
+  templateColors: string[];
   toggleTheme: () => void;
 }
 
@@ -23,19 +24,13 @@ export default function Planner(props: PlannerProps) {
   let [eventType, setEventType] = useState(DEFAULT_EVENT_TYPE);
 
   function refreshDetails() {
-    invoke("get_week_details", { year: props.userYear, week: props.week }).then(
-      (msg) => {
-        setWeekDetails(msg as IDayDetails[]);
-      }
-    );
+    invoke<IDayDetails[]>("get_week_details", { year: props.userYear, week: props.week }).then(setWeekDetails);
   }
 
   useEffect(refreshDetails, [props.userYear, props.week]);
 
   useEffect(() => {
-    invoke("get_first_weekday", { year: props.userYear }).then((msg) => {
-      setFirstWeekday(msg as number);
-    });
+    invoke<number>("get_first_weekday", { year: props.userYear }).then(setFirstWeekday);
   }, [props.userYear]);
 
   return (
@@ -68,6 +63,7 @@ export default function Planner(props: PlannerProps) {
       <AddEventDialog
         date={date}
         isOpened={promptOpened === Prompt.ADD}
+        templateColors={props.templateColors}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);
           if (refresh) refreshDetails();

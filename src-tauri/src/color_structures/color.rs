@@ -45,7 +45,7 @@ impl Color {
     }
 
     pub fn to_hex(&self) -> String {
-        format!("#{:x}{:x}{:x}", self.red, self.green, self.blue)
+        format!("#{:0>2x}{:0>2x}{:0>2x}", self.red, self.green, self.blue)
     }
 
     pub fn get_shade(&self, multiplier: f32) -> Result<Self, ()> {

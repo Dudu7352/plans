@@ -1,3 +1,3 @@
 pub mod date;
 pub mod event;
-mod color;
+pub mod color;

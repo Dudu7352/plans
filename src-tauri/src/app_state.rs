@@ -51,7 +51,7 @@ impl AppState {
 
     let event_list = FileManager::load_data::<HashMap<NaiveDate, Vec<EventType>>>(
       &events_file_path
-    ).unwrap();
+    ).unwrap_or(HashMap::new());
     let color_list = FileManager::load_data::<Vec<Color>>(&colors_file_path).unwrap_or(
       vec![Color::new(32, 191, 85), Color::new(11, 79, 108), Color::new(254, 93, 38)]
     );

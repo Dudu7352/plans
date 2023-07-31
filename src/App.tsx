@@ -10,27 +10,34 @@ export default function App() {
   let [userYear, setUserYear] = useState(0);
   let [week, setWeek] = useState(0);
   let [lightTheme, setLightTheme] = useState(true);
+  let [templateColors, setTemplateColors] = useState([] as string[]);
 
   useEffect(() => {
-    invoke<number>("get_current_year").then(result => {
+    invoke<number>("get_current_year").then((result) => {
       setCurrentYear(result);
       setUserYear(result);
-    })
+    });
     invoke<number>("get_current_week").then(setWeek);
+    invoke<string[]>("get_template_colors").then(setTemplateColors);
   }, []);
+
+  console.log(templateColors);
 
   return (
     <div className={`App ${lightTheme ? "light" : "dark"}`}>
-      <Sidebar 
+      <Sidebar
         userYear={userYear}
         currentYear={currentYear}
         setUserYear={(year: number) => setUserYear(year)}
         setWeek={setWeek}
       />
-      <Planner 
+      <Planner
         week={week}
         userYear={userYear}
-        toggleTheme={() => {setLightTheme(x => !x)}}
+        templateColors={templateColors}
+        toggleTheme={() => {
+          setLightTheme((x) => !x);
+        }}
       />
     </div>
   );

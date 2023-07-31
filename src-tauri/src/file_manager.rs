@@ -19,7 +19,7 @@ impl FileManager {
 
   pub fn load_data<T: for<'a> serde::Deserialize<'a>>(data_path: &PathBuf) -> Result<T, ()> {
     let mut binding = OpenOptions::new();
-    let open_options = binding.read(true).write(true).create(true);
+    let open_options = binding.read(true).write(true);
     match open_options.open(data_path) {
         Ok(mut data_file) => {
             let mut contents = String::new();

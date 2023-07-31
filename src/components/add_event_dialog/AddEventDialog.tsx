@@ -11,12 +11,14 @@ import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 interface AddEventDialogProps {
   date: Date;
   isOpened: boolean;
+  templateColors: string[];
   close: (refresh: boolean) => void;
 }
 
 export default function AddEventDialog(props: AddEventDialogProps) {
   let [inputData, setInputData] = useState({
     name: "",
+    color: "#808080",
     start: DEFAULT_TIME,
     end: DEFAULT_TIME,
   } as IEventInputData);
@@ -32,7 +34,8 @@ export default function AddEventDialog(props: AddEventDialogProps) {
       } }>
       <EventInput
         inputData={inputData}
-        updateIEventDetails={(inputData: IEventInputData) => {
+        templateColors={props.templateColors}
+        updateIEventInputData={(inputData: IEventInputData) => {
           setInputData(inputData);
         }}
       />
@@ -54,7 +57,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                   ? {
                       DEADLINE: {
                         dateTime: Math.floor(startDate.getTime() / 1000),
-                        color: "#808080",
+                        color: inputData.color,
                         name: inputData.name,
                       },
                     }
@@ -62,7 +65,7 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                       EVENT: {
                         dateTime: Math.floor(startDate.getTime() / 1000),
                         durationMinutes: duration,
-                        color: "#808080",
+                        color: inputData.color,
                         name: inputData.name,
                       },
                     };
