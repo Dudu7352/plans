@@ -1,10 +1,10 @@
-use std::{ collections::HashMap, ops::Index, env, fs::create_dir_all, path::PathBuf };
+use std::{ collections::HashMap, ops::Index, path::PathBuf, fs::create_dir_all };
 
 use chrono::{ Duration, NaiveDate };
 use serde::Serialize;
 
 use crate::{
-  utils::events_collide,
+  utils::{events_collide, get_data_path},
   event_structures::event_type::EventType,
   file_manager::FileManager,
   color_structures::color::Color,
@@ -20,41 +20,36 @@ pub struct AppState {
 
 impl AppState {
   pub fn new() -> Self {
-    let mut data_path = home::home_dir().unwrap();
-    match env::consts::OS {
-      "windows" => {
-        data_path.push("AppData");
-        data_path.push("Local");
-        data_path.push("plans-app");
-        data_path.push("plans");
-      }
-      "linux" => {
-        data_path.push(".local");
-        data_path.push("share");
-        data_path.push("plans-app");
-      }
-      _ => {
-        data_path.push(".plans");
-      }
-    }
+    let data_path = get_data_path();
     let _ = create_dir_all(&data_path);
-
-    data_path.set_extension("json");
-
+    
     let mut events_file_path = data_path.clone();
     let mut colors_file_path = data_path.clone();
-    events_file_path.push("events");
+
+    events_file_path.push("plans-app");
     events_file_path.set_file_name("events");
-
-    colors_file_path.push("colors");
+    events_file_path.set_extension("json");
+        
+    colors_file_path.push("plans-app");
     colors_file_path.set_file_name("colors");
+    colors_file_path.set_extension("json");
 
+    
     let event_list = FileManager::load_data::<HashMap<NaiveDate, Vec<EventType>>>(
       &events_file_path
     ).unwrap_or(HashMap::new());
-    let color_list = FileManager::load_data::<Vec<Color>>(&colors_file_path).unwrap_or(
-      vec![Color::new(32, 191, 85), Color::new(11, 79, 108), Color::new(254, 93, 38)]
-    );
+    let color_list = match FileManager::load_data::<Vec<Color>>(&colors_file_path) {
+      Ok(file_data) => file_data,
+      Err(_) => {
+        let new_data: Vec<Color> = vec![
+          Color::new(32, 191, 85),
+          Color::new(11, 79, 108),
+          Color::new(254, 93, 38)
+        ];
+        FileManager::save_data(&colors_file_path, &new_data);
+        new_data
+      }
+    };
 
     Self {
       event_list,
