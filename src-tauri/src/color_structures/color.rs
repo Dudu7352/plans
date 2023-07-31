@@ -27,6 +27,8 @@ impl Serialize for Color {
 }
 
 impl Color {
+    pub fn new(red: u8, green: u8, blue: u8) -> Self { Self { red, green, blue } }
+
     pub fn from_hex(mut hex: String) -> Result<Self, ()> {
         if hex.len() != 7 {
             return Err(());
