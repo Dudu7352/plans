@@ -1,7 +1,7 @@
 use serde_json::from_str;
 use std::io::prelude::*;
 use std::path::PathBuf;
-use std::fs::{ OpenOptions };
+use std::fs::OpenOptions;
 
 pub struct FileManager;
 

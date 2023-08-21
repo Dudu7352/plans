@@ -47,17 +47,6 @@ impl Color {
     pub fn to_hex(&self) -> String {
         format!("#{:0>2x}{:0>2x}{:0>2x}", self.red, self.green, self.blue)
     }
-
-    pub fn get_shade(&self, multiplier: f32) -> Result<Self, ()> {
-        if multiplier < 0f32 {
-            return Err(());
-        }
-        let mut res = self.clone();
-        res.red = (res.red as f32 * multiplier) as u8;
-        res.green = (res.green as f32 * multiplier) as u8;
-        res.blue = (res.green as f32 * multiplier) as u8;
-        Ok(res)
-    }
 }
 
 struct ColorVisitor;

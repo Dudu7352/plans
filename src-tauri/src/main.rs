@@ -12,7 +12,6 @@ mod color_structures;
 
 use std::sync::Mutex;
 use app_state::AppState;
-use commands::color::*;
 use commands::date::*;
 use commands::event::*;
 
@@ -25,7 +24,6 @@ fn main() {
             get_first_weekday,
             get_year_details, 
             get_week_details,
-            get_template_colors,
             try_add_event,
             try_delete_event
         ])
