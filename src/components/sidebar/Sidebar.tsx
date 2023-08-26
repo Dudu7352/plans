@@ -27,7 +27,7 @@ export default function Sidebar(props: SidebarProps) {
   }, [props.userYear]);
 
   return (
-    <div className="Sidebar">
+    <div className="Sidebar child-box bordered">
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector
