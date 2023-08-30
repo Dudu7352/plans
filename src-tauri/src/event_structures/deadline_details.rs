@@ -1,9 +1,10 @@
 use chrono::{naive::serde::ts_seconds, NaiveDateTime};
 use serde::{Serialize, Deserialize};
+use sqlx::FromRow;
 
 use crate::color_structures::color::Color;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, FromRow)]
 #[serde(rename_all = "camelCase")]
 pub struct DeadlineDetails {
     #[serde(with = "ts_seconds")]
