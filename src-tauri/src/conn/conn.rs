@@ -1,4 +1,4 @@
-use sqlx::{pool::Pool, SqlitePool, Sqlite};
+use sqlx::{pool::Pool, SqlitePool, Sqlite, sqlite::SqlitePoolOptions};
 
 pub struct Conn {
   pool: Pool<Sqlite>
@@ -6,9 +6,10 @@ pub struct Conn {
 
 impl Conn {
   pub async fn new(url: &str) -> Self {
-      let pool = SqlitePool::connect(url).await.unwrap(); //TODO: Handle result
+      let pool_options = SqlitePoolOptions::new()
+        .max_connections(1);
       Self {
-          pool
+          pool: pool_options.connect(url).await.unwrap() //TODO: Handle result
       }
   }
 
