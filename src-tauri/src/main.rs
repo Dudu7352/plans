@@ -9,6 +9,7 @@ mod event_structures;
 mod consts;
 mod utils;
 mod color_structures;
+mod conn;
 
 use std::sync::Mutex;
 use app_state::AppState;
