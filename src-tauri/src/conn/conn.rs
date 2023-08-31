@@ -1,3 +1,4 @@
+use chrono::NaiveDate;
 use sqlx::{pool::Pool, sqlite::SqlitePoolOptions, Sqlite, SqlitePool};
 
 use crate::event_structures::event_details::EventDetails;
@@ -39,4 +40,10 @@ impl Conn {
 
         Ok(())
     }
+
+	pub async fn getEventDetailsVec(date: NaiveDate) -> Vec<EventDetails> {
+		
+
+		vec![]
+	}
 }
