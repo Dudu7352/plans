@@ -9,14 +9,17 @@ mod event_structures;
 mod consts;
 mod utils;
 mod color_structures;
-mod conn;
 
 use std::sync::Mutex;
 use app_state::AppState;
 use commands::date::*;
 use commands::event::*;
 
-fn main() {
+#[allow(warnings, unused)]
+mod prisma;
+
+#[tokio::main]
+async fn main() {
     tauri::Builder::default()
         .manage(Mutex::new(AppState::new()))
         .invoke_handler(tauri::generate_handler![

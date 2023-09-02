@@ -1,0 +1,34 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:~/dev.db"
+}
+
+generator client {
+    provider = "cargo prisma"
+    output   = "../src/prisma.rs"
+}
+
+model Event {
+    id              String           @id
+    eventDetails    EventDetails?
+    deadlineDetails DeadlineDetails?
+}
+
+model EventDetails {
+    id              String   @id
+    name            String
+    color           String
+    start           DateTime
+    durationMinutes Int
+
+    event Event @relation(fields: [id], references: [id])
+}
+
+model DeadlineDetails {
+    id    String   @id
+    name  String
+    color String
+    start DateTime
+
+    event Event @relation(fields: [id], references: [id])
+}
