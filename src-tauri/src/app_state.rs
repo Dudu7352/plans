@@ -7,19 +7,26 @@ use crate::{
     color_structures::color::Color,
     event_structures::event_type::EventType,
     file_manager::FileManager,
-    utils::{events_collide, get_data_path},
+    utils::{events_collide, get_data_path}, prisma::{PrismaClient, new_client},
 };
 
-#[derive(Serialize)]
 pub struct AppState {
     pub event_list: HashMap<NaiveDate, Vec<EventType>>,
     pub color_list: Vec<Color>,
+    client: PrismaClient,
     events_file_path: PathBuf,
     colors_file_path: PathBuf,
 }
 
+impl Serialize for AppState {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where S: serde::Serializer {
+        serializer.collect_str("")
+    }
+}
+
 impl AppState {
-    pub fn new() -> Self {
+    pub async fn new() -> Self {
         let data_path = get_data_path();
         let _ = create_dir_all(&data_path);
 
@@ -49,10 +56,12 @@ impl AppState {
                 new_data
             }
         };
+        let client = new_client().await.unwrap(); // TODO: Handle errors
 
         Self {
             event_list,
             color_list,
+            client,
             events_file_path,
             colors_file_path,
         }

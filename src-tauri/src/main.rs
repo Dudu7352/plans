@@ -21,7 +21,7 @@ mod prisma;
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
-        .manage(Mutex::new(AppState::new()))
+        .manage(Mutex::new(AppState::new().await))
         .invoke_handler(tauri::generate_handler![
             get_current_year, 
             get_current_week,
