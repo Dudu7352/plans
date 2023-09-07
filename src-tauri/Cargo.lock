@@ -89,10 +89,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "angular-units"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4f1c36cde4b75aa8518ad38880fdc7b649d7bf22b359a296964756e2319d598d"
+dependencies = [
+ "approx",
+ "num-traits",
+]
+
+[[package]]
 name = "anyhow"
 version = "1.0.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
+
+[[package]]
+name = "approx"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0e60b75072ecd4168020818c0107f2857bb6c4e64252d8d3983f6263b40a5c3"
+dependencies = [
+ "num-traits",
+]
 
 [[package]]
 name = "arrayvec"
@@ -3852,6 +3871,7 @@ version = "0.0.0"
 dependencies = [
  "chrono",
  "home",
+ "prisma",
  "prisma-client-rust",
  "prisma-client-rust-cli",
  "serde",
@@ -3948,6 +3968,17 @@ name = "pretty-hex"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c6fa0831dd7cc608c38a5e323422a0077678fa5744aa2be4ad91c4ece8eec8d5"
+
+[[package]]
+name = "prisma"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f5640533116b656900156ef15e22d3789edb9a71f36ec04a2678a307be243495"
+dependencies = [
+ "angular-units",
+ "approx",
+ "num-traits",
+]
 
 [[package]]
 name = "prisma-client-rust"

@@ -9,7 +9,7 @@ generator client {
 }
 
 model Event {
-    id              String           @id
+    id              String           @id @default(uuid())
     eventDetails    EventDetails?
     deadlineDetails DeadlineDetails?
 }

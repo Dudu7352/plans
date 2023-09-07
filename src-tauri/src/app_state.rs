@@ -1,13 +1,14 @@
 use std::{collections::HashMap, fs::create_dir_all, ops::Index, path::PathBuf};
 
-use chrono::{Duration, NaiveDate};
+use chrono::{Duration, NaiveDate, DateTime, Offset, FixedOffset, TimeZone, Utc};
 use serde::Serialize;
 
 use crate::{
     color_structures::color::Color,
-    event_structures::event_type::EventType,
+    event_structures::{event_type::EventType, event_details::EventDetails, deadline_details::DeadlineDetails},
     file_manager::FileManager,
-    utils::{events_collide, get_data_path}, prisma::{PrismaClient, new_client},
+    utils::{events_collide, get_data_path}, 
+    prisma::{PrismaClient, new_client, event::{WhereParam, UniqueWhereParam}},
 };
 
 pub struct AppState {
@@ -56,7 +57,10 @@ impl AppState {
                 new_data
             }
         };
-        let client = new_client().await.unwrap(); // TODO: Handle errors
+        let client = PrismaClient::_builder()
+            .build()
+            .await
+            .unwrap(); // TODO: Handle errors
 
         Self {
             event_list,
@@ -67,7 +71,48 @@ impl AppState {
         }
     }
 
-    pub fn add_event(&mut self, e: EventType) -> Result<(), ()> {
+    pub async fn get_all_events(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<EventType>, ()> {
+        match self.client.event().find_many(vec![]).exec().await {
+            Ok(data_vec) => {
+                let mut result: Vec<EventType> = Vec::new();
+                for data in data_vec {
+                    if let Ok(event_data) = data.event_details() {
+                        let event_details = event_data.unwrap();
+                        result.push(
+                            EventType::EVENT(
+                                EventDetails::new(
+                                    data.id.clone(),
+                                    event_details.start.naive_local(),
+                                    event_details.name.clone(),
+                                    event_details.duration_minutes as u32,
+                                    Color::from_hex(event_details.color.clone()).unwrap()
+                                )
+                            )
+                        );
+                    } else if let Ok(deadline_data) = data.deadline_details() {
+                        let deadline_details = deadline_data.unwrap();
+                        result.push(
+                            EventType::DEADLINE(
+                                DeadlineDetails::new(
+                                    data.id.clone(),
+                                    deadline_details.start.naive_local(),
+                                    deadline_details.name.clone(),
+                                    Color::from_hex(deadline_details.color.clone()).unwrap()
+                                )
+                            )
+                        );
+                    }
+                }
+                Ok(result)
+            },
+            Err(err) => {
+                println!("Error while fetching events");
+                Err(())
+            },
+        }
+    }
+
+    pub async fn add_event(&mut self, e: EventType) -> Result<(), ()> {
         let date_time = e.get_date_time();
         let day_key = date_time.date();
 
@@ -80,43 +125,44 @@ impl AppState {
             }
         }
 
-        match self.event_list.get_mut(&day_key) {
-            Some(day_list) => {
-                for event in day_list.iter() {
-                    if events_collide(event, &e) {
-                        return Err(());
-                    }
+        return match self.client.event().create(
+            vec![]
+        ).exec().await {
+            Ok(data) => {
+                match &e {
+                    EventType::EVENT(ev) => {
+                        self.client.event_details().create(
+                            ev.name.clone(), 
+                            ev.color.to_hex(), 
+                            ev.date_time.and_local_timezone(FixedOffset::east_opt(0).unwrap()).unwrap(),
+                            ev.duration_minutes as i32,
+                            crate::prisma::event::UniqueWhereParam::IdEquals(data.id),
+                            vec![]
+                        );
+                        Ok(())
+                    },
+                    EventType::DEADLINE(de) => {
+                        Err(())
+                    },
                 }
-                day_list.push(e);
-            }
-            None => {
-                self.event_list.insert(day_key, vec![e]);
-            }
+            },
+            Err(err) => {
+                println!("Could not add the EventType\nError:\n{:?}", err);
+                Err(())
+            },
         }
-        FileManager::save_data::<HashMap<NaiveDate, Vec<EventType>>>(
-            &self.events_file_path,
-            &self.event_list,
-        );
-        Ok(())
     }
 
-    pub fn delete_event(&mut self, new_event: EventType) -> Result<(), ()> {
-        match self.event_list.get_mut(&new_event.get_date_time().date()) {
-            Some(day_list) => match day_list.iter().position(|r| r == &new_event) {
-                Some(index) => {
-                    for i in index + 1..day_list.len() {
-                        day_list[i - 1] = day_list.index(i).clone();
-                    }
-                    day_list.pop();
-                    FileManager::save_data::<HashMap<NaiveDate, Vec<EventType>>>(
-                        &self.events_file_path,
-                        &self.event_list,
-                    );
-                    Ok(())
-                }
-                None => Err(()),
+    pub async fn delete_event(&mut self, id: String) -> Result<(), ()> {
+        let param = UniqueWhereParam::IdEquals(id);
+        match self.client.event().delete().exec().await {
+            Ok(data) => {
+                data.id
             },
-            None => Err(()),
+            Err(err) => {
+                println!("Error while deleting event");
+                Err(())
+            },
         }
     }
 }

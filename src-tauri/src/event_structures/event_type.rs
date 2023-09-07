@@ -17,4 +17,11 @@ impl EventType {
             EventType::DEADLINE(deadline) => &deadline.date_time,
         }
     }
+
+    pub fn get_id(&self) -> &String {
+        match self {
+            EventType::EVENT(event) => &event.id,
+            EventType::DEADLINE(deadline) => &deadline.id,
+        }
+    }
 }
