@@ -8,13 +8,11 @@ use crate::{
     event_structures::{event_type::EventType, event_details::EventDetails, deadline_details::DeadlineDetails},
     file_manager::FileManager,
     utils::{events_collide, get_data_path}, 
-    prisma::{PrismaClient, new_client, event::{WhereParam, UniqueWhereParam}},
 };
 
 pub struct AppState {
     pub event_list: HashMap<NaiveDate, Vec<EventType>>,
     pub color_list: Vec<Color>,
-    client: PrismaClient,
     events_file_path: PathBuf,
     colors_file_path: PathBuf,
 }
@@ -57,59 +55,19 @@ impl AppState {
                 new_data
             }
         };
-        let client = PrismaClient::_builder()
-            .build()
-            .await
-            .unwrap(); // TODO: Handle errors
 
         Self {
             event_list,
             color_list,
-            client,
             events_file_path,
             colors_file_path,
         }
     }
 
     pub async fn get_all_events(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<EventType>, ()> {
-        match self.client.event().find_many(vec![]).exec().await {
-            Ok(data_vec) => {
-                let mut result: Vec<EventType> = Vec::new();
-                for data in data_vec {
-                    if let Ok(event_data) = data.event_details() {
-                        let event_details = event_data.unwrap();
-                        result.push(
-                            EventType::EVENT(
-                                EventDetails::new(
-                                    data.id.clone(),
-                                    event_details.start.naive_local(),
-                                    event_details.name.clone(),
-                                    event_details.duration_minutes as u32,
-                                    Color::from_hex(event_details.color.clone()).unwrap()
-                                )
-                            )
-                        );
-                    } else if let Ok(deadline_data) = data.deadline_details() {
-                        let deadline_details = deadline_data.unwrap();
-                        result.push(
-                            EventType::DEADLINE(
-                                DeadlineDetails::new(
-                                    data.id.clone(),
-                                    deadline_details.start.naive_local(),
-                                    deadline_details.name.clone(),
-                                    Color::from_hex(deadline_details.color.clone()).unwrap()
-                                )
-                            )
-                        );
-                    }
-                }
-                Ok(result)
-            },
-            Err(err) => {
-                println!("Error while fetching events");
-                Err(())
-            },
-        }
+        
+        // TODO: Implementation
+        Err(())
     }
 
     pub async fn add_event(&mut self, e: EventType) -> Result<(), ()> {
@@ -125,44 +83,13 @@ impl AppState {
             }
         }
 
-        return match self.client.event().create(
-            vec![]
-        ).exec().await {
-            Ok(data) => {
-                match &e {
-                    EventType::EVENT(ev) => {
-                        self.client.event_details().create(
-                            ev.name.clone(), 
-                            ev.color.to_hex(), 
-                            ev.date_time.and_local_timezone(FixedOffset::east_opt(0).unwrap()).unwrap(),
-                            ev.duration_minutes as i32,
-                            crate::prisma::event::UniqueWhereParam::IdEquals(data.id),
-                            vec![]
-                        );
-                        Ok(())
-                    },
-                    EventType::DEADLINE(de) => {
-                        Err(())
-                    },
-                }
-            },
-            Err(err) => {
-                println!("Could not add the EventType\nError:\n{:?}", err);
-                Err(())
-            },
-        }
+        // TODO: Implementation
+        Err(())
     }
 
     pub async fn delete_event(&mut self, id: String) -> Result<(), ()> {
-        let param = UniqueWhereParam::IdEquals(id);
-        match self.client.event().delete().exec().await {
-            Ok(data) => {
-                data.id
-            },
-            Err(err) => {
-                println!("Error while deleting event");
-                Err(())
-            },
-        }
+        
+        // TODO: Implementation
+        Err(())
     }
 }

@@ -15,9 +15,6 @@ use app_state::AppState;
 use commands::date::*;
 use commands::event::*;
 
-#[allow(warnings, unused)]
-mod prisma;
-
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
