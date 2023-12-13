@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS calendar_event (
     event_name TEXT NOT NULL,
     date_start DATE NOT NULL,
     date_end DATE NOT NULL,
+    color TEXT NOT NULL,
     FOREIGN KEY(id) REFERENCES calendar_entry(id)
 );
 
@@ -15,5 +16,6 @@ CREATE TABLE IF NOT EXISTS calendar_deadline (
     id TEXT PRIMARY KEY,
     deadline_name TEXT NOT NULL,
     date_until DATE NOT NULL,
+    color TEXT NOT NULL,
     FOREIGN KEY(id) REFERENCES calendar_entry(id)
 );
