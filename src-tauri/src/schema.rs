@@ -5,6 +5,7 @@ diesel::table! {
         id -> Nullable<Text>,
         deadline_name -> Text,
         date_until -> Date,
+        color -> Text,
     }
 }
 
@@ -20,6 +21,7 @@ diesel::table! {
         event_name -> Text,
         date_start -> Date,
         date_end -> Date,
+        color -> Text,
     }
 }
 
