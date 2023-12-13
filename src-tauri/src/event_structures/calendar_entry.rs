@@ -1,13 +1,13 @@
 use chrono::NaiveDateTime;
 use serde::{Serialize, Deserialize};
 
-use super::event_details::EventDetails;
-use super::deadline_details::DeadlineDetails;
+use super::calendar_event::CalendarEvent;
+use super::calendar_deadline::CalendarDeadline;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub enum CalendarEntry {
-    EVENT(EventDetails),
-    DEADLINE(DeadlineDetails)
+    EVENT(CalendarEvent),
+    DEADLINE(CalendarDeadline)
 }
 
 impl CalendarEntry {

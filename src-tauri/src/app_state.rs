@@ -5,7 +5,7 @@ use serde::Serialize;
 
 use crate::{
     color_structures::color::Color,
-    event_structures::{calendar_entry::CalendarEntry, event_details::EventDetails, deadline_details::DeadlineDetails},
+    event_structures::{calendar_entry::CalendarEntry, calendar_event::CalendarEvent, calendar_deadline::CalendarDeadline},
     file_manager::FileManager,
     utils::{events_collide, get_data_path}, 
 };
