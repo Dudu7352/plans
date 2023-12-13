@@ -38,3 +38,7 @@ pub fn get_data_path() -> PathBuf {
     }
     data_path
 }
+
+pub fn get_database_path() -> PathBuf {
+  todo!();
+}
