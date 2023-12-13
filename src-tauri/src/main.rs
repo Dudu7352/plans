@@ -10,6 +10,7 @@ mod consts;
 mod utils;
 mod color_structures;
 mod database;
+pub mod schema;
 
 use std::sync::Mutex;
 use app_state::AppState;
