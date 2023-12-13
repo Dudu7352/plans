@@ -1,7 +1,14 @@
+use diesel::backend::Backend;
+use diesel::deserialize::FromSql;
+use diesel::expression::AsExpression;
+use diesel::serialize::ToSql;
+use diesel::sql_types::Text;
+use diesel::sqlite;
 use serde::de::{self, Visitor};
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, AsExpression, FromSqlRow)]
+#[sql_type = "Text"]
 pub struct Color {
     pub red: u8,
     pub green: u8,
@@ -23,6 +30,19 @@ impl Serialize for Color {
         S: serde::Serializer,
     {
         serializer.serialize_str(self.to_hex().as_str())
+    }
+}
+
+impl<DB: Backend> ToSql<Text, DB> for Color {
+    fn to_sql<'b>(&'b self, out: &mut diesel::serialize::Output<'b, '_, DB>) -> diesel::serialize::Result {
+        let str = self.to_hex();
+        <String as ToSql<String, DB>>::to_sql(&str, out)
+    }
+}
+
+impl<DB: Backend> FromSql<Text, DB> for Color {
+    fn from_sql(bytes: <DB as Backend>::RawValue<'_>) -> diesel::deserialize::Result<Self> {
+        <String as FromSql<String, DB>>::from_sql(bytes).map(|x| Self::from_hex(x).unwrap())
     }
 }
 
