@@ -5,23 +5,23 @@ use super::event_details::EventDetails;
 use super::deadline_details::DeadlineDetails;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub enum EventType {
+pub enum CalendarEntry {
     EVENT(EventDetails),
     DEADLINE(DeadlineDetails)
 }
 
-impl EventType {
+impl CalendarEntry {
     pub fn get_date_time(&self) -> &NaiveDateTime {
         match self {
-            EventType::EVENT(event) => &event.date_time,
-            EventType::DEADLINE(deadline) => &deadline.date_time,
+            CalendarEntry::EVENT(event) => &event.date_time,
+            CalendarEntry::DEADLINE(deadline) => &deadline.date_time,
         }
     }
 
     pub fn get_id(&self) -> &String {
         match self {
-            EventType::EVENT(event) => &event.id,
-            EventType::DEADLINE(deadline) => &deadline.id,
+            CalendarEntry::EVENT(event) => &event.id,
+            CalendarEntry::DEADLINE(deadline) => &deadline.id,
         }
     }
 }

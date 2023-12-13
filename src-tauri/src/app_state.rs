@@ -5,13 +5,13 @@ use serde::Serialize;
 
 use crate::{
     color_structures::color::Color,
-    event_structures::{event_type::EventType, event_details::EventDetails, deadline_details::DeadlineDetails},
+    event_structures::{calendar_entry::CalendarEntry, event_details::EventDetails, deadline_details::DeadlineDetails},
     file_manager::FileManager,
     utils::{events_collide, get_data_path}, 
 };
 
 pub struct AppState {
-    pub event_list: HashMap<NaiveDate, Vec<EventType>>,
+    pub event_list: HashMap<NaiveDate, Vec<CalendarEntry>>,
     pub color_list: Vec<Color>,
     events_file_path: PathBuf,
     colors_file_path: PathBuf,
@@ -41,7 +41,7 @@ impl AppState {
         colors_file_path.set_extension("json");
 
         let event_list =
-            FileManager::load_data::<HashMap<NaiveDate, Vec<EventType>>>(&events_file_path)
+            FileManager::load_data::<HashMap<NaiveDate, Vec<CalendarEntry>>>(&events_file_path)
                 .unwrap_or(HashMap::new());
         let color_list = match FileManager::load_data::<Vec<Color>>(&colors_file_path) {
             Ok(file_data) => file_data,
@@ -64,17 +64,17 @@ impl AppState {
         }
     }
 
-    pub async fn get_all_events(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<EventType>, ()> {
+    pub async fn get_all_events(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<CalendarEntry>, ()> {
         
         // TODO: Implementation
         Err(())
     }
 
-    pub async fn add_event(&mut self, e: EventType) -> Result<(), ()> {
+    pub async fn add_event(&mut self, e: CalendarEntry) -> Result<(), ()> {
         let date_time = e.get_date_time();
         let day_key = date_time.date();
 
-        if let EventType::EVENT(new_event) = &e {
+        if let CalendarEntry::EVENT(new_event) = &e {
             let new_event_end =
                 new_event.date_time + Duration::minutes(new_event.duration_minutes as i64);
 
