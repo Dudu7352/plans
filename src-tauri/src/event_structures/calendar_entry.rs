@@ -13,7 +13,7 @@ pub enum CalendarEntry {
 impl CalendarEntry {
     pub fn get_date_time(&self) -> &NaiveDateTime {
         match self {
-            CalendarEntry::EVENT(event) => &event.date_time,
+            CalendarEntry::EVENT(event) => todo!(),
             CalendarEntry::DEADLINE(deadline) => &deadline.date_time,
         }
     }

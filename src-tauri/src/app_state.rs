@@ -75,10 +75,7 @@ impl AppState {
         let day_key = date_time.date();
 
         if let CalendarEntry::EVENT(new_event) = &e {
-            let new_event_end =
-                new_event.date_time + Duration::minutes(new_event.duration_minutes as i64);
-
-            if new_event.date_time.date() != new_event_end.date() {
+            if new_event.date_start.date() != new_event.date_start.date() {
                 return Err(());
             }
         }
