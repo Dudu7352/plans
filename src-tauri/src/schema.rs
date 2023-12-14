@@ -19,8 +19,8 @@ diesel::table! {
     calendar_event (id) {
         id -> Nullable<Text>,
         event_name -> Text,
-        date_start -> Date,
-        date_end -> Date,
+        date_start -> Timestamp,
+        date_end -> Timestamp,
         color -> Text,
     }
 }
