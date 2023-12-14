@@ -40,5 +40,7 @@ pub fn get_data_path() -> PathBuf {
 }
 
 pub fn get_database_path() -> PathBuf {
-  todo!();
+  let mut home_path = get_data_path();
+  home_path.push("plans.db");
+  home_path
 }
