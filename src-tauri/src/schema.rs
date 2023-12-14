@@ -2,7 +2,7 @@
 
 diesel::table! {
     calendar_deadline (id) {
-        id -> Nullable<Text>,
+        id -> Text,
         deadline_name -> Text,
         date_until -> Timestamp,
         color -> Text,
@@ -11,13 +11,13 @@ diesel::table! {
 
 diesel::table! {
     calendar_entry (id) {
-        id -> Nullable<Text>,
+        id -> Text,
     }
 }
 
 diesel::table! {
     calendar_event (id) {
-        id -> Nullable<Text>,
+        id -> Text,
         event_name -> Text,
         date_start -> Timestamp,
         date_end -> Timestamp,
