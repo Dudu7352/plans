@@ -14,7 +14,7 @@ impl CalendarEntry {
     pub fn get_date_time(&self) -> &NaiveDateTime {
         match self {
             CalendarEntry::EVENT(event) => todo!(),
-            CalendarEntry::DEADLINE(deadline) => &deadline.date_time,
+            CalendarEntry::DEADLINE(deadline) => &deadline.date_until,
         }
     }
 

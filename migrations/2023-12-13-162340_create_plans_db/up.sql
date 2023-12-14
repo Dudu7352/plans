@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS calendar_event (
 CREATE TABLE IF NOT EXISTS calendar_deadline (
     id TEXT PRIMARY KEY,
     deadline_name TEXT NOT NULL,
-    date_until DATE NOT NULL,
+    date_until TIMESTAMP NOT NULL,
     color TEXT NOT NULL,
     FOREIGN KEY(id) REFERENCES calendar_entry(id)
 );

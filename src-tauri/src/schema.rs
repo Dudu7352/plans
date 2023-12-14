@@ -4,7 +4,7 @@ diesel::table! {
     calendar_deadline (id) {
         id -> Nullable<Text>,
         deadline_name -> Text,
-        date_until -> Date,
+        date_until -> Timestamp,
         color -> Text,
     }
 }
