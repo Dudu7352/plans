@@ -74,7 +74,7 @@ impl AppState {
         let date_time = e.get_date_time();
         let day_key = date_time.date();
 
-        if let CalendarEntry::EVENT(new_event) = &e {
+        if let CalendarEntry::Event(new_event) = &e {
             if new_event.date_start.date() != new_event.date_start.date() {
                 return Err(());
             }
