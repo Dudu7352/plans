@@ -3,7 +3,7 @@ use diesel::deserialize::FromSql;
 use diesel::expression::AsExpression;
 use diesel::serialize::ToSql;
 use diesel::sql_types::Text;
-use diesel::sqlite;
+use diesel::*;
 use serde::de::{self, Visitor};
 use serde::{Deserialize, Serialize};
 
@@ -33,21 +33,22 @@ impl Serialize for Color {
     }
 }
 
-impl<DB: Backend> ToSql<Text, DB> for Color {
-    fn to_sql<'b>(&'b self, out: &mut diesel::serialize::Output<'b, '_, DB>) -> diesel::serialize::Result {
-        let str = self.to_hex();
-        <String as ToSql<String, DB>>::to_sql(&str, out)
+impl From<Color> for String {
+    fn from(value: Color) -> Self {
+        value.to_hex()
     }
 }
 
-impl<DB: Backend> FromSql<Text, DB> for Color {
-    fn from_sql(bytes: <DB as Backend>::RawValue<'_>) -> diesel::deserialize::Result<Self> {
-        <String as FromSql<String, DB>>::from_sql(bytes).map(|x| Self::from_hex(x).unwrap())
+impl From<String> for Color {
+    fn from(value: String) -> Self {
+        Self::from_hex(value).unwrap_or(Color::new(0, 0, 0))
     }
 }
 
 impl Color {
-    pub fn new(red: u8, green: u8, blue: u8) -> Self { Self { red, green, blue } }
+    pub fn new(red: u8, green: u8, blue: u8) -> Self {
+        Self { red, green, blue }
+    }
 
     pub fn from_hex(mut hex: String) -> Result<Self, ()> {
         if hex.len() != 7 {
