@@ -3,6 +3,7 @@ use diesel::RunQueryDsl;
 use diesel::{prelude::SqliteConnection, Connection, QueryDsl, ExpressionMethods, SelectableHelper};
 
 use crate::event_structures::calendar_deadline::CalendarDeadline;
+use crate::event_structures::calendar_entry::{self, CalendarEntry};
 use crate::{utils::get_database_path, event_structures::{entry::Entry, calendar_event::CalendarEvent}, schema};
 
 struct PlansDbConn {
@@ -33,8 +34,26 @@ impl PlansDbConn {
         entries
     }
 
-    pub fn insert_entry(&self, calendar_entry: Entry) {
-        todo!()
+    pub fn insert_entry(&mut self, calendar_entry: Entry) {
+        let id = calendar_entry.get_id();
+        diesel::insert_into(schema::calendar_entry::table)
+            .values(CalendarEntry::new(id.clone()))
+            .execute(&mut self.conn)
+            .expect("Error inserting new entry");
+        match calendar_entry {
+            Entry::Event(event) => {
+                diesel::insert_into(schema::calendar_event::table)
+                    .values(event)
+                    .execute(&mut self.conn)
+                    .expect("Error inserting new event");
+            }
+            Entry::Deadline(deadline) => {
+                diesel::insert_into(schema::calendar_deadline::table)
+                    .values(deadline)
+                    .execute(&mut self.conn)
+                    .expect("Error inserting new deadline");
+            }
+        }
     }
 
     pub fn delete_entry(&self, id: &str) {
