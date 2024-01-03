@@ -14,6 +14,7 @@ use crate::schema::calendar_event;
     PartialEq,
     Selectable,
     Insertable,
+    AsChangeset,
     Queryable,
     Identifiable,
     Associations,

@@ -56,11 +56,30 @@ impl PlansDbConn {
         }
     }
 
-    pub fn delete_entry(&self, id: &str) {
-        todo!()
+    pub fn delete_entry(&mut self, id: &str) -> Result<(), diesel::result::Error> {
+        let _ = diesel::delete(schema::calendar_event::dsl::calendar_event.find(id))
+            .execute(&mut self.conn);
+        let _ = diesel::delete(schema::calendar_deadline::dsl::calendar_deadline.find(id))
+            .execute(&mut self.conn);
+        diesel::delete(schema::calendar_entry::dsl::calendar_entry.find(id))
+            .execute(&mut self.conn)?;
+        Ok(())
     }
 
-    pub fn update_entry(&self, calendar_entry: Entry) {
-        todo!()
+    pub fn update_entry(&mut self, calendar_entry: Entry) -> Result<(), diesel::result::Error> {
+        let id = calendar_entry.get_id().clone();
+        match calendar_entry {
+            Entry::Event(event) => {
+                diesel::update(schema::calendar_event::dsl::calendar_event.find(id))
+                    .set(event)
+                    .execute(&mut self.conn)?;
+            }
+            Entry::Deadline(deadline) => {
+                diesel::update(schema::calendar_deadline::dsl::calendar_deadline.find(id))
+                    .set(deadline)
+                    .execute(&mut self.conn)?;
+            }
+        }
+        Ok(())
     }
 }

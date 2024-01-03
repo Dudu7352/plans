@@ -13,6 +13,7 @@ use crate::schema::calendar_deadline;
     PartialEq,
     Selectable,
     Insertable,
+    AsChangeset,
     Queryable,
     QueryableByName,
     Identifiable,
