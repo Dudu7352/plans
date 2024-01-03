@@ -9,7 +9,7 @@ use crate::{
     date_structures::{
         day_details::DayDetails, month_details::MonthDetails, year_details::YearDetails,
     },
-    event_structures::calendar_entry::CalendarEntry,
+    event_structures::entry::Entry,
 };
 
 #[tauri::command]
@@ -83,7 +83,7 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
     let mut week_details: Vec<DayDetails> = Vec::new();
 
     if let Ok(app_state) = state.lock() {
-        let empty: Vec<CalendarEntry> = Vec::new();
+        let empty: Vec<Entry> = Vec::new();
         for i in 0..min(week_remaining, year_remaining) {
             let day = week_start + Duration::days(i);
             let events = app_state.event_list.get(&day).unwrap_or(&empty);

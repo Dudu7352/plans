@@ -1,17 +1,17 @@
-use std::{collections::HashMap, fs::create_dir_all, ops::Index, path::PathBuf};
+use std::{collections::HashMap, fs::create_dir_all, path::PathBuf};
 
-use chrono::{Duration, NaiveDate, DateTime, Offset, FixedOffset, TimeZone, Utc};
+use chrono::NaiveDate;
 use serde::Serialize;
 
 use crate::{
     color_structures::color::Color,
-    event_structures::{calendar_entry::CalendarEntry, calendar_event::CalendarEvent, calendar_deadline::CalendarDeadline},
+    event_structures::entry::Entry,
     file_manager::FileManager,
-    utils::{events_collide, get_data_path}, 
+    utils::get_data_path, 
 };
 
 pub struct AppState {
-    pub event_list: HashMap<NaiveDate, Vec<CalendarEntry>>,
+    pub event_list: HashMap<NaiveDate, Vec<Entry>>,
     pub color_list: Vec<Color>,
     events_file_path: PathBuf,
     colors_file_path: PathBuf,
@@ -41,7 +41,7 @@ impl AppState {
         colors_file_path.set_extension("json");
 
         let event_list =
-            FileManager::load_data::<HashMap<NaiveDate, Vec<CalendarEntry>>>(&events_file_path)
+            FileManager::load_data::<HashMap<NaiveDate, Vec<Entry>>>(&events_file_path)
                 .unwrap_or(HashMap::new());
         let color_list = match FileManager::load_data::<Vec<Color>>(&colors_file_path) {
             Ok(file_data) => file_data,
@@ -64,17 +64,17 @@ impl AppState {
         }
     }
 
-    pub async fn get_all_events(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<CalendarEntry>, ()> {
+    pub async fn get_all_events(&self, _start: NaiveDate, _end: NaiveDate) -> Result<Vec<Entry>, ()> {
         
         // TODO: Implementation
         Err(())
     }
 
-    pub async fn add_event(&mut self, e: CalendarEntry) -> Result<(), ()> {
+    pub async fn add_event(&mut self, e: Entry) -> Result<(), ()> {
         let date_time = e.get_date_time();
-        let day_key = date_time.date();
+        let _day_key = date_time.date();
 
-        if let CalendarEntry::Event(new_event) = &e {
+        if let Entry::Event(new_event) = &e {
             if new_event.date_start.date() != new_event.date_start.date() {
                 return Err(());
             }
@@ -84,7 +84,7 @@ impl AppState {
         Err(())
     }
 
-    pub async fn delete_event(&mut self, id: String) -> Result<(), ()> {
+    pub async fn delete_event(&mut self, _id: String) -> Result<(), ()> {
         
         // TODO: Implementation
         Err(())

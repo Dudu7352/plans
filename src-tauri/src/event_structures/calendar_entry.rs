@@ -1,27 +1,7 @@
-use chrono::NaiveDateTime;
-use serde::{Serialize, Deserialize};
+use crate::schema::calendar_entry;
 
-use super::calendar_event::CalendarEvent;
-use super::calendar_deadline::CalendarDeadline;
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub enum CalendarEntry {
-    Event(CalendarEvent),
-    Deadline(CalendarDeadline)
-}
-
-impl CalendarEntry {
-    pub fn get_date_time(&self) -> &NaiveDateTime {
-        match self {
-            CalendarEntry::Event(event) => todo!(),
-            CalendarEntry::Deadline(deadline) => &deadline.date_until,
-        }
-    }
-
-    pub fn get_id(&self) -> &String {
-        match self {
-            CalendarEntry::Event(event) => &event.id,
-            CalendarEntry::Deadline(deadline) => &deadline.id,
-        }
-    }
+#[derive(Debug, PartialEq, Queryable, Selectable, Insertable, Identifiable)]
+#[diesel(table_name = calendar_entry)]
+pub struct CalendarEntry {
+    pub id: String
 }

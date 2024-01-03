@@ -1,19 +1,17 @@
 use std::{path::PathBuf, env};
 
-use chrono::Duration;
+use crate::event_structures::entry::Entry;
 
-use crate::event_structures::calendar_entry::CalendarEntry;
-
-pub fn events_collide(e1: &CalendarEntry, e2: &CalendarEntry) -> bool {
+pub fn events_collide(e1: &Entry, e2: &Entry) -> bool {
     let e1_start = e1.get_date_time();
     let e2_start = e2.get_date_time();
     let e1_end = match e1 {
-        CalendarEntry::Event(e) => e.date_end,
-        CalendarEntry::Deadline(_) => e1_start.clone(),
+        Entry::Event(e) => e.date_end,
+        Entry::Deadline(_) => e1_start.clone(),
     };
     let e2_end = match e2 {
-        CalendarEntry::Event(e) => e.date_end,
-        CalendarEntry::Deadline(_) => e2_start.clone(),
+        Entry::Event(e) => e.date_end,
+        Entry::Deadline(_) => e2_start.clone(),
     };
     e1_start < e2_start && e2_start < &e1_end || e2_start < e1_start && e1_start < &e2_end
 }

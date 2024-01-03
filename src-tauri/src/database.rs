@@ -1,7 +1,7 @@
-use chrono::{NaiveDate, NaiveDateTime};
+use chrono::NaiveDateTime;
 use diesel::{prelude::SqliteConnection, Connection};
 
-use crate::{utils::get_database_path, event_structures::calendar_entry::CalendarEntry};
+use crate::{utils::get_database_path, event_structures::entry::Entry};
 
 struct PlansDbConn {
     conn: SqliteConnection
@@ -15,11 +15,11 @@ impl PlansDbConn {
         }
     }
 
-    pub fn get_entries(&self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<CalendarEntry> {
+    pub fn get_entries(&self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
         todo!()
     }
 
-    pub fn insert_entry(&self, calendar_entry: CalendarEntry) {
+    pub fn insert_entry(&self, calendar_entry: Entry) {
         todo!()
     }
 
@@ -27,7 +27,7 @@ impl PlansDbConn {
         todo!()
     }
 
-    pub fn update_entry(&self, calendar_entry: CalendarEntry) {
+    pub fn update_entry(&self, calendar_entry: Entry) {
         todo!()
     }
 }
