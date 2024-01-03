@@ -2,9 +2,11 @@ use chrono::NaiveDateTime;
 use diesel::RunQueryDsl;
 use diesel::{prelude::SqliteConnection, Connection, QueryDsl, ExpressionMethods, SelectableHelper};
 
+use crate::consts::MIGRATIONS;
 use crate::event_structures::calendar_deadline::CalendarDeadline;
 use crate::event_structures::calendar_entry::CalendarEntry;
 use crate::{utils::get_database_path, event_structures::{entry::Entry, calendar_event::CalendarEvent}, schema};
+use diesel_migrations::MigrationHarness;
 
 pub struct PlansDbConn {
     conn: SqliteConnection
@@ -12,9 +14,10 @@ pub struct PlansDbConn {
 
 impl PlansDbConn {
     pub fn new() -> Self {
-        Self {
-            conn: SqliteConnection::establish(get_database_path().to_str().unwrap()).expect("Could not connect to the database")
-        }
+        // TODO: Handle errors
+        let mut conn = SqliteConnection::establish(get_database_path().to_str().unwrap()).expect("Could not connect to the database");
+        let _ = conn.run_pending_migrations(MIGRATIONS);
+        Self { conn }
     }
 
     pub fn get_entries(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
