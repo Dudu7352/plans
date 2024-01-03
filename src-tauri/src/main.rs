@@ -4,14 +4,12 @@
 #[macro_use]
 extern crate diesel;
 
-mod file_manager;
 mod app_state;
 mod commands;
 mod date_structures;
 mod event_structures;
 mod consts;
 mod utils;
-mod color_structures;
 mod database;
 pub mod schema;
 
