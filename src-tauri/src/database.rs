@@ -34,7 +34,7 @@ impl PlansDbConn {
         entries
     }
 
-    pub fn insert_entry(&mut self, calendar_entry: Entry) {
+    pub fn insert_entry(&mut self, calendar_entry: Entry) -> Result<(), diesel::result::Error> {
         let id = calendar_entry.get_id();
         diesel::insert_into(schema::calendar_entry::table)
             .values(CalendarEntry::new(id.clone()))
@@ -44,16 +44,15 @@ impl PlansDbConn {
             Entry::Event(event) => {
                 diesel::insert_into(schema::calendar_event::table)
                     .values(event)
-                    .execute(&mut self.conn)
-                    .expect("Error inserting new event");
+                    .execute(&mut self.conn)?;
             }
             Entry::Deadline(deadline) => {
                 diesel::insert_into(schema::calendar_deadline::table)
                     .values(deadline)
-                    .execute(&mut self.conn)
-                    .expect("Error inserting new deadline");
+                    .execute(&mut self.conn)?;
             }
         }
+        Ok(())
     }
 
     pub fn delete_entry(&mut self, id: &str) -> Result<(), diesel::result::Error> {
