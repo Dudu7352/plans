@@ -1,6 +1,6 @@
 use std::{cmp::min, sync::Mutex};
 
-use chrono::{Datelike, Duration, NaiveDate};
+use chrono::{Datelike, Duration, NaiveDate, NaiveTime};
 use tauri::State;
 
 use crate::{
@@ -80,13 +80,16 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
         week_remaining -= year_start.weekday().num_days_from_monday() as i64;
     }
 
-    let mut week_details: Vec<DayDetails> = Vec::new();
+    let mut week_details: Vec<DayDetails> = Vec::with_capacity(7);
 
-    if let Ok(app_state) = state.lock() {
-        let empty: Vec<Entry> = Vec::new();
+    if let Ok(mut app_state) = state.lock() {
+        let event_list = app_state.get_all_events(
+            week_start.and_time(NaiveTime::MIN), 
+            week_start.and_time(NaiveTime::from_hms_opt(23, 59, 59).unwrap())
+        );
         for i in 0..min(week_remaining, year_remaining) {
             let day = week_start + Duration::days(i);
-            let events = app_state.event_list.get(&day).unwrap_or(&empty);
+            let events = event_list.iter().filter(|e| e.get_date_time().date() == day).map(|x| x.clone()).collect::<Vec<Entry>>();
             week_details.push(DayDetails::new(day, events.to_vec()));
         }
     }

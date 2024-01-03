@@ -3,10 +3,10 @@ use diesel::RunQueryDsl;
 use diesel::{prelude::SqliteConnection, Connection, QueryDsl, ExpressionMethods, SelectableHelper};
 
 use crate::event_structures::calendar_deadline::CalendarDeadline;
-use crate::event_structures::calendar_entry::{self, CalendarEntry};
+use crate::event_structures::calendar_entry::CalendarEntry;
 use crate::{utils::get_database_path, event_structures::{entry::Entry, calendar_event::CalendarEvent}, schema};
 
-struct PlansDbConn {
+pub struct PlansDbConn {
     conn: SqliteConnection
 }
 
