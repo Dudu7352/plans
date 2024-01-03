@@ -2,7 +2,7 @@ use std::{path::PathBuf, env};
 
 use crate::event_structures::entry::Entry;
 
-pub fn events_collide(e1: &Entry, e2: &Entry) -> bool {
+pub fn _events_collide(e1: &Entry, e2: &Entry) -> bool {
     let e1_start = e1.get_date_time();
     let e2_start = e2.get_date_time();
     let e1_end = match e1 {

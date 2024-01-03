@@ -11,7 +11,6 @@ struct PlansDbConn {
 
 impl PlansDbConn {
     pub fn new() -> Self {
-        let url = get_database_path();
         Self {
             conn: SqliteConnection::establish(get_database_path().to_str().unwrap()).expect("Could not connect to the database")
         }

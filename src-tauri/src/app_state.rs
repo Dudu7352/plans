@@ -65,9 +65,7 @@ impl AppState {
     }
 
     pub async fn get_all_events(&self, _start: NaiveDate, _end: NaiveDate) -> Result<Vec<Entry>, ()> {
-        
-        // TODO: Implementation
-        Err(())
+        todo!()
     }
 
     pub async fn add_event(&mut self, e: Entry) -> Result<(), ()> {
@@ -80,13 +78,10 @@ impl AppState {
             }
         }
 
-        // TODO: Implementation
-        Err(())
+        todo!()
     }
 
     pub async fn delete_event(&mut self, _id: String) -> Result<(), ()> {
-        
-        // TODO: Implementation
-        Err(())
+        todo!()
     }
 }

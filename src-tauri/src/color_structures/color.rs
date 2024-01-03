@@ -1,7 +1,4 @@
-use diesel::backend::Backend;
-use diesel::deserialize::FromSql;
 use diesel::expression::AsExpression;
-use diesel::serialize::ToSql;
 use diesel::sql_types::Text;
 use diesel::*;
 use serde::de::{self, Visitor};
