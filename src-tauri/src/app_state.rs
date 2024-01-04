@@ -28,20 +28,25 @@ impl AppState {
         self.db.get_entries(start, end)
     }
 
-    pub async fn add_event(&mut self, e: Entry) -> Result<(), ()> {
+    pub fn add_event(&mut self, e: Entry) -> Result<(), ()> {
         let date_time = e.get_date_time();
         let _day_key = date_time.date();
+        println!("AppState: Adding event: {:?}", e);
 
         if let Entry::Event(new_event) = &e {
-            if new_event.date_start.date() != new_event.date_start.date() {
+            if new_event.date_start > new_event.date_end {
+                println!("Event cannot have start date after end date");
                 return Err(());
             }
         }
 
-        self.db.insert_entry(e).map_err(|_| ())
+
+        self.db.insert_entry(e).map_err(|e| {
+            println!("Error inserting entry: {:?}", e);
+        })
     }
 
-    pub async fn delete_event(&mut self, id: String) -> Result<(), ()> {
+    pub fn delete_event(&mut self, id: String) -> Result<(), ()> {
         self.db.delete_entry(id.as_str()).map_err(|_| ())
     }
 }

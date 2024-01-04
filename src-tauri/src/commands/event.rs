@@ -10,6 +10,7 @@ use tauri::State;
 pub fn try_add_event(state: State<'_, Mutex<AppState>>, event: Entry) -> bool {
     match state.lock() {
         Ok(mut app_state) => {
+            println!("Adding event: {:?}", event);
             let _ = app_state.add_event(event);
             true
         },

@@ -7,6 +7,7 @@ use crate::event_structures::calendar_deadline::CalendarDeadline;
 use crate::event_structures::calendar_entry::CalendarEntry;
 use crate::{utils::get_database_path, event_structures::{entry::Entry, calendar_event::CalendarEvent}, schema};
 use diesel_migrations::MigrationHarness;
+use uuid::Uuid;
 
 pub struct PlansDbConn {
     conn: SqliteConnection
@@ -15,7 +16,9 @@ pub struct PlansDbConn {
 impl PlansDbConn {
     pub fn new() -> Self {
         // TODO: Handle errors
-        let mut conn = SqliteConnection::establish(get_database_path().to_str().unwrap()).expect("Could not connect to the database");
+        let db_path = get_database_path();
+        println!("Database path: {:?}", db_path);
+        let mut conn = SqliteConnection::establish(db_path.to_str().unwrap()).expect("Could not connect to the database");
         let _ = conn.run_pending_migrations(MIGRATIONS);
         Self { conn }
     }
@@ -34,11 +37,17 @@ impl PlansDbConn {
             .filter(schema::calendar_deadline::date_until.le(end))
             .select(CalendarDeadline::as_select())
             .load::<CalendarDeadline>(&mut self.conn).map_or(vec![], |v| v.into_iter().map(|e| Entry::Deadline(e)).collect()));
+        println!("Entries: {:?}", entries);
         entries
     }
 
-    pub fn insert_entry(&mut self, calendar_entry: Entry) -> Result<(), diesel::result::Error> {
-        let id = calendar_entry.get_id();
+    pub fn insert_entry(&mut self, mut calendar_entry: Entry) -> Result<(), diesel::result::Error> {
+        let mut id = calendar_entry.get_id();
+        if id == "" {
+            calendar_entry.set_id(Uuid::new_v4().to_string());
+            id = calendar_entry.get_id();
+        }
+        println!("Inserting entry with id: {}", id);
         diesel::insert_into(schema::calendar_entry::table)
             .values(CalendarEntry::new(id.clone()))
             .execute(&mut self.conn)

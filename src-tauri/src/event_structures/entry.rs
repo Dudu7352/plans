@@ -13,7 +13,7 @@ pub enum Entry {
 impl Entry {
     pub fn get_date_time(&self) -> &NaiveDateTime {
         match self {
-            Entry::Event(_event) => todo!(),
+            Entry::Event(event) => &event.date_start,
             Entry::Deadline(deadline) => &deadline.date_until,
         }
     }
@@ -22,6 +22,13 @@ impl Entry {
         match self {
             Entry::Event(event) => &event.calendar_entry_id,
             Entry::Deadline(deadline) => &deadline.calendar_entry_id,
+        }
+    }
+
+    pub fn set_id(&mut self, id: String) {
+        match self {
+            Entry::Event(event) => event.calendar_entry_id = id,
+            Entry::Deadline(deadline) => deadline.calendar_entry_id = id,
         }
     }
 }

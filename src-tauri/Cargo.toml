@@ -21,6 +21,7 @@ home = "*"
 tokio = { version = "1.35.1", features = ["macros", "rt"] }
 diesel = {version = "2.1.4", features = ["sqlite", "chrono"] }
 diesel_migrations = "2.1.0"
+uuid = { version = "1.6.1", features = ["v4"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
