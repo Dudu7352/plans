@@ -18,7 +18,7 @@ impl Entry {
         }
     }
 
-    pub fn get_id(&self) -> &String {
+    pub fn get_id(&self) -> &Option<String> {
         match self {
             Entry::Event(event) => &event.calendar_entry_id,
             Entry::Deadline(deadline) => &deadline.calendar_entry_id,
@@ -27,8 +27,8 @@ impl Entry {
 
     pub fn set_id(&mut self, id: String) {
         match self {
-            Entry::Event(event) => event.calendar_entry_id = id,
-            Entry::Deadline(deadline) => deadline.calendar_entry_id = id,
+            Entry::Event(event) => event.calendar_entry_id = Some(id),
+            Entry::Deadline(deadline) => deadline.calendar_entry_id = Some(id),
         }
     }
 }

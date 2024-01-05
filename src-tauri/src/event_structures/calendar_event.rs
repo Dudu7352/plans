@@ -24,7 +24,8 @@ use crate::schema::calendar_event;
 #[diesel(table_name = calendar_event)]
 #[serde(rename_all = "camelCase")]
 pub struct CalendarEvent {
-    pub calendar_entry_id: String,
+    #[diesel(deserialize_as = String)]
+    pub calendar_entry_id: Option<String>,
     pub event_name: String,
     #[serde(with = "ts_seconds")]
     pub date_start: NaiveDateTime,
@@ -35,14 +36,14 @@ pub struct CalendarEvent {
 
 impl CalendarEvent {
     pub fn new(
-        id: String,
+        calendar_entry: Option<String>,
         event_name: String,
         date_start: NaiveDateTime,
         date_end: NaiveDateTime,
         color: String,
     ) -> Self {
         Self {
-            calendar_entry_id: id,
+            calendar_entry_id: calendar_entry,
             event_name,
             date_start,
             date_end,
