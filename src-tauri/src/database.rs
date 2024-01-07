@@ -40,7 +40,7 @@ impl PlansDbConn {
                 .filter(schema::calendar_event::date_end.le(end))
                 .select(CalendarEvent::as_select())
                 .load::<CalendarEvent>(&mut self.conn)
-                .map_or(vec![], |v| v.into_iter().map(|e| Entry::Event(e)).collect()),
+                .map_or(vec![], |v| v.into_iter().map(Entry::Event).collect()),
         );
         entries.extend(
             calendar_deadline
@@ -49,7 +49,7 @@ impl PlansDbConn {
                 .select(CalendarDeadline::as_select())
                 .load::<CalendarDeadline>(&mut self.conn)
                 .map_or(vec![], |v| {
-                    v.into_iter().map(|e| Entry::Deadline(e)).collect()
+                    v.into_iter().map(Entry::Deadline).collect()
                 }),
         );
         println!("Entries: {:?}", entries);

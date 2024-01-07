@@ -7,11 +7,11 @@ pub fn _events_collide(e1: &Entry, e2: &Entry) -> bool {
     let e2_start = e2.get_date_time();
     let e1_end = match e1 {
         Entry::Event(e) => e.date_end,
-        Entry::Deadline(_) => e1_start.clone(),
+        Entry::Deadline(_) => *e1_start,
     };
     let e2_end = match e2 {
         Entry::Event(e) => e.date_end,
-        Entry::Deadline(_) => e2_start.clone(),
+        Entry::Deadline(_) => *e2_start,
     };
     e1_start < e2_start && e2_start < &e1_end || e2_start < e1_start && e1_start < &e2_end
 }

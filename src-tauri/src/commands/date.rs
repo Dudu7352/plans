@@ -30,7 +30,7 @@ pub fn get_current_week() -> i64 {
     let today = chrono::offset::Local::now().date_naive();
     let first = today.with_day(1).unwrap().with_month(1).unwrap();
     let dur = today - first;
-    return dur.num_weeks();
+    dur.num_weeks()
 }
 
 #[tauri::command]
@@ -58,11 +58,11 @@ pub fn get_year_details(year: i32) -> YearDetails {
         month_details_list.push(month_details);
     }
 
-    return YearDetails {
+    YearDetails {
         year,
         month_details_list,
         is_leap,
-    };
+    }
 }
 
 #[tauri::command]
@@ -89,7 +89,7 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
         );
         for i in 0..min(week_remaining, year_remaining) {
             let day = week_start + Duration::days(i);
-            let events = event_list.iter().filter(|e| e.get_date_time().date() == day).map(|x| x.clone()).collect::<Vec<Entry>>();
+            let events = event_list.iter().filter(|e| e.get_date_time().date() == day).cloned().collect::<Vec<Entry>>();
             week_details.push(DayDetails::new(day, events.to_vec()));
         }
     }
