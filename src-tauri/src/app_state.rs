@@ -29,8 +29,6 @@ impl AppState {
     }
 
     pub fn add_event(&mut self, e: Entry) -> Result<(), ()> {
-        let date_time = e.get_date_time();
-        let _day_key = date_time.date();
         println!("AppState: Adding event: {:?}", e);
 
         if let Entry::Event(new_event) = &e {
@@ -43,6 +41,21 @@ impl AppState {
 
         self.db.insert_entry(e).map_err(|e| {
             println!("Error inserting entry: {:?}", e);
+        })
+    }
+
+    pub fn update_event(&mut self, e: Entry) -> Result<(), ()> {
+        println!("AppState: Updating event: {:?}", e);
+
+        if let Entry::Event(new_event) = &e {
+            if new_event.date_start > new_event.date_end {
+                println!("Event cannot have start date after end date");
+                return Err(());
+            }
+        }
+
+        self.db.update_entry(e).map_err(|e| {
+            println!("Error updating entry: {:?}", e);
         })
     }
 

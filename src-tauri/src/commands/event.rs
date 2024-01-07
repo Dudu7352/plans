@@ -37,3 +37,16 @@ pub fn try_delete_event(state: State<'_, Mutex<AppState>>, event: Entry) -> bool
         Err(_) => false,
     }
 }
+
+#[tauri::command]
+pub fn try_update_event(state: State<'_, Mutex<AppState>>, event: Entry) -> bool {
+    match state.lock() {
+        Ok(mut app_state) => {
+            println!("Updating event: {:?}", event);
+            let _ = app_state.update_event(event);
+            true
+        },
+        Err(_) => false,
+    }
+  
+}

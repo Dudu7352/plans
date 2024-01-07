@@ -29,7 +29,8 @@ async fn main() {
             get_year_details, 
             get_week_details,
             try_add_event,
-            try_delete_event
+            try_delete_event,
+            try_update_event
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
