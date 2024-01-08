@@ -41,6 +41,7 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
           } else if (eventType.Deadline) {
             return (
               <DeadlineBox
+              key={i}
                 deadlineDetails={eventType.Deadline}
                 showEditEventDialog={() => {
                   props.showEditEventDialog(eventType);
