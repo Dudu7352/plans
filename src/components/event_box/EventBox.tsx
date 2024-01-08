@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Time } from "../../utils/classes";
 import { shadeDown, shadeUp } from "../../utils/functions/shades";
 import { IEventDetails } from "../../utils/interfaces";
 import "./EventBox.css";

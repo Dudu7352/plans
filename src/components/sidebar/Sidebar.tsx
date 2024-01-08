@@ -4,7 +4,6 @@ import "./Sidebar.css";
 import CalendarBar from "../calendar_bar/CalendarBar";
 import WeekSelector from "../week_selector/WeekSelector";
 import { IMonthDetails, IYearDetails } from "../../utils/interfaces";
-import TopBar, { TopBarFloat, TopBarSize } from "../top_bar/TopBar";
 
 interface SidebarProps {
   userYear: number;

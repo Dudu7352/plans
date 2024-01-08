@@ -7,7 +7,6 @@ import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
-import Titlebar from "../titlebar/Titlebar";
 
 interface PlannerProps {
   week: number;

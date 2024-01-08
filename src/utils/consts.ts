@@ -1,5 +1,5 @@
 import { Time } from "./classes";
-import { IEventDetails, IEventType } from "./interfaces";
+import { IEventDetails, Entry } from "./interfaces";
 
 export const MONTHS: string[] = [
   "January",
@@ -39,12 +39,13 @@ export const LEAP_YEAR_DAYS = 366;
 export const DEFAULT_DATE: Date = new Date("2000-01-01");
 export const DEFAULT_TIME: Time = new Time("00:00");
 export const DEFAULT_EVENT: IEventDetails = {
-  dateTime: Math.floor(DEFAULT_DATE.getTime() / 1000),
-  durationMinutes: 0,
+  calendarEntryId: "",
+  dateStart: Math.floor(DEFAULT_DATE.getTime() / 1000),
+  dateEnd: Math.floor(DEFAULT_DATE.getTime() / 1000 + 1),
   color: "#ff0000",
-  name: "",
+  eventName: "",
 };
-export const DEFAULT_EVENT_TYPE: IEventType = {
+export const DEFAULT_EVENT_TYPE: Entry = {
   Event: undefined,
   Deadline: undefined,
 };

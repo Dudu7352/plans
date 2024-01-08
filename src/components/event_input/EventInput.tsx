@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { Time } from "../../utils/classes";
 import { IEventInputData } from "../../utils/interfaces";
 import TableInput from "../table_input/TableInput";
