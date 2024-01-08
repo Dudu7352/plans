@@ -28,38 +28,32 @@ impl AppState {
         self.db.get_entries(start, end)
     }
 
-    pub fn add_event(&mut self, e: Entry) -> Result<(), ()> {
+    pub fn add_event(&mut self, e: Entry) -> Result<(), String> {
         println!("AppState: Adding event: {:?}", e);
 
         if let Entry::Event(new_event) = &e {
             if new_event.date_start > new_event.date_end {
-                println!("Event cannot have start date after end date");
-                return Err(());
+                return Err(String::from("Event cannot have start date after end date"));
             }
         }
 
 
-        self.db.insert_entry(e).map_err(|e| {
-            println!("Error inserting entry: {:?}", e);
-        })
+        self.db.insert_entry(e).map_err(|_| String::from("Error inserting entry"))
     }
 
-    pub fn update_event(&mut self, e: Entry) -> Result<(), ()> {
+    pub fn update_event(&mut self, e: Entry) -> Result<(), String> {
         println!("AppState: Updating event: {:?}", e);
 
         if let Entry::Event(new_event) = &e {
             if new_event.date_start > new_event.date_end {
-                println!("Event cannot have start date after end date");
-                return Err(());
+                return Err(String::from("Event cannot have start date after end date"));
             }
         }
 
-        self.db.update_entry(e).map_err(|e| {
-            println!("Error updating entry: {:?}", e);
-        })
+        self.db.update_entry(e).map_err(|_| String::from("Error updating entry"))
     }
 
-    pub fn delete_event(&mut self, id: String) -> Result<(), ()> {
-        self.db.delete_entry(id.as_str()).map_err(|_| ())
+    pub fn delete_event(&mut self, id: String) -> Result<(), String> {
+        self.db.delete_entry(id.as_str()).map_err(|_| String::from("Error deleting entry"))
     }
 }

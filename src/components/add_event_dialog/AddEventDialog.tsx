@@ -71,10 +71,10 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                       },
                     };
               console.log(newEvent);
-              invoke("try_add_event", { event: newEvent }).then((msg) => {
-                const result = msg as boolean;
-                if (result) props.close(true);
-                else alert("Could not add the event");
+              invoke("try_add_event", { event: newEvent }).then(() => {
+                props.close(true);
+              }).catch((err) => {
+                alert(err);
               });
               break;
             }

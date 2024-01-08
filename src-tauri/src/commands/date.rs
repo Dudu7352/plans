@@ -66,7 +66,7 @@ pub fn get_year_details(year: i32) -> YearDetails {
 }
 
 #[tauri::command]
-pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> Vec<DayDetails> {
+pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> Result<Vec<DayDetails>, String> {
     let year_start = NaiveDate::from_yo_opt(year, 1).unwrap();
     let mut week_start = year_start + Duration::days(week * 7);
     if week > 0 {
@@ -94,5 +94,5 @@ pub fn get_week_details(state: State<Mutex<AppState>>, year: i32, week: i64) -> 
         }
     }
 
-    week_details
+    Ok(week_details)
 }
