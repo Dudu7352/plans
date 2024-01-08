@@ -1,13 +1,13 @@
 import { Time } from "../../utils/classes";
 import { formatDate } from "../../utils/functions";
-import { IEventType } from "../../utils/interfaces";
+import { Entry } from "../../utils/interfaces";
 import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 import Dialog from "../dialog/Dialog";
 import { invoke } from "@tauri-apps/api";
 import "./EditEventDialog.css";
 
 interface EditEventDialogProps {
-  eventType: IEventType;
+  eventType: Entry;
   isOpened: boolean;
   close: (refresh: boolean) => void;
 }
@@ -21,13 +21,13 @@ export default function EditEventDialog(props: EditEventDialogProps) {
     </tbody>
   );
   let name = "undefined event";
-  if (props.eventType.EVENT) {
-    const event = props.eventType.EVENT;
-    const date = new Date(event.dateTime * 1000);
+  if (props.eventType.Event) {
+    const event = props.eventType.Event;
+    const date = new Date(event.dateStart * 1000);
     const startTime: Time = Time.fromDate(date);
-    const endTime = startTime.copy();
-    endTime.addMinutes(Math.floor(event.durationMinutes));
-    name = event.name;
+    const endTime: Time = Time.fromDate(new Date(event.dateEnd * 1000));
+    const duration = (props.eventType.Event.dateEnd - props.eventType.Event.dateStart) / 60;
+    name = event.eventName;
     tableData = (
       <tbody>
         <tr>
@@ -40,7 +40,7 @@ export default function EditEventDialog(props: EditEventDialogProps) {
         </tr>
         <tr>
           <td>Duration: </td>
-          <td>{`${event.durationMinutes} minutes`}</td>
+          <td>{`${duration} minutes`}</td>
         </tr>
         <tr>
           <td>End: </td>
@@ -48,11 +48,11 @@ export default function EditEventDialog(props: EditEventDialogProps) {
         </tr>
       </tbody>
     );
-  } else if (props.eventType.DEADLINE) {
-    const deadline = props.eventType.DEADLINE;
-    const date = new Date(deadline.dateTime * 1000);
+  } else if (props.eventType.Deadline) {
+    const deadline = props.eventType.Deadline;
+    const date = new Date(deadline.dateUntil * 1000);
     const time = Time.fromDate(date);
-    name = deadline.name;
+    name = deadline.deadlineName;
     tableData = (
       <tbody>
         <tr>

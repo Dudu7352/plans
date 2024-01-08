@@ -12,7 +12,7 @@ interface DeadlineBoxProps {
 export default function DeadlineBox(props: DeadlineBoxProps) {
   let [highlight, setHightlight] = useState(false);
 
-  const time = Time.fromDate(new Date(props.deadlineDetails.dateTime * 1000));
+  const time = Time.fromDate(new Date(props.deadlineDetails.dateUntil * 1000));
 
   return (
     <div
@@ -30,7 +30,7 @@ export default function DeadlineBox(props: DeadlineBoxProps) {
       <div className="line" style={{
         backgroundColor: highlight ? shadeUp(props.deadlineDetails.color) : props.deadlineDetails.color,
       }}></div>
-      <span className="event-name">{props.deadlineDetails.name}</span>
+      <span className="event-name">{props.deadlineDetails.deadlineName}</span>
       <p>{time.toString()}</p>
     </div>
   );

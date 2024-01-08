@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { IDayDetails, IEventType } from "../../utils/interfaces";
+import { IDayDetails, Entry } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
 import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
@@ -54,7 +54,7 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={(eventType: IEventType) => {
+          showEditEventDialog={(eventType: Entry) => {
             setEventType(eventType);
             setPromptOpened(Prompt.EDIT);
           }}

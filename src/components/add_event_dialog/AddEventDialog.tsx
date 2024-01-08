@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import EventInput from "../event_input/EventInput";
-import { IEventInputData } from "../../utils/interfaces";
+import { IEventInputData, NewEntry } from "../../utils/interfaces";
 import { formatDate } from "../../utils/functions";
 import { DEFAULT_TIME } from "../../utils/consts";
 import { Time } from "../../utils/classes";
@@ -52,21 +52,22 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                 inputData.end,
                 inputData.start
               );
-              let newEvent: any =
+              const endDate = new Date(startDate.getTime() + duration * 60000);
+              let newEvent: NewEntry =
                 duration === 0
                   ? {
-                      DEADLINE: {
-                        dateTime: Math.floor(startDate.getTime() / 1000),
+                      Deadline: {
+                        dateUntil: Math.floor(startDate.getTime() / 1000),
+                        deadlineName: inputData.name,
                         color: inputData.color,
-                        name: inputData.name,
                       },
                     }
                   : {
-                      EVENT: {
-                        dateTime: Math.floor(startDate.getTime() / 1000),
-                        durationMinutes: duration,
+                      Event: {
+                        dateStart: Math.floor(startDate.getTime() / 1000),
+                        dateEnd: Math.floor(endDate.getTime() / 1000),
+                        eventName: inputData.name,
                         color: inputData.color,
-                        name: inputData.name,
                       },
                     };
               console.log(newEvent);

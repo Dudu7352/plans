@@ -18,10 +18,8 @@ export default function App() {
       setUserYear(result);
     });
     invoke<number>("get_current_week").then(setWeek);
-    invoke<string[]>("get_template_colors").then(setTemplateColors);
+    // invoke<string[]>("get_template_colors").then(setTemplateColors);
   }, []);
-
-  console.log(templateColors);
 
   return (
     <div className={`App ${lightTheme ? "light" : "dark"}`}>

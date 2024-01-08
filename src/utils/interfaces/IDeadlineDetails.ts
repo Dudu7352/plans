@@ -1,5 +1,6 @@
 export default interface IDeadlineDetails {
-  dateTime: number;
+  calendarEntryId: string;
+  dateUntil: number;
   color: string;
-  name: string;
+  deadlineName: string;
 }

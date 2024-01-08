@@ -1,6 +1,6 @@
 import { WEEKDAYS } from "../../utils/consts";
 import { formatDate } from "../../utils/functions";
-import { IDayDetails, IEventType } from "../../utils/interfaces";
+import { IDayDetails, Entry } from "../../utils/interfaces";
 import Button from "../button/Button";
 import DeadlineBox from "../deadline_box/DeadlineBox";
 import { EventBox } from "../event_box/EventBox";
@@ -11,7 +11,7 @@ import "./EventsTableColumn.css";
 interface EventsTableColumnProps {
   dayDetails: IDayDetails;
   showAddEventDialog: () => void;
-  showEditEventDialog: (eventType: IEventType) => void;
+  showEditEventDialog: (eventType: Entry) => void;
 }
 
 export default function EventsTableColumn(props: EventsTableColumnProps) {
@@ -27,21 +27,21 @@ export default function EventsTableColumn(props: EventsTableColumnProps) {
         <Button title="Add" onClick={props.showAddEventDialog} fit />
       </TopBar>
       <div className="events child-box rounded bordered">
-        {props.dayDetails.events.map((eventType: IEventType, i: number) => {
-          if (eventType.EVENT) {
+        {props.dayDetails.events.map((eventType: Entry, i: number) => {
+          if (eventType.Event) {
             return (
               <EventBox
                 key={i}
-                eventDetails={eventType.EVENT}
+                eventDetails={eventType.Event}
                 showEditEventDialog={() => {
                   props.showEditEventDialog(eventType);
                 }}
               />
             );
-          } else if (eventType.DEADLINE) {
+          } else if (eventType.Deadline) {
             return (
               <DeadlineBox
-                deadlineDetails={eventType.DEADLINE}
+                deadlineDetails={eventType.Deadline}
                 showEditEventDialog={() => {
                   props.showEditEventDialog(eventType);
                 }}

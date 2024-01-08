@@ -1,5 +1,7 @@
-import IDeadlineDetails from "./IDeadlineDetails";
-
-export default interface IEventDetails extends IDeadlineDetails {
-  durationMinutes: number;
+export default interface IEventDetails {
+  calendarEntryId: string;
+  dateStart: number;
+  dateEnd: number;
+  color: string;
+  eventName: string;
 }

@@ -45,8 +45,8 @@ export const DEFAULT_EVENT: IEventDetails = {
   name: "",
 };
 export const DEFAULT_EVENT_TYPE: IEventType = {
-  EVENT: undefined,
-  DEADLINE: undefined,
+  Event: undefined,
+  Deadline: undefined,
 };
 
 export const SHADE_DOWN = 0.9;

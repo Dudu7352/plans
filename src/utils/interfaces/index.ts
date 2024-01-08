@@ -2,7 +2,7 @@ import IDayDetails from "./IDayDetails";
 import IDeadlineDetails from "./IDeadlineDetails";
 import IEventDetails from "./IEventDetails";
 import IEventInputData from "./IEventInputData";
-import IEventType from "./IEventType";
+import NewEntry, { Entry } from "./IEventType";
 import IMonthDetails from "./IMonthDetails";
 import IYearDetails from "./IYearDetails";
 
@@ -11,7 +11,8 @@ export type {
   IDeadlineDetails,
   IEventDetails,
   IEventInputData,
-  IEventType,
+  NewEntry,
+  Entry,
   IMonthDetails,
   IYearDetails,
 };
