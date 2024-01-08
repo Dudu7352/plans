@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub struct AppState {
-    db: PlansDbConn,
+    db: Option<PlansDbConn>,
 }
 
 impl Serialize for AppState {
@@ -25,20 +25,23 @@ impl AppState {
     }
 
     pub fn get_all_events(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
-        self.db.get_entries(start, end)
+        match &mut self.db {
+            Some(db) => db.get_entries(start, end),
+            None => Vec::new(),
+        }
     }
 
     pub fn add_event(&mut self, e: Entry) -> Result<(), String> {
-        println!("AppState: Adding event: {:?}", e);
-
         if let Entry::Event(new_event) = &e {
             if new_event.date_start > new_event.date_end {
                 return Err(String::from("Event cannot have start date after end date"));
             }
         }
 
-
-        self.db.insert_entry(e).map_err(|_| String::from("Error inserting entry"))
+        match &mut self.db {
+            Some(ref mut db) => db.insert_entry(e).map_err(|_| String::from("Error inserting entry")),
+            None => Err(String::from("Error inserting entry")),
+        }
     }
 
     pub fn update_event(&mut self, e: Entry) -> Result<(), String> {
@@ -50,10 +53,16 @@ impl AppState {
             }
         }
 
-        self.db.update_entry(e).map_err(|_| String::from("Error updating entry"))
+        match &mut self.db {
+            Some(db) => db.update_entry(e).map_err(|_| String::from("Error inserting entry")),
+            None => Err(String::from("Error updating entry")),
+        }
     }
 
     pub fn delete_event(&mut self, id: String) -> Result<(), String> {
-        self.db.delete_entry(id.as_str()).map_err(|_| String::from("Error deleting entry"))
+        match &mut self.db {
+            Some(db) => db.delete_entry(&id).map_err(|_| String::from("Error inserting entry")),
+            None => Err(String::from("Error deleting entry")),
+        }
     }
 }

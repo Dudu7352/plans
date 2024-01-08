@@ -20,14 +20,16 @@ pub struct PlansDbConn {
 }
 
 impl PlansDbConn {
-    pub fn new() -> Self {
-        // TODO: Handle errors
+    pub fn new() -> Option<Self> {
         let db_path = get_database_path();
-        println!("Database path: {:?}", db_path);
-        let mut conn = SqliteConnection::establish(db_path.to_str().unwrap())
-            .expect("Could not connect to the database");
-        let _ = conn.run_pending_migrations(MIGRATIONS);
-        Self { conn }
+        let conn = SqliteConnection::establish(db_path.to_str().unwrap());
+        match conn {
+            Ok(mut conn) => {
+                let _ = conn.run_pending_migrations(MIGRATIONS);
+                Some(Self { conn })
+            },
+            Err(_) => None
+        }
     }
 
     pub fn get_entries(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
@@ -52,7 +54,6 @@ impl PlansDbConn {
                     v.into_iter().map(Entry::Deadline).collect()
                 }),
         );
-        println!("Entries: {:?}", entries);
         entries
     }
 
@@ -64,11 +65,9 @@ impl PlansDbConn {
             calendar_entry.set_id(id.clone());
             id
         };
-        println!("Inserting entry with id: {}", id);
         diesel::insert_into(schema::calendar_entry::table)
             .values(CalendarEntry::new(id.clone()))
-            .execute(&mut self.conn)
-            .expect("Error inserting new entry");
+            .execute(&mut self.conn)?;
         match calendar_entry {
             Entry::Event(event) => {
                 diesel::insert_into(schema::calendar_event::table)
