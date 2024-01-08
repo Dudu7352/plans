@@ -7,6 +7,7 @@ interface ColorPickerProps {
 }
 
 export default function ColorPicker(props: ColorPickerProps) {
+  console.log(props.templateColors);
   return (
     <div className="ColorPicker">
       {props.templateColors.map((color: string, i: number) => (
@@ -14,6 +15,7 @@ export default function ColorPicker(props: ColorPickerProps) {
           key={i}
           color={color}
           onClick={() => {
+            console.log(i);
             props.setColor(color);
           }}
         />

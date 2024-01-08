@@ -50,5 +50,11 @@ export const DEFAULT_EVENT_TYPE: Entry = {
   Deadline: undefined,
 };
 
+export const COLORS: string[] = [
+  "#20bf55",
+  "#0b4f6c",
+  "#fe5d26"
+];
+
 export const SHADE_DOWN = 0.9;
 export const SHADE_UP = 1.1;

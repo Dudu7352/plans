@@ -4,13 +4,13 @@ import "./styles";
 import Sidebar from "./components/sidebar/Sidebar";
 import Planner from "./components/planner/Planner";
 import { useState, useEffect } from "react";
+import { COLORS } from "./utils/consts";
 
 export default function App() {
   let [currentYear, setCurrentYear] = useState(0);
   let [userYear, setUserYear] = useState(0);
   let [week, setWeek] = useState(0);
   let [lightTheme, setLightTheme] = useState(true);
-  let [templateColors, setTemplateColors] = useState([] as string[]);
 
   useEffect(() => {
     invoke<number>("get_current_year").then((result) => {
@@ -18,7 +18,6 @@ export default function App() {
       setUserYear(result);
     });
     invoke<number>("get_current_week").then(setWeek);
-    // invoke<string[]>("get_template_colors").then(setTemplateColors);
   }, []);
 
   return (
@@ -32,7 +31,7 @@ export default function App() {
       <Planner
         week={week}
         userYear={userYear}
-        templateColors={templateColors}
+        templateColors={COLORS}
         toggleTheme={() => {
           setLightTheme((x) => !x);
         }}
