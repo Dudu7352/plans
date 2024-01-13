@@ -1,0 +1,5 @@
+.ColorPicker {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+}

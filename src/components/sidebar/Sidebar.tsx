@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import "./Sidebar.css";
 import CalendarBar from "../calendar_bar/CalendarBar";
 import WeekSelector from "../week_selector/WeekSelector";
-import { MonthDetails, YearDetails } from "../../utils/interfaces";
+import { IMonthDetails, IYearDetails } from "../../utils/interfaces";
 
 interface SidebarProps {
   userYear: number;
@@ -13,20 +13,20 @@ interface SidebarProps {
 }
 
 export default function Sidebar(props: SidebarProps) {
-  let [yearDetails, setYearDetails] = useState<YearDetails>({
+  let [yearDetails, setYearDetails] = useState<IYearDetails>({
     year: 0,
-    monthDetailsList: Array<MonthDetails>(12),
+    monthDetailsList: Array<IMonthDetails>(12),
     isLeap: false,
   });
 
   useEffect(() => {
-    invoke<YearDetails>("get_year_details", { year: props.userYear }).then(
+    invoke<IYearDetails>("get_year_details", { year: props.userYear }).then(
       setYearDetails
     );
   }, [props.userYear]);
 
   return (
-    <div className="Sidebar">
+    <div className="Sidebar child-box bordered">
       <Suspense fallback={<div>Loading...</div>}>
         <CalendarBar year={props.currentYear} setYear={props.setUserYear} />
         <WeekSelector

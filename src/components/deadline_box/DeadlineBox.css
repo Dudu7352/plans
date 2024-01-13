@@ -1,0 +1,45 @@
+.Deadline {
+    width: calc(100% - 1rem);
+    height: 1rem;
+    margin: 0 0.5rem;
+    text-align: right;
+    position: relative;
+}
+
+.Deadline > .line {
+    height: 2px;
+}
+
+.Deadline > p {
+    word-wrap: break-word;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+}
+
+.Deadline:hover {
+    z-index: 2;
+}
+
+.Deadline > .event-name {
+    position: absolute;
+    top: -0.5rem;
+    right: 0.5rem;
+}
+
+.Deadline > p:not(.event-name) {
+    display: none;
+    padding: 0 0.2rem;
+    font-size: small;
+    width: fit-content;
+    background-color: #2228;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(5px);
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+}
+
+.Deadline:hover > p:not(.event-name) {
+    display: block;
+}

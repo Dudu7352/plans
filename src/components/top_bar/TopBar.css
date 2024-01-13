@@ -11,6 +11,11 @@
     justify-content: start;
 }
 
+.TopBar.no-border {
+    border: none;
+    width: 100%;
+}
+
 .TopBar.center {
     justify-content: center;
 }

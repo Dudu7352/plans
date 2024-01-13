@@ -1,5 +1,6 @@
 .Dialog {
   background-color: transparent;
+  min-width: 300px;
   padding: 0;
   position: absolute;
   top: 0;
