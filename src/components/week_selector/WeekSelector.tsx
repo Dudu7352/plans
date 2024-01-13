@@ -1,10 +1,10 @@
 import "./WeekSelector.css";
-import { MonthDetails } from "../../utils/interfaces";
+import { IMonthDetails } from "../../utils/interfaces";
 import { YEAR_WEEKS } from "../../utils/consts";
 import Week from "../week/Week";
 
 interface WeekSelectorProps {
-  monthDetails: MonthDetails[];
+  monthDetails: IMonthDetails[];
   setWeek: (year: number) => void;
 }
 
