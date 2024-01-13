@@ -85,11 +85,10 @@ export default function EditEventDialog(props: EditEventDialogProps) {
               props.close(false);
               break;
             case ControlOption.DELETE:
-              invoke("try_delete_event", { event: props.eventType }).then(
+              invoke<string | null>("try_delete_event", { event: props.eventType }).then(
                 (msg) => {
-                  const result = msg as boolean;
-                  if (result) props.close(true);
-                  else alert("Could not delete the event");
+                  if (msg === null) props.close(true);
+                  else alert(`Could not delete the event: ${msg}`);
                 }
               );
               break;
