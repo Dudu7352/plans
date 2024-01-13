@@ -15,7 +15,7 @@ export default function CalendarBar(props: CalendarBarProps) {
   }
 
   return (
-    <TopBar tauriDrag size={TopBarSize.MEDIUM} float={TopBarFloat.RIGHT} noBorder shadow>
+    <TopBar tauriDrag size={TopBarSize.MEDIUM} float={TopBarFloat.RIGHT} className="CalendarBar">
       <Select
         values={[...Array(5)].map((_, i) => props.year + i)}
         onChange={(e) => props.setYear(+e.target.value)}

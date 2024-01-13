@@ -23,6 +23,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# development database
-dev_database.db

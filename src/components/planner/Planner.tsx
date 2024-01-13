@@ -1,35 +1,41 @@
 import { useEffect, useState } from "react";
 import "./Planner.css";
 import PlannerBar from "../planner_bar/PlannerBar";
-import { IDayDetails, Entry } from "../../utils/interfaces";
+import { DayDetails, EventDetails } from "../../utils/interfaces";
 import { invoke } from "@tauri-apps/api";
-import { DEFAULT_DATE, DEFAULT_EVENT_TYPE, Prompt } from "../../utils/consts";
+import { DEFAULT_DATE, DEFAULT_EVENT, Prompt } from "../../utils/consts";
 import AddEventDialog from "../add_event_dialog/AddEventDialog";
 import EventsTable from "../events_table/EventsTable";
 import EditEventDialog from "../edit_event_dialog/EditEventDialog";
+import Titlebar from "../titlebar/Titlebar";
 
 interface PlannerProps {
   week: number;
   userYear: number;
-  templateColors: string[];
   toggleTheme: () => void;
 }
 
 export default function Planner(props: PlannerProps) {
-  let [weekDetails, setWeekDetails] = useState([] as IDayDetails[]);
+  let [weekDetails, setWeekDetails] = useState([] as DayDetails[]);
   let [firstWeekday, setFirstWeekday] = useState(0);
   let [promptOpened, setPromptOpened] = useState(Prompt.NONE);
   let [date, setDate] = useState(DEFAULT_DATE);
-  let [eventType, setEventType] = useState(DEFAULT_EVENT_TYPE);
+  let [eventDetails, setEventDetails] = useState(DEFAULT_EVENT);
 
   function refreshDetails() {
-    invoke<IDayDetails[]>("get_week_details", { year: props.userYear, week: props.week }).then(setWeekDetails);
+    invoke("get_week_details", { year: props.userYear, week: props.week }).then(
+      (msg) => {
+        setWeekDetails(msg as DayDetails[]);
+      }
+    );
   }
 
   useEffect(refreshDetails, [props.userYear, props.week]);
 
   useEffect(() => {
-    invoke<number>("get_first_weekday", { year: props.userYear }).then(setFirstWeekday);
+    invoke("get_first_weekday", { year: props.userYear }).then((msg) => {
+      setFirstWeekday(msg as number);
+    });
   }, [props.userYear]);
 
   return (
@@ -53,8 +59,8 @@ export default function Planner(props: PlannerProps) {
             setDate(date);
             setPromptOpened(Prompt.ADD);
           }}
-          showEditEventDialog={(eventType: Entry) => {
-            setEventType(eventType);
+          showEditEventDialog={(eventDetails: EventDetails) => {
+            setEventDetails(eventDetails);
             setPromptOpened(Prompt.EDIT);
           }}
         />
@@ -62,14 +68,13 @@ export default function Planner(props: PlannerProps) {
       <AddEventDialog
         date={date}
         isOpened={promptOpened === Prompt.ADD}
-        templateColors={props.templateColors}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);
           if (refresh) refreshDetails();
         }}
       />
       <EditEventDialog
-        eventType={eventType}
+        eventDetails={eventDetails}
         isOpened={promptOpened === Prompt.EDIT}
         close={(refresh: boolean) => {
           setPromptOpened(Prompt.NONE);

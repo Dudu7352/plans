@@ -18,6 +18,7 @@
 
 .EventBox > p:not(.event-name) {
     display: none;
+    
     margin: auto;
     padding: 0 0.2rem;
     font-size: small;

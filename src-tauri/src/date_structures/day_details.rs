@@ -1,15 +1,15 @@
 use chrono::NaiveDate;
 use serde::Serialize;
 
-use crate::event_structures::entry::Entry;
+use crate::event_structures::event_details::EventDetails;
 
 #[derive(Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DayDetails {
     pub date: NaiveDate,
-    pub events: Vec<Entry>
+    pub events: Vec<EventDetails>
 }
 
 impl DayDetails {
-    pub fn new(date: NaiveDate, events: Vec<Entry>) -> Self { Self { date, events } }
+    pub fn new(date: NaiveDate, events: Vec<EventDetails>) -> Self { Self { date, events } }
 }

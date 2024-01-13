@@ -9,9 +9,6 @@
   flex: 1
 }
 
-
-.vert {
+.EventsTableColumn span {
   margin-left: 0.5rem;
-  display: flex;
-  flex-direction: column;
 }

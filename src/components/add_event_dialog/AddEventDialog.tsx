@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import EventInput from "../event_input/EventInput";
-import { IEventInputData, NewEntry } from "../../utils/interfaces";
+import { EventDetails, EventInputData } from "../../utils/interfaces";
 import { formatDate } from "../../utils/functions";
 import { DEFAULT_TIME } from "../../utils/consts";
 import { Time } from "../../utils/classes";
@@ -11,17 +11,15 @@ import ControlBar, { ControlOption } from "../control_bar/ControlBar";
 interface AddEventDialogProps {
   date: Date;
   isOpened: boolean;
-  templateColors: string[];
   close: (refresh: boolean) => void;
 }
 
 export default function AddEventDialog(props: AddEventDialogProps) {
   let [inputData, setInputData] = useState({
     name: "",
-    color: "#808080",
     start: DEFAULT_TIME,
     end: DEFAULT_TIME,
-  } as IEventInputData);
+  } as EventInputData);
 
   const dateFormat: string = formatDate(new Date(props.date));
 
@@ -31,11 +29,11 @@ export default function AddEventDialog(props: AddEventDialogProps) {
       title={`Add new event for ${dateFormat}`}
       closeDialog={() => {
         props.close(false);
-      } }>
+      }}
+    >
       <EventInput
         inputData={inputData}
-        templateColors={props.templateColors}
-        updateIEventInputData={(inputData: IEventInputData) => {
+        updateEventDetails={(inputData: EventInputData) => {
           setInputData(inputData);
         }}
       />
@@ -52,29 +50,15 @@ export default function AddEventDialog(props: AddEventDialogProps) {
                 inputData.end,
                 inputData.start
               );
-              const endDate = new Date(startDate.getTime() + duration * 60000);
-              let newEvent: NewEntry =
-                duration === 0
-                  ? {
-                      Deadline: {
-                        dateUntil: Math.floor(startDate.getTime() / 1000),
-                        deadlineName: inputData.name,
-                        color: inputData.color,
-                      },
-                    }
-                  : {
-                      Event: {
-                        dateStart: Math.floor(startDate.getTime() / 1000),
-                        dateEnd: Math.floor(endDate.getTime() / 1000),
-                        eventName: inputData.name,
-                        color: inputData.color,
-                      },
-                    };
-              console.log(newEvent);
-              invoke("try_add_event", { event: newEvent }).then(() => {
-                props.close(true);
-              }).catch((err) => {
-                alert(err);
+              let newEvent = {
+                dateTime: Math.floor(startDate.getTime() / 1000),
+                durationMinutes: duration,
+                name: inputData.name,
+              } as EventDetails;
+              invoke("try_add_event", { event: newEvent }).then((msg) => {
+                const result = msg as boolean;
+                if (result) props.close(true);
+                else alert("Could not add the event");
               });
               break;
             }
