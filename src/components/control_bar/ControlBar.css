@@ -1,7 +1,0 @@
-.ControlBar {
-  display: flex;
-}
-
-.ControlBar > * {
-  flex: 1;
-}

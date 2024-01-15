@@ -1,4 +1,4 @@
-import IMonthDetails from "./IMonthDetails";
+import type IMonthDetails from "./IMonthDetails";
 
 export default interface IYearDetails {
   year: number;

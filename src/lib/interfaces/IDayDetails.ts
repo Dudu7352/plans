@@ -1,4 +1,4 @@
-import { Entry } from "./IEventType";
+import { type Entry } from "./IEventType";
 
 export default interface IDayDetails {
   date: Date;
