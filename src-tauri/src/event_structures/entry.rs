@@ -1,7 +1,7 @@
 use chrono::NaiveDateTime;
 use serde::{Serialize, Deserialize};
 
-use super::calendar_event::CalendarEvent;
+use super::activity::CalendarEvent;
 use super::calendar_deadline::CalendarDeadline;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -13,8 +13,8 @@ pub enum Entry {
 impl Entry {
     pub fn get_date_time(&self) -> &NaiveDateTime {
         match self {
-            Entry::Event(event) => &event.date_start,
-            Entry::Deadline(deadline) => &deadline.date_until,
+            Entry::Event(event) => &event.from_date,
+            Entry::Deadline(deadline) => &deadline.until_date,
         }
     }
 

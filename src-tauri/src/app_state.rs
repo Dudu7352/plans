@@ -33,7 +33,7 @@ impl AppState {
 
     pub fn add_event(&mut self, e: Entry) -> Result<(), String> {
         if let Entry::Event(new_event) = &e {
-            if new_event.date_start > new_event.date_end {
+            if new_event.from_date > new_event.until_date {
                 return Err(String::from("Event cannot have start date after end date"));
             }
         }
@@ -48,7 +48,7 @@ impl AppState {
         println!("AppState: Updating event: {:?}", e);
 
         if let Entry::Event(new_event) = &e {
-            if new_event.date_start > new_event.date_end {
+            if new_event.from_date > new_event.until_date {
                 return Err(String::from("Event cannot have start date after end date"));
             }
         }

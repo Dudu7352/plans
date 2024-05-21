@@ -4,7 +4,7 @@ use diesel::{prelude::Insertable, Selectable};
 use serde::{Deserialize, Serialize};
 use diesel::prelude::*;
 
-use crate::schema::calendar_event;
+use crate::schema::activity;
 
 #[derive(
     Serialize,
@@ -21,32 +21,32 @@ use crate::schema::calendar_event;
 )]
 #[diesel(belongs_to(CalendarEntry))]
 #[diesel(primary_key(calendar_entry_id))]
-#[diesel(table_name = calendar_event)]
+#[diesel(table_name = activity)]
 #[serde(rename_all = "camelCase")]
 pub struct CalendarEvent {
     #[diesel(deserialize_as = String)]
     pub calendar_entry_id: Option<String>,
-    pub event_name: String,
+    pub name: String,
     #[serde(with = "ts_seconds")]
-    pub date_start: NaiveDateTime,
+    pub from_date: NaiveDateTime,
     #[serde(with = "ts_seconds")]
-    pub date_end: NaiveDateTime,
-    pub color: String,
+    pub until_date: NaiveDateTime,
+    pub color: Option<String>,
 }
 
 impl CalendarEvent {
     pub fn new(
         calendar_entry: Option<String>,
-        event_name: String,
-        date_start: NaiveDateTime,
-        date_end: NaiveDateTime,
-        color: String,
+        name: String,
+        from_date: NaiveDateTime,
+        until_date: NaiveDateTime,
+        color: Option<String>,
     ) -> Self {
         Self {
             calendar_entry_id: calendar_entry,
-            event_name,
-            date_start,
-            date_end,
+            name,
+            from_date,
+            until_date,
             color,
         }
     }

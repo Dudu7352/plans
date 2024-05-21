@@ -3,7 +3,7 @@ use chrono::{naive::serde::ts_seconds, NaiveDateTime};
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use crate::schema::calendar_deadline;
+use crate::schema::deadline;
 
 #[derive(
     Serialize,
@@ -21,28 +21,28 @@ use crate::schema::calendar_deadline;
 )]
 #[diesel(belongs_to(CalendarEntry))]
 #[diesel(primary_key(calendar_entry_id))]
-#[diesel(table_name = calendar_deadline)]
+#[diesel(table_name = deadline)]
 #[serde(rename_all = "camelCase")]
 pub struct CalendarDeadline {
     #[diesel(deserialize_as = String)]
     pub calendar_entry_id: Option<String>,
-    pub deadline_name: String,
+    pub name: String,
     #[serde(with = "ts_seconds")]
-    pub date_until: NaiveDateTime,
-    pub color: String,
+    pub until_date: NaiveDateTime,
+    pub color: Option<String>,
 }
 
 impl CalendarDeadline {
     pub fn new(
         calendar_entry_id: Option<String>,
-        deadline_name: String,
-        date_until: NaiveDateTime,
-        color: String,
+        name: String,
+        until_date: NaiveDateTime,
+        color: Option<String>,
     ) -> Self {
         Self {
             calendar_entry_id,
-            date_until,
-            deadline_name,
+            until_date,
+            name,
             color,
         }
     }

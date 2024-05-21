@@ -8,6 +8,7 @@ export interface Activity {
   type: "activity";
   from: Date;
   until: Date;
+  color?: string;
 }
 
 export interface Deadline {
@@ -16,4 +17,5 @@ export interface Deadline {
   type: "deadline";
   until: Date;
   accomplished: boolean;
+  color?: string;
 }

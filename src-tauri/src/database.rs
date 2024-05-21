@@ -1,14 +1,14 @@
 use chrono::NaiveDateTime;
-use diesel::RunQueryDsl;
+use diesel::{ExpressionMethods, RunQueryDsl};
 use diesel::{
-    prelude::SqliteConnection, Connection, ExpressionMethods, QueryDsl, SelectableHelper,
+    prelude::SqliteConnection, Connection, QueryDsl, SelectableHelper,
 };
 
 use crate::consts::MIGRATIONS;
 use crate::event_structures::calendar_deadline::CalendarDeadline;
 use crate::event_structures::calendar_entry::CalendarEntry;
 use crate::{
-    event_structures::{calendar_event::CalendarEvent, entry::Entry},
+    event_structures::{activity::CalendarEvent, entry::Entry},
     schema,
     utils::get_database_path,
 };
@@ -33,21 +33,21 @@ impl PlansDbConn {
     }
 
     pub fn get_entries(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
-        use schema::calendar_deadline::dsl::*;
-        use schema::calendar_event::dsl::*;
+        use schema::deadline::dsl::*;
+        use schema::activity::dsl::*;
         let mut entries: Vec<Entry> = Vec::new();
         entries.extend(
-            calendar_event
-                .filter(schema::calendar_event::date_start.ge(start))
-                .filter(schema::calendar_event::date_end.le(end))
+            activity
+                .filter(schema::activity::from_date.ge(start))
+                .filter(schema::activity::until_date.le(end))
                 .select(CalendarEvent::as_select())
                 .load::<CalendarEvent>(&mut self.conn)
                 .map_or(vec![], |v| v.into_iter().map(Entry::Event).collect()),
         );
         entries.extend(
-            calendar_deadline
-                .filter(schema::calendar_deadline::date_until.ge(start))
-                .filter(schema::calendar_deadline::date_until.le(end))
+            deadline
+                .filter(schema::deadline::until_date.ge(start))
+                .filter(schema::deadline::until_date.le(end))
                 .select(CalendarDeadline::as_select())
                 .load::<CalendarDeadline>(&mut self.conn)
                 .map_or(vec![], |v| {
@@ -59,7 +59,7 @@ impl PlansDbConn {
 
     pub fn insert_entry(&mut self, mut calendar_entry: Entry) -> Result<(), diesel::result::Error> {
         let id = if let Some(c_id) = calendar_entry.get_id().clone() {
-            c_id
+            c_id.clone()
         } else {
             let id = Uuid::new_v4().to_string();
             calendar_entry.set_id(id.clone());
@@ -70,12 +70,12 @@ impl PlansDbConn {
             .execute(&mut self.conn)?;
         match calendar_entry {
             Entry::Event(event) => {
-                diesel::insert_into(schema::calendar_event::table)
+                diesel::insert_into(schema::activity::table)
                     .values(event)
                     .execute(&mut self.conn)?;
             }
             Entry::Deadline(deadline) => {
-                diesel::insert_into(schema::calendar_deadline::table)
+                diesel::insert_into(schema::deadline::table)
                     .values(deadline)
                     .execute(&mut self.conn)?;
             }
@@ -84,9 +84,9 @@ impl PlansDbConn {
     }
 
     pub fn delete_entry(&mut self, id: &str) -> Result<(), diesel::result::Error> {
-        let _ = diesel::delete(schema::calendar_event::dsl::calendar_event.find(id))
+        let _ = diesel::delete(schema::activity::dsl::activity.find(id))
             .execute(&mut self.conn);
-        let _ = diesel::delete(schema::calendar_deadline::dsl::calendar_deadline.find(id))
+        let _ = diesel::delete(schema::deadline::dsl::deadline.find(id))
             .execute(&mut self.conn);
         diesel::delete(schema::calendar_entry::dsl::calendar_entry.find(id))
             .execute(&mut self.conn)?;
@@ -101,12 +101,12 @@ impl PlansDbConn {
         };
         match calendar_entry {
             Entry::Event(event) => {
-                diesel::update(schema::calendar_event::dsl::calendar_event.find(id))
+                diesel::update(schema::activity::dsl::activity.find(id))
                     .set(event)
                     .execute(&mut self.conn)?;
             }
             Entry::Deadline(deadline) => {
-                diesel::update(schema::calendar_deadline::dsl::calendar_deadline.find(id))
+                diesel::update(schema::deadline::dsl::deadline.find(id))
                     .set(deadline)
                     .execute(&mut self.conn)?;
             }
