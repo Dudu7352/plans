@@ -1,1 +1,1 @@
-export type SvgIcon = "arrow_back" | "arrow_forward";
+export type SvgIcon = "arrow_back" | "arrow_forward" | "close";

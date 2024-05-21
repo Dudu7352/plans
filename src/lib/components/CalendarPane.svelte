@@ -21,10 +21,27 @@
     return days;
   }
 
+  let days = getDaysInMonth(2024, 4);
+  days[4].entries = [
+    {
+      type: "activity",
+      id: "asdv",
+      name: "Meeting",
+      from: new Date(),
+      until: new Date()
+    },
+    {
+      type: "deadline",
+      id: "asdv",
+      name: "Deadline",
+      until: new Date()
+    },
+  ]
+
   const defaultMonth: Month = {
     beginning: 2,
     monthId: 4,
-    days: getDaysInMonth(2024, 4),
+    days: days,
   };
 
   export let month: Month = defaultMonth;
@@ -51,6 +68,7 @@
     box-shadow: 0 7pt 14pt #00000020;
     padding: 14pt;
     border-radius: 14pt;
+    width: fit-content;
   }
 
   .days {
