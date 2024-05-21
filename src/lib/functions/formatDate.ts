@@ -1,9 +1,6 @@
-import { DEFAULT_DATE, MONTHS } from "../consts";
+import { MONTHS } from "../consts";
 
 export default function formatDate(date: Date, withYear: boolean = false): string {
-  if(date === DEFAULT_DATE)
-    return "";
-  
   const day: number = date.getDate();
 
   let ending: string;

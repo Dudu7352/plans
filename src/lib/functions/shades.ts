@@ -1,4 +1,3 @@
-import { time } from "console";
 import { SHADE_DOWN, SHADE_UP } from "../consts";
 import { clamp } from "./clamp";
 
