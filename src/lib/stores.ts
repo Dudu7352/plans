@@ -11,7 +11,6 @@ function createOpenDayStore() {
       if (isSet) update(() => day);
       else set(day);
       isSet = true;
-      console.log(day);
     },
     close: () => {
       isSet = false;
