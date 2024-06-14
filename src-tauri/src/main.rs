@@ -21,13 +21,12 @@ use commands::event::*;
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
-        .manage(Mutex::new(AppState::new().await))
+        .manage(Mutex::new(AppState::new()))
         .invoke_handler(tauri::generate_handler![
             get_current_year, 
             get_current_week,
             get_first_weekday,
-            get_year_details, 
-            get_week_details,
+            get_month,
             try_add_event,
             try_delete_event,
             try_update_event

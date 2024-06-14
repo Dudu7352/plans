@@ -1,4 +1,4 @@
-use chrono::NaiveDateTime;
+use chrono::{NaiveDate, NaiveTime};
 use diesel::{ExpressionMethods, RunQueryDsl};
 use diesel::{
     prelude::SqliteConnection, Connection, QueryDsl, SelectableHelper,
@@ -32,22 +32,24 @@ impl PlansDbConn {
         }
     }
 
-    pub fn get_entries(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
+    pub fn get_entries(&mut self, start: NaiveDate, end: NaiveDate) -> Vec<Entry> {
         use schema::deadline::dsl::*;
         use schema::activity::dsl::*;
         let mut entries: Vec<Entry> = Vec::new();
+        let start_datetime = start.and_time(NaiveTime::MIN);
+        let end_datetime = end.succ_opt().unwrap().and_time(NaiveTime::MIN);
         entries.extend(
             activity
-                .filter(schema::activity::from_date.ge(start))
-                .filter(schema::activity::until_date.le(end))
+                .filter(schema::activity::from_date.ge(start_datetime))
+                .filter(schema::activity::until_date.lt(end_datetime))
                 .select(CalendarEvent::as_select())
                 .load::<CalendarEvent>(&mut self.conn)
                 .map_or(vec![], |v| v.into_iter().map(Entry::Event).collect()),
         );
         entries.extend(
             deadline
-                .filter(schema::deadline::until_date.ge(start))
-                .filter(schema::deadline::until_date.le(end))
+                .filter(schema::deadline::until_date.ge(start_datetime))
+                .filter(schema::deadline::until_date.lt(end_datetime))
                 .select(CalendarDeadline::as_select())
                 .load::<CalendarDeadline>(&mut self.conn)
                 .map_or(vec![], |v| {

@@ -1,9 +1,8 @@
-use chrono::NaiveDateTime;
+use chrono::NaiveDate;
 use serde::Serialize;
 
 use crate::{
-    event_structures::entry::Entry,
-    database::PlansDbConn, 
+    database::PlansDbConn, event_structures::entry::Entry,
 };
 
 pub struct AppState {
@@ -12,19 +11,21 @@ pub struct AppState {
 
 impl Serialize for AppState {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: serde::Serializer {
+    where
+        S: serde::Serializer,
+    {
         serializer.collect_str("")
     }
 }
 
 impl AppState {
-    pub async fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             db: PlansDbConn::new(),
         }
     }
 
-    pub fn get_all_events(&mut self, start: NaiveDateTime, end: NaiveDateTime) -> Vec<Entry> {
+    pub fn get_all_events(&mut self, start: NaiveDate, end: NaiveDate) -> Vec<Entry> {
         match &mut self.db {
             Some(db) => db.get_entries(start, end),
             None => Vec::new(),
@@ -39,7 +40,9 @@ impl AppState {
         }
 
         match &mut self.db {
-            Some(ref mut db) => db.insert_entry(e).map_err(|_| String::from("Error inserting entry")),
+            Some(ref mut db) => db
+                .insert_entry(e)
+                .map_err(|_| String::from("Error inserting entry")),
             None => Err(String::from("Error inserting entry")),
         }
     }
@@ -54,14 +57,18 @@ impl AppState {
         }
 
         match &mut self.db {
-            Some(db) => db.update_entry(e).map_err(|_| String::from("Error inserting entry")),
+            Some(db) => db
+                .update_entry(e)
+                .map_err(|_| String::from("Error inserting entry")),
             None => Err(String::from("Error updating entry")),
         }
     }
 
     pub fn delete_event(&mut self, id: String) -> Result<(), String> {
         match &mut self.db {
-            Some(db) => db.delete_entry(&id).map_err(|_| String::from("Error inserting entry")),
+            Some(db) => db
+                .delete_entry(&id)
+                .map_err(|_| String::from("Error inserting entry")),
             None => Err(String::from("Error deleting entry")),
         }
     }
