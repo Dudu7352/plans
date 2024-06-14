@@ -1,4 +1,4 @@
-import type { Entry } from "../interfaces";
+import type { Entry } from "./entry";
 
 export interface Day {
     date: Date,
