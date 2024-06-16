@@ -3,9 +3,11 @@
   import type { Day } from "../types/day";
 
   export let day: Day;
+
+  $: today = day.date.toDateString() == new Date().toDateString();
 </script>
 
-<button on:click={() => openDay.open(day)}>
+<button on:click={() => openDay.open(day)} class:today>
   {day.date.getDate()}
 </button>
 
@@ -22,10 +24,16 @@
     cursor: pointer;
     user-select: none;
     font-family: "inter";
+    box-sizing: border-box;
     border: none;
   }
 
   button:hover {
     background-color: #abf2ff;
+  }
+
+  button.today {
+    border: 1pt #abf2ff solid;
+    line-height: 27pt;
   }
 </style>

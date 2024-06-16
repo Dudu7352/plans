@@ -1,23 +1,14 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import CalendarPane from "./lib/components/CalendarPane.svelte";
   import DayDetailsPane from "./lib/components/DayDetailsPane.svelte";
-  import { getMonth } from "./lib/functions/tauri";
   import { openDay } from "./lib/stores";
-  import type { Month } from "./lib/types/month";
-  let month: Month | null = null;
-  onMount(async () => {
-    month = await getMonth(5, 2024);
-  });
 </script>
 
 <header>header</header>
 
 <main>
   <div></div>
-  {#if month}
-    <CalendarPane {month} />
-  {/if}
+  <CalendarPane />
   <div>
     {#if $openDay != null}
       <DayDetailsPane />

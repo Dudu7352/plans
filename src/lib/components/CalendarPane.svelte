@@ -1,27 +1,59 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { MONTHS } from "../consts";
   import type { Month } from "../types/month";
   import CalendarPaneDay from "./CalendarPaneDay.svelte";
   import CalendarPaneHead from "./CalendarPaneHead.svelte";
+  import { getMonth } from "../functions/tauri";
+  import { fly } from "svelte/transition";
 
-  export let month: Month;
+  let month: Month | null = null;
+  let year: number = new Date().getFullYear();
+
+  onMount(async () => {
+    let currentMonth = new Date().getMonth();
+    month = await getMonth(currentMonth, year);
+  });
+
+  async function nextMonth() {
+    if (month === null) return;
+    if (month?.monthId == 11) {
+      year++;
+      month = await getMonth(0, year);
+    } else {
+      month = await getMonth(month.monthId+1, year);
+    }
+  }
+
+  async function previousMonth() {
+    if (month === null) return;
+    if (month?.monthId == 0) {
+      year--;
+      month = await getMonth(11, year);
+    } else {
+      month = await getMonth(month.monthId-1, year);
+    }
+  }
 </script>
 
-<div class="main">
-  <CalendarPaneHead 
-    on:nextmonth={() => {}}
-    on:previousmonth={() => {}}
-    monthName={MONTHS[month.monthId]}
-  />
-  <div class="days">
-    {#if month.beginning > 0}
-      <div style={`grid-column: 1 / ${month.beginning + 1}`}></div>
-    {/if}
-    {#each month.days as day}
-      <CalendarPaneDay {day} />
-    {/each}
+{#if month !== null}
+  <div class="main" in:fly={{duration: 300}}>
+    <CalendarPaneHead
+      on:nextmonth={nextMonth}
+      on:previousmonth={previousMonth}
+      monthName={MONTHS[month.monthId]}
+      {year}
+    />
+    <div class="days">
+      {#if month.beginning > 0}
+        <div style={`grid-column: 1 / ${month.beginning + 1}`}></div>
+      {/if}
+      {#each month.days as day}
+        <CalendarPaneDay {day} />
+      {/each}
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   .main {
@@ -35,6 +67,7 @@
     display: grid;
     margin-top: 14pt;
     grid-template-columns: repeat(7, auto);
+    grid-template-rows: repeat(6, 1fr);
     gap: 7pt;
   }
 </style>

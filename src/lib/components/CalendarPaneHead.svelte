@@ -3,14 +3,15 @@
   import IconButton from "./IconButton.svelte";
   const dispatch = createEventDispatcher();
   export let monthName: string;
+  export let year: number;
 </script>
 
 <div class="head">
-  <IconButton on:click={() => dispatch("nextmonth")} icon="arrow_back"/>
+  <IconButton on:click={() => dispatch("previousmonth")} icon="arrow_back"/>
   <span>
-    {monthName}
+    {monthName} {year}
   </span>
-  <IconButton on:click={() => dispatch("previousmonth")} icon="arrow_forward" />
+  <IconButton on:click={() => dispatch("nextmonth")} icon="arrow_forward" />
 </div>
 
 <style>
@@ -20,7 +21,8 @@
   }
 
   .head > span {
-    font-size: 24pt;
+    font-size: 20pt;
+    line-height: 28pt;
     font-family: 'Inter';
     text-align: center;
   }
